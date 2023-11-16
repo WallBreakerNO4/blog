@@ -4,12 +4,29 @@ title: WallBreakerNO4的博客
 theme: PaperMod
 
 params:
+  homeInfoParams:
+      Title: 你好，世界！
+      Content: 一个正在学习，但总想着打游戏的人
+
+  socialIcons: # optional
+      - name: "bilibili"
+        url: "https://space.bilibili.com/28978056"
+      - name: "github"
+        url: "https://github.com/wallBreakerNO4"
+
+  ShowCodeCopyButtons: true
+  defaultTheme: dark
   assets:
     favicon: "assets/favicon.ico"
     favicon16x16: "assets/favicon-16x16.png"
     favicon32x32: "assets/favicon-32x32.png"
     apple_touch_icon: "assets/apple-touch-icon.png"
     safari_pinned_tab: "assets/mstile-150x150.png"
+
+#redirects:
+#- from: /**
+#  status: 404
+#  to: 404.html
     
 #  label:
 #    text: "WallBreakerNO4"
