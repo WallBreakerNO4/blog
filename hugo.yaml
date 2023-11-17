@@ -1,18 +1,18 @@
-baseURL: 'https://blog.wall-breaker-no4.xyz/'
-languageCode: zh-cn
+baseURL: "https://blog.wall-breaker-no4.xyz/"
+languageCode: zh-CN
 title: WallBreakerNO4的博客
 theme: PaperMod
 
 params:
   homeInfoParams:
-      Title: 你好，世界！
-      Content: 一个正在学习，但总想着打游戏的人
+    Title: 你好，世界！
+    Content: 一个正在学习，但总想着打游戏的人
 
   socialIcons: # optional
-      - name: "bilibili"
-        url: "https://space.bilibili.com/28978056"
-      - name: "github"
-        url: "https://github.com/wallBreakerNO4"
+    - name: "bilibili"
+      url: "https://space.bilibili.com/28978056"
+    - name: "github"
+      url: "https://github.com/wallBreakerNO4"
 
   ShowCodeCopyButtons: true
   defaultTheme: dark
@@ -23,12 +23,11 @@ params:
     apple_touch_icon: "assets/apple-touch-icon.png"
     safari_pinned_tab: "assets/mstile-150x150.png"
 
-#redirects:
-#- from: /**
-#  status: 404
-#  to: 404.html
-    
-#  label:
-#    text: "WallBreakerNO4"
-#    icon: static/WallBreakerNO4.JPG
-#    iconHeight: 35
+menu:
+  main:
+    - name: 朋友
+      url: /friends/
+      weight: 10
+    - name: 关于
+      url: /about/
+      weight: 20
