@@ -1,5 +1,5 @@
 baseURL: "https://blog.wall-breaker-no4.xyz/"
-languageCode: zh-CN
+languageCode: zh
 title: WallBreakerNO4的博客
 theme: PaperMod
 
@@ -15,6 +15,7 @@ params:
       url: "https://github.com/wallBreakerNO4"
 
   ShowCodeCopyButtons: true
+  ShowPostNavLinks: true
   defaultTheme: dark
   assets:
     favicon: "assets/favicon.ico"
