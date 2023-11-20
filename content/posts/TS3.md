@@ -1,7 +1,8 @@
 ---
-title: "TeamSpeak 3 客户端使用教程"
+title: TeamSpeak 3 客户端使用教程
 date: 2023-11-16T17:19:00Z
 draft: false
+author: WallBreakerNO4
 ---
 
 ## 0x00 | 前言 | 什么是 TeamSpeak 3？
