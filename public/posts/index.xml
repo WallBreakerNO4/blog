@@ -17,8 +17,8 @@
 域名 搭博客的第一步，自然是拥有一个属于自己的域名
 wall-breaker-no4.xyz 这个域名，是我在 18 岁生日时给自己购买的生日礼物。这个域名最初是在腾讯云上购买的，后面迁移到了 Cloudflare 上。主要目的是为了白嫖 CF 免费的 CDN，次要目的是规避国内建站所需要的实名和备案。
 框架 市面上主要的博客框架分为以下两大类：
-动态博客框架 WordPress Typecho &amp;hellip;&amp;hellip; 静态博客框架 Hexo Hugo &amp;hellip;&amp;hellip; 最开始，我计划参考经常访问的一个博客：P3TERX ZONE，并使用动态博客 Typecho 来搭建我的博客。 但我最后还是选用了静态 Hugo 来搭建我的博客，原因如下：
-在搭建难度上，静态博客相比动态博客更简单 我菜死了 静态博客可以靠 GitHub pages 之类的服务提供网站，比自己的机子可靠多了 Hugo 对 Markdown 的支持很好，可以把 Hugo 和 Obsidian 联动起来，方便写文章 我的朋友 @ECWU 和 @Steven53 都使用 Hugo 来搭建博客，有问题可以请教骚扰 部署和托管 由于我的域名在就在 Cloudflare 上，因此在网站托管提供商上，我选择了 Cloudflare Pages。 至于如何在 Cloudflare Pages 上托管 Hugo 站点可以参考官方文档
+动态博客框架 WordPress Typecho &amp;hellip;&amp;hellip; 静态博客框架 Hexo Hugo &amp;hellip;&amp;hellip; 最开始，我计划参考经常访问的一个博客：P3TERX ZONE，使用动态框架 Typecho 来搭建我的博客。 但我最后还是选用了静态框架 Hugo 来搭建我的博客，原因如下：
+在搭建难度上，静态博客相比动态博客更简单 我菜死了 静态博客可以靠 GitHub pages 之类的服务提供网站，可靠程度++ Hugo 对 Markdown 的支持很好，可以把 Hugo 和 Obsidian 联动起来，方便写文章 我的朋友 @ECWU 和 @Steven53 都使用 Hugo 来搭建博客，有问题可以请教骚扰 部署和托管 由于我的域名在就在 Cloudflare 上，因此在网站托管提供商上，我选择了 Cloudflare Pages。 至于如何在 Cloudflare Pages 上托管 Hugo 站点可以参考官方文档
 图床 图床可以选择图床提供商，或者自建图床。图床提供商有免费的也有付费的，如国外有 SM. MS，国内有七牛云 等。自建图床也可以使用各个厂商的对象存储来实现。但是最终我选择了 GitHub repository + Cloudflare Workers 来自建图床，原因如下：</description>
     </item>
     
