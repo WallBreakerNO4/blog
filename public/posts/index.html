@@ -111,6 +111,21 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2>在Ubuntu上安装zsh以及高亮、自动补全插件
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>记录一下如何在 Ubuntu 上安装 zsh，以及高亮、自动补全插件和自定义主题
+安装 zsh sudo apt install zsh git fonts-font-awesome 安装 Oh My Zsh Oh My Zsh will not make you a 10x developer… But you may feel like one!
+sh -c &#34;$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&#34; 安装插件和主题 语法高亮 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 自动补全 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 安装主题 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k 配置文件 打开 ~/.zshrc
+nano ~/.zshrc 把 ZSH_THEME 改成 powerlevel10k/powerlevel10k： 在 plugins 处加上 zsh-syntax-highlighting 和 zsh-autosuggestions（用空格隔开）： 配置代理 export https_proxy=http://192....</p>
+  </div>
+  <footer class="entry-footer"><span title='2023-11-22 00:00:00 +0000 UTC'>November 22, 2023</span>&nbsp;·&nbsp;WallBreakerNO4</footer>
+  <a class="entry-link" aria-label="post link to 在Ubuntu上安装zsh以及高亮、自动补全插件" href="https://blog.wall-breaker-no4.xyz/posts/ubuntu-zsh/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2>博客搭建过程记录
     </h2>
   </header>

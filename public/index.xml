@@ -6,7 +6,19 @@
     <description>Recent content on WallBreakerNO4的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Mon, 20 Nov 2023 15:46:00 +0000</lastBuildDate><atom:link href="https://blog.wall-breaker-no4.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 22 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.wall-breaker-no4.xyz/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>在Ubuntu上安装zsh以及高亮、自动补全插件</title>
+      <link>https://blog.wall-breaker-no4.xyz/posts/ubuntu-zsh/</link>
+      <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
+      
+      <guid>https://blog.wall-breaker-no4.xyz/posts/ubuntu-zsh/</guid>
+      <description>记录一下如何在 Ubuntu 上安装 zsh，以及高亮、自动补全插件和自定义主题
+安装 zsh sudo apt install zsh git fonts-font-awesome 安装 Oh My Zsh Oh My Zsh will not make you a 10x developer&amp;hellip; But you may feel like one!
+sh -c &amp;#34;$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&amp;#34; 安装插件和主题 语法高亮 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 自动补全 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 安装主题 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k 配置文件 打开 ~/.zshrc
+nano ~/.zshrc 把 ZSH_THEME 改成 powerlevel10k/powerlevel10k： 在 plugins 处加上 zsh-syntax-highlighting 和 zsh-autosuggestions（用空格隔开）： 配置代理 export https_proxy=http://192.</description>
+    </item>
+    
     <item>
       <title>博客搭建过程记录</title>
       <link>https://blog.wall-breaker-no4.xyz/posts/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/</link>
