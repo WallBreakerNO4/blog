@@ -64,3 +64,6 @@ source ~/.zshrc
 ## 总结
 
 配置 zsh 不难，基本上复制粘贴就行了
+
+## 参考
+https://itsfoss.com/zsh-ubuntu/

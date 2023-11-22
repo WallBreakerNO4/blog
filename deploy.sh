@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # 执行hugo -F命令
-hugo -F
+#hugo -F
 
 # 添加所有更改到Git仓库
 git add .
