@@ -12,6 +12,20 @@ params:
     Title: 你好，世界！
     Content: 一个正在学习，但总想着打游戏的人
 
+  #profileMode:
+  #  enabled: true
+  #  title: "你好，世界！" # optional default will be site title
+  #  subtitle: "一个正在学习，但总想着打游戏的人"
+  #  imageUrl: "https://image.wall-breaker-no4.xyz/WallBreakerNO4-1024px.png" # optional
+  #  imageTitle: "WallBreakerNO4" # optional
+  #  imageWidth: 120 # custom size
+  #  imageHeight: 120 # custom size
+  #  buttons:
+  #    - name: Archive
+  #      url: "/archive"
+  #    - name: Github
+  #      url: "https://github.com/"
+
   socialIcons: # optional
     - name: "bilibili"
       url: "https://space.bilibili.com/28978056"
@@ -19,6 +33,7 @@ params:
       url: "https://github.com/wallBreakerNO4"
 
   ShowCodeCopyButtons: true
+  ShowBreadCrumbs: true
   ShowPostNavLinks: true
   defaultTheme: dark
   assets:
@@ -36,3 +51,6 @@ menu:
     - name: 关于
       url: /about/
       weight: 20
+    - name: 存档
+      url: /archives
+      weight: 30

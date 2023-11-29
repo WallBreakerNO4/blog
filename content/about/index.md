@@ -1,6 +1,9 @@
 ---
 title: 关于我
+ShowBreadCrumbs: false
 ---
+
+{{< figure src="https://image.wall-breaker-no4.xyz/WallBreakerNO4-1024px.png" width="15%">}}
 
 ### _教育_
 
@@ -19,3 +22,4 @@ title: 关于我
 - 最伟大的快递员
 - 神之天平持有者
 - 提丰星上的走地鸡
+
