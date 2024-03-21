@@ -5,9 +5,11 @@ draft: false
 author: WallBreakerNO4
 ---
 
+> **重要：TeamSpeak 正在测试并推广 TeamSpeak 5，这篇文章是针对 TeamSpeak 3 所写，大部分能容可能已经过时，请自行分辨**
+
 ## 0x00 | 前言 | 什么是 TeamSpeak 3？
 
-TeamSpeak 3 （下文简称为 TeamSpeak 3）是一款开源的 VoIP（语音聊天）软件，其提供了免费的服务端与客户端。相比于其他我们常用的聊天软件，如国内常见的 `KOOK（原开黑啦）`和国外常见的 `Discord`，其最大的优点是其资源占用低。
+TeamSpeak 3 （下文简称为 TS3）是一款 VoIP（语音聊天）软件，其提供了免费的服务端与客户端。相比于其他我们常用的聊天软件，如国内常见的 `KOOK（原开黑啦）` 和国外常见的 `Discord`，其最大的优点是其资源占用低。
 
 如下图所见，在 `KOOK`、`Discord`、`Tim` 和 `TeamSpeak 3` 这四款语音软件中，TeamSpeak 3 对内存的占用是最低的，仅有 77.2MB。
 
