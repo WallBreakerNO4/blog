@@ -4,6 +4,7 @@ date: 2023-11-16T17:19:00Z
 draft: false
 author: WallBreakerNO4
 ---
+**TeamSpeak最新版为TS5，操作界面有很大的变化，这篇文章已经过时，仅供参考**
 
 > **重要：TeamSpeak 正在测试并推广 TeamSpeak 5，这篇文章是针对 TeamSpeak 3 所写，大部分能容可能已经过时，请自行分辨**
 
