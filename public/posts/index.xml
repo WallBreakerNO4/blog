@@ -2,45 +2,76 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
   <channel>
     <title>Posts on WallBreakerNO4的博客</title>
-    <link>https://blog.wall-breaker-no4.xyz/posts/</link>
+    <link>http://192.168.20.55:1313/posts/</link>
     <description>Recent content in Posts on WallBreakerNO4的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Wed, 22 Nov 2023 00:00:00 +0000</lastBuildDate><atom:link href="https://blog.wall-breaker-no4.xyz/posts/index.xml" rel="self" type="application/rss+xml" />
+    <lastBuildDate>Wed, 27 Mar 2024 20:13:00 +0000</lastBuildDate>
+    <atom:link href="http://192.168.20.55:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title></title>
+      <link>http://192.168.20.55:1313/posts/%E6%9C%AA%E5%91%BD%E5%90%8D/</link>
+      <pubDate>Wed, 27 Mar 2024 20:13:00 +0000</pubDate>
+      <guid>http://192.168.20.55:1313/posts/%E6%9C%AA%E5%91%BD%E5%90%8D/</guid>
+      <description>Phantun 一个轻量且快速的 UDP 到 TCP 混淆器。
+目录 Phantun 最新版本 概述 用法 1. 启用内核IP转发 2. 添加所需的防火墙规则 客户端 使用nftables 使用iptables 服务器 使用nftables 使用iptables 3. 以非root用户身份运行Phantun二进制文件（可选） 4. 启动Phantun守护进程 服务器 客户端 MTU开销 WireGuard的MTU计算 版本兼容性 文档 性能 未来计划 与udp2raw的比较 许可证 最新版本 v0.6.0
+概述 Phantun 是一个将 UDP 数据包混淆为 TCP 连接的项目。它旨在在最小的处理和封装开销下实现最大的性能。
+它通常用于 UDP 被阻塞/限速而 TCP 允许通过的环境中。
+Phantun 简单地将一系列 UDP 数据包转换为混淆的 TCP 数据包流。Phantun 使用的 TCP 堆栈设计用于通过大多数 L 3/L 4 有状态/无状态防火墙/NAT 设备。它将无法通过 L 7 代理。然而，这种方法的优点是，即使连接看起来像是来自防火墙/NAT 设备的 TCP 连接，也不会出现常见的 UDP over TCP 性能问题，比如重传和流量控制。底层 UDP 特性，如乱序传递，即使连接看起来像是来自防火墙/NAT 设备的 TCP 连接，也将完全保留。</description>
+    </item>
+    <item>
+      <title>使用 Tailscale &#43; WireGuard 组网</title>
+      <link>http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-&#43;-wireguard-%E7%BB%84%E7%BD%91/</link>
+      <pubDate>Wed, 27 Mar 2024 20:12:00 +0000</pubDate>
+      <guid>http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-&#43;-wireguard-%E7%BB%84%E7%BD%91/</guid>
+      <description>今年年初，我购入了属于自己的 NAS，并在将其作为 HomeLab All In Boom 搭建了许多服务。 部分自建的服务
+在宿舍的局域网内访问这些服务自然是十分方便的。但平常在校内上课时想访问 NAS 上的服务，就需要一番配置了。
+内网穿透 内网穿透主要有两种：公网 IP 中转 or 打洞直连。这两种方式各有其优缺点：
+公网 IP 中转： 优点：对网络环境（准确说是 NAT 类型）没有要求 缺点：需要公网 IP，如果宿舍没有公网 IP 的话则需要中转服务器 打洞直连： 优点：无需公网 IP 缺点：需要至少一个客户端有良好的 NAT 类型 会同职业寄术学院 UIC 一期宿舍内有三家运营商，分别是电信、移动和联通。其中联通是唯一一家同时提供 PPPoE 拨号和 IPv6 服务。我在搬到一期宿舍前还听说联通可以申请到公网 IP，因此选择了联通。然而现在联通也申请不到公网 IP 了，令人感慨。
+得出结论，警惕 @Steven 的电信诈骗
+在最开始，我选择了使用 WireGuard + 腾讯云轻量服务器作为中转来提供宿舍的内网穿透。这套方案最开始运作的很好，但用久了就暴露出了一些问题：</description>
+    </item>
+    <item>
+      <title>目前我使用的内网穿透方法</title>
+      <link>http://192.168.20.55:1313/posts/%E7%9B%AE%E5%89%8D%E6%88%91%E4%BD%BF%E7%94%A8%E7%9A%84%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%96%B9%E6%B3%95/</link>
+      <pubDate>Tue, 28 Nov 2023 09:32:00 +0000</pubDate>
+      <guid>http://192.168.20.55:1313/posts/%E7%9B%AE%E5%89%8D%E6%88%91%E4%BD%BF%E7%94%A8%E7%9A%84%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%96%B9%E6%B3%95/</guid>
+      <description>前天晚上我在折腾我的 OpenWRT 路由器时不小心把路由表 boom 了，炸到访问不到管理网页的程度。由于那是一台硬路由，我不得不重新安装系统并且重新配置。 那天晚上我宿舍的网络状态
+在重新配置的过程中，除了让人心碎的多拨和分流配置，最让我头疼的就是配置我用来内网穿透的 WireGuard。因此我决定记录一下我目前使用的内网穿透服务，即 WireGuard，以防未来我需要重新配置时又需要头脑风暴。
+哦，选择！ 目前市面上有许多的内网穿透服务，大体上可以分为两类：VPN 和 P2P 打洞。这两者的优缺点如下：
+VPN 较为稳定 需要至少一个公网 IP 速度上限取决于公网 IP 设备 P2P 打洞 无需公网 IP 要访问的内网需要有良好的 NAT 类型 我的选择 对于这两种类型的解决方案，我分别尝试了 WireGuard（VPN）和 ZeroTier（P2P）。最终基于以下理由，我选择了 WireGuard：
+我有一台拥有公网 IP 的服务器 在校内我不需要高速访问宿舍内（如看视频）我可以回宿舍看 由于不需要打洞，相比ZeroTier建立连接所需的时间极短，几乎无感 同样由于不需要打洞，在更换网络环境时（如自习室到教室）时不需要重新建立连接 搭建 WireGuard </description>
+    </item>
     <item>
       <title>在Ubuntu上安装zsh以及高亮、自动补全插件</title>
-      <link>https://blog.wall-breaker-no4.xyz/posts/ubuntu-zsh/</link>
+      <link>http://192.168.20.55:1313/posts/ubuntu-zsh/</link>
       <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
-      
-      <guid>https://blog.wall-breaker-no4.xyz/posts/ubuntu-zsh/</guid>
+      <guid>http://192.168.20.55:1313/posts/ubuntu-zsh/</guid>
       <description>记录一下如何在 Ubuntu 上安装 zsh，以及高亮、自动补全插件和自定义主题
 安装 zsh sudo apt install zsh git fonts-font-awesome 安装 Oh My Zsh Oh My Zsh will not make you a 10x developer&amp;hellip; But you may feel like one!
 sh -c &amp;#34;$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&amp;#34; 安装插件和主题 语法高亮 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 自动补全 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 安装主题 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k 配置文件 打开 ~/.zshrc
 nano ~/.zshrc 把 ZSH_THEME 改成 powerlevel10k/powerlevel10k： 在 plugins 处加上 zsh-syntax-highlighting 和 zsh-autosuggestions（用空格隔开）： 配置代理 export https_proxy=http://192.</description>
     </item>
-    
     <item>
       <title>博客搭建过程记录</title>
-      <link>https://blog.wall-breaker-no4.xyz/posts/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/</link>
+      <link>http://192.168.20.55:1313/posts/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/</link>
       <pubDate>Mon, 20 Nov 2023 15:46:00 +0000</pubDate>
-      
-      <guid>https://blog.wall-breaker-no4.xyz/posts/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/</guid>
+      <guid>http://192.168.20.55:1313/posts/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/</guid>
       <description>前言 本人是一位计算机专业的学生，而学习计算机往往需要在网上自学很多内容。在网上搜索资料的的时候，抛开臭名昭著的 CSDN 虽然里面还是有一些不错的内容，最常见到的就是各式各样的个人博客。这些个人博客往往质量都相当高，我从这些博客中学习到了相当多的知识，收获颇丰。秉着“前人栽树，后人乘凉”的思想，在享受了那么多人栽的树后，我也决定搭个自己的博客。不求能做到栽树的水平，能够记录自己的学习经历，也已经很满意了。
 域名 搭博客的第一步，自然是拥有一个属于自己的域名
 wall-breaker-no4.xyz 这个域名，是我在 18 岁生日时给自己购买的生日礼物。这个域名最初是在腾讯云上购买的，后面迁移到了 Cloudflare 上。主要目的是为了白嫖 CF 免费的 CDN，次要目的是规避国内建站所需要的实名和备案。
 框架 市面上主要的博客框架分为以下两大类：
 动态博客框架 WordPress Typecho &amp;hellip;&amp;hellip; 静态博客框架 Hexo Hugo &amp;hellip;&amp;hellip; 最开始，我计划参考经常访问的一个博客：P3TERX ZONE，使用动态框架 Typecho 来搭建我的博客。 但我最后还是选用了静态框架 Hugo 来搭建我的博客，原因如下：
-在搭建难度上，静态博客相比动态博客更简单 我菜死了 静态博客可以靠 GitHub pages 之类的服务提供网站，可靠程度++ Hugo 对 Markdown 的支持很好，可以把 Hugo 和 Obsidian 联动起来，方便写文章 我的朋友 @ECWU 和 @Steven53 都使用 Hugo 来搭建博客，有问题可以请教骚扰 部署和托管 由于我的域名在就在 Cloudflare 上，因此在网站托管提供商上，我选择了 Cloudflare Pages。 至于如何在 Cloudflare Pages 上托管 Hugo 站点可以参考官方文档
+在搭建难度上，静态博客相比动态博客更简单 我菜死了 静态博客可以靠 GitHub pages 之类的服务提供网站，可靠程度++ Hugo 对 Markdown 的支持很好，可以把 Hugo 和 Obsidian 联动起来，方便写文章 我的朋友 @ECWU 和 @Steven53 都使用 Hugo 来搭建博客，有问题可以请教 骚扰 部署和托管 由于我的域名在就在 Cloudflare 上，因此在网站托管提供商上，我选择了 Cloudflare Pages。 至于如何在 Cloudflare Pages 上托管 Hugo 站点可以参考官方文档
 图床 图床可以选择图床提供商，或者自建图床。图床提供商有免费的也有付费的，如国外有 SM. MS，国内有七牛云 等。自建图床也可以使用各个厂商的对象存储来实现。但是最终我选择了 GitHub repository + Cloudflare Workers 来自建图床，原因如下：</description>
     </item>
-    
     <item>
       <title>TeamSpeak 3 客户端使用教程</title>
-      <link>https://blog.wall-breaker-no4.xyz/posts/ts3/</link>
+      <link>http://192.168.20.55:1313/posts/ts3/</link>
       <pubDate>Thu, 16 Nov 2023 17:19:00 +0000</pubDate>
-      
-      <guid>https://blog.wall-breaker-no4.xyz/posts/ts3/</guid>
-      <description>0x00 | 前言 | 什么是 TeamSpeak 3？ TeamSpeak 3 （下文简称为 TeamSpeak 3）是一款开源的 VoIP（语音聊天）软件，其提供了免费的服务端与客户端。相比于其他我们常用的聊天软件，如国内常见的 KOOK（原开黑啦）和国外常见的 Discord，其最大的优点是其资源占用低。
+      <guid>http://192.168.20.55:1313/posts/ts3/</guid>
+      <description>TeamSpeak 最新版为 TeamSpeak 5，操作界面有很大的变化，这篇文章已经过时，仅供参考
+0x00 | 前言 | 什么是 TeamSpeak 3？ TeamSpeak 3 （下文简称为 TS3）是一款 VoIP（语音聊天）软件，其提供了免费的服务端与客户端。相比于其他我们常用的聊天软件，如国内常见的 KOOK（原开黑啦） 和国外常见的 Discord，其最大的优点是其资源占用低。
 如下图所见，在 KOOK、Discord、Tim 和 TeamSpeak 3 这四款语音软件中，TeamSpeak 3 对内存的占用是最低的，仅有 77.2MB。
 因此，在电脑性能相对不高，内存容量相对不富裕时，TeamSpeak 3 无疑是绝佳的选择。
 0x01 | 下载 重要：此教程中所需的所有文件我都在国内的网盘中提供了一份，若你无法访问官网的话可以退而求其次从我的网盘链接中下载
@@ -53,19 +84,14 @@ wall-breaker-no4.xyz 这个域名，是我在 18 岁生日时给自己购买的�
 选择用户资料保存位置，就按照软件推荐的默认选择Save in user own files就行了。
 选择是否安装游戏内显示（显示谁在说话），这边选择不安装。
 安装完毕。
-0x03 | 第一次启动 打开 TeamSpeak 3 客户端，第一次打开会弹出一个又臭又长的 EULA（用户协议）。滑到最底下并选择 I accept。
-第一次打开时会弹出一个广告界面，将其关闭。
-第一次打开时TeamSpeak 3 客户端会让我们登陆。由于是使用我自己搭建的服务器而不是官方的服务器，因此这里选择Continue without logging in。</description>
+0x03 | 第一次启动 打开 TeamSpeak 3 客户端，第一次打开会弹出一个又臭又长的 EULA（用户协议）。滑到最底下并选择 I accept。</description>
     </item>
-    
     <item>
       <title>Hello World</title>
-      <link>https://blog.wall-breaker-no4.xyz/posts/my-first-post/</link>
+      <link>http://192.168.20.55:1313/posts/my-first-post/</link>
       <pubDate>Thu, 16 Nov 2023 14:19:00 +0000</pubDate>
-      
-      <guid>https://blog.wall-breaker-no4.xyz/posts/my-first-post/</guid>
+      <guid>http://192.168.20.55:1313/posts/my-first-post/</guid>
       <description>第一篇博客总得是 Hello World 吧</description>
     </item>
-    
   </channel>
 </rss>

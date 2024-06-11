@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="noindex, nofollow">
+<title>WallBreakerNO4的博客</title>
+<meta name="keywords" content="">
+<meta name="description" content="Phantun 一个轻量且快速的 UDP 到 TCP 混淆器。
+目录 Phantun 最新版本 概述 用法 1. 启用内核IP转发 2. 添加所需的防火墙规则 客户端 使用nftables 使用iptables 服务器 使用nftables 使用iptables 3. 以非root用户身份运行Phantun二进制文件（可选） 4. 启动Phantun守护进程 服务器 客户端 MTU开销 WireGuard的MTU计算 版本兼容性 文档 性能 未来计划 与udp2raw的比较 许可证 最新版本 v0.6.0
+概述 Phantun 是一个将 UDP 数据包混淆为 TCP 连接的项目。它旨在在最小的处理和封装开销下实现最大的性能。
+它通常用于 UDP 被阻塞/限速而 TCP 允许通过的环境中。
+Phantun 简单地将一系列 UDP 数据包转换为混淆的 TCP 数据包流。Phantun 使用的 TCP 堆栈设计用于通过大多数 L 3/L 4 有状态/无状态防火墙/NAT 设备。它将无法通过 L 7 代理。然而，这种方法的优点是，即使连接看起来像是来自防火墙/NAT 设备的 TCP 连接，也不会出现常见的 UDP over TCP 性能问题，比如重传和流量控制。底层 UDP 特性，如乱序传递，即使连接看起来像是来自防火墙/NAT 设备的 TCP 连接，也将完全保留。">
+<meta name="author" content="WallBreakerNO4">
+<link rel="canonical" href="http://192.168.20.55:1313/posts/%E6%9C%AA%E5%91%BD%E5%90%8D/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://192.168.20.55:1313/assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://192.168.20.55:1313/assets/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://192.168.20.55:1313/assets/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://192.168.20.55:1313/assets/apple-touch-icon.png">
+<link rel="mask-icon" href="http://192.168.20.55:1313/assets/mstile-150x150.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://192.168.20.55:1313/posts/%E6%9C%AA%E5%91%BD%E5%90%8D/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript>
+</head>
+
+<body class=" dark" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://192.168.20.55:1313/" accesskey="h" title="WallBreakerNO4的博客 (Alt + H)">WallBreakerNO4的博客</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://192.168.20.55:1313/friends/" title="朋友">
+                    <span>朋友</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://192.168.20.55:1313/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://192.168.20.55:1313/archives" title="存档">
+                    <span>存档</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://192.168.20.55:1313/">Home</a>&nbsp;»&nbsp;<a href="http://192.168.20.55:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      
+      <span class="entry-hint" title="Draft">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
+          <path
+            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+        </svg>
+      </span>
+    </h1>
+    <div class="post-meta"><span title='2024-03-27 20:13:00 +0000 UTC'>March 27, 2024</span>&nbsp;·&nbsp;WallBreakerNO4
+
+</div>
+  </header> 
+  <div class="post-content"><h1 id="phantun">Phantun<a hidden class="anchor" aria-hidden="true" href="#phantun">#</a></h1>
+<p>一个轻量且快速的 UDP 到 TCP 混淆器。</p>
+<p><img loading="lazy" src="https://img.shields.io/github/actions/workflow/status/dndx/phantun/rust.yml" alt="GitHub Workflow Status"  />
+
+<img loading="lazy" src="https://img.shields.io/docsrs/fake-tcp" alt="docs.rs"  />
+</p>
+<h1 id="目录">目录<a hidden class="anchor" aria-hidden="true" href="#目录">#</a></h1>
+<ul>
+<li><a href="#phantun">Phantun</a></li>
+<li><a href="#latest-release">最新版本</a></li>
+<li><a href="#overview">概述</a></li>
+<li><a href="#usage">用法</a>
+<ul>
+<li><a href="#1-enable-kernel-ip-forwarding">1. 启用内核IP转发</a></li>
+<li><a href="#2-add-required-firewall-rules">2. 添加所需的防火墙规则</a>
+<ul>
+<li><a href="#client">客户端</a>
+<ul>
+<li><a href="#using-nftables">使用nftables</a></li>
+<li><a href="#using-iptables">使用iptables</a></li>
+</ul>
+</li>
+<li><a href="#server">服务器</a>
+<ul>
+<li><a href="#using-nftables">使用nftables</a></li>
+<li><a href="#using-iptables">使用iptables</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#3-run-phantun-binaries-as-non-root-optional">3. 以非root用户身份运行Phantun二进制文件（可选）</a></li>
+<li><a href="#4-start-phantun-daemon">4. 启动Phantun守护进程</a>
+<ul>
+<li><a href="#server">服务器</a></li>
+<li><a href="#client">客户端</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#mtu-overhead">MTU开销</a>
+<ul>
+<li><a href="#mtu-calculation-for-wireguard">WireGuard的MTU计算</a></li>
+</ul>
+</li>
+<li><a href="#version-compatibility">版本兼容性</a></li>
+<li><a href="#documentations">文档</a></li>
+<li><a href="#performance">性能</a></li>
+<li><a href="#future-plans">未来计划</a></li>
+<li><a href="#compariation-to-udp2raw">与udp2raw的比较</a></li>
+<li><a href="#license">许可证</a></li>
+</ul>
+<h1 id="最新版本">最新版本<a hidden class="anchor" aria-hidden="true" href="#最新版本">#</a></h1>
+<p><a href="https://github.com/dndx/phantun/releases/tag/v0.6.0">v0.6.0</a></p>
+<h1 id="概述">概述<a hidden class="anchor" aria-hidden="true" href="#概述">#</a></h1>
+<p>Phantun 是一个将 UDP 数据包混淆为 TCP 连接的项目。它旨在在最小的处理和封装开销下实现最大的性能。</p>
+<p>它通常用于 UDP 被阻塞/限速而 TCP 允许通过的环境中。</p>
+<p>Phantun 简单地将一系列 UDP 数据包转换为混淆的 TCP 数据包流。Phantun 使用的 TCP 堆栈设计用于通过大多数 L 3/L 4 有状态/无状态防火墙/NAT 设备。它将<strong>无法</strong>通过 L 7 代理。然而，这种方法的优点是，即使连接看起来像是来自防火墙/NAT 设备的 TCP 连接，也不会出现常见的 UDP over TCP 性能问题，比如重传和流量控制。底层 UDP 特性，如乱序传递，即使连接看起来像是来自防火墙/NAT 设备的 TCP 连接，也将完全保留。</p>
+<p>Phantun 的意思是 Phantom TUN，因为它是一种将 UDP 流量混淆为 TCP 数据包的混淆器。</p>
+<p>Phantun 使用 100%安全的 Rust 编写。它经过了大量优化，以在多核系统上良好扩展，并且在快速连接上没有任何问题。有关基准测试结果，请参阅<a href="#performance">性能</a>部分。</p>
+<p><img loading="lazy" src="images/phantun-vs-udp2raw-benchmark-result.png" alt="Phantun基准测试结果"  />
+
+<img loading="lazy" src="images/traffic-flow.png" alt="流量流动图"  />
+</p>
+<h1 id="用法">用法<a hidden class="anchor" aria-hidden="true" href="#用法">#</a></h1>
+<p>在下面的示例中，假设<strong>Phantun 服务器</strong>在端口 <code>4567</code> 上侦听传入的 Phantun 客户端连接（服务器的 <code>--local</code> 选项），并将 UDP 数据包转发到 UDP 服务器 <code>127.0.0.1:1234</code>（服务器的 <code>--remote</code> 选项）。</p>
+<p>还假设<strong>Phantun 客户端</strong>在 <code>127.0.0.1:1234</code> 上侦听传入的 UDP 数据包（客户端的 <code>--local</code> 选项），并连接到 Phantun 服务器 <code>10.0.0.1:4567</code>（客户端的 <code>--remote</code> 选项）。</p>
+<p>Phantun 为客户端和服务器创建 TUN 接口。对于<strong>客户端</strong>，Phantun 默认将 IP 地址分配为 <code>192.168.200.2</code> 和 <code>fcc8::2</code>。对于<strong>服务器</strong>，它默认分配为 <code>192.168.201.2</code> 和 <code>fcc9::2</code>。因此，您的内核必须启用 IPv 4/IPv 6 转发，并为您的物理网卡地址和 Phantun 的 Tun 接口地址设置适当的 iptables/nftables 规则以进行 NAT。</p>
+<p>您可以自定义 Phantun 创建的 Tun 接口的名称和分配的地址。请使用 <code>-h</code> 选项运行可执行文件以查看如何更改它们。</p>
+<p>另一种帮助理解这个网络拓扑的方法（请参阅上面的图表以了解此拓扑的示例）：</p>
+<p>Phantun 客户端就像一个位于路由器后面的具有私有 IP 地址（<code>192.168.200.2</code> / <code>fcc8::2</code>）的机器。为了让它访问互联网，您需要在其流量离开网卡之前对私有 IP 地址进行 SNAT。</p>
+<p>Phantun 服务器就像一个位于路由器后面的具有私有 IP 地址（<code>192.168.201.2</code> / <code>fcc9::2</code>）的服务器。为了从互联网访问它，您需要在路由器上的监听端口上进行 <code>DNAT</code>，并将目标 IP 地址更改为服务器用于接收传入连接的地址。</p>
+<p>在这些情况下，运行 Phantun 的机器/iptables 充当允许 Phantun 使用其私有 IP 地址与外部通信的“路由器”。</p>
+<p>从 Phantun v 0.4.1 开始，TCP 和 UDP 双方都完全支持 IPv 6。要指定 IPv 6 地址，请使用以下格式：<code>[::1]:1234</code> 与命令行选项一起使用。也支持解析 AAAA 记录。请使用 <code>-h</code> 运行程序以查看有关如何控制 IPv6行为的详细选项。</p>
+<p><a href="#table-of-contents">返回目录</a></p>
+<h2 id="1-启用内核-ip-转发">1. 启用内核 IP 转发<a hidden class="anchor" aria-hidden="true" href="#1-启用内核-ip-转发">#</a></h2>
+<p>编辑 <code>/etc/sysctl.conf</code>，添加 <code>net.ipv4.ip_forward=1</code>，然后运行 <code>sudo sysctl -p /etc/sysctl.conf</code>。</p>
+<!-- raw HTML omitted -->
+<p>还需要设置<code>net. Ipv 6. Conf. All. Forwarding=1</code>。</p>
+<!-- raw HTML omitted -->
+<p><a href="#table-of-contents">返回目录</a></p>
+<h2 id="2-添加所需的防火墙规则">2. 添加所需的防火墙规则<a hidden class="anchor" aria-hidden="true" href="#2-添加所需的防火墙规则">#</a></h2>
+<h3 id="客户端">客户端<a hidden class="anchor" aria-hidden="true" href="#客户端">#</a></h3>
+<p>客户端只需在物理接口上启用 SNAT，将 Phantun 的地址转换为可以在物理网络上使用的地址。这可以通过简单的 masquerade 实现。</p>
+<p>注意：将 <code>eth0</code> 更改为实际的物理接口名称</p>
+<p><a href="#table-of-contents">返回目录</a></p>
+<h4 id="使用-nftables">使用 nftables<a hidden class="anchor" aria-hidden="true" href="#使用-nftables">#</a></h4>
+<pre tabindex="0"><code>table inet nat {
+    chain postrouting {
+        type nat hook postrouting priority srcnat; policy accept;
+        iifname tun0 oif eth0 masquerade
+    }
+}
+</code></pre><p>注意：上述规则使用 <code>inet</code> 作为表族类型，因此与 IPv 4 和 IPv 6 使用兼容。</p>
+<p><a href="#table-of-contents">返回目录</a></p>
+<h4 id="使用-iptables">使用 iptables<a hidden class="anchor" aria-hidden="true" href="#使用-iptables">#</a></h4>
+<pre tabindex="0"><code>iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+ip6tables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+</code></pre><p><a href="#table-of-contents">返回目录</a></p>
+<h3 id="服务器">服务器<a hidden class="anchor" aria-hidden="true" href="#服务器">#</a></h3>
+<p>服务器需要将 TCP 监听端口的流量转发到 Phantun 的 TUN 接口地址。</p>
+<p>注意：将 <code>eth0</code> 更改为实际的物理接口名称，<code>4567</code> 更改为 Phantun 服务器使用的实际 TCP 端口号</p>
+<p><a href="#table-of-contents">返回目录</a></p>
+<h4 id="使用-nftables-1">使用 nftables<a hidden class="anchor" aria-hidden="true" href="#使用-nftables-1">#</a></h4>
+<pre tabindex="0"><code>table inet nat {
+    chain prerouting {
+        type nat hook prerouting priority dstnat; policy accept;
+        iif eth0 tcp dport 4567 dnat ip to 192.168.201.2
+        iif eth0 tcp dport 4567 dnat ip6 to fcc9::2
+    }
+}
+</code></pre><p><a href="#table-of-contents">返回目录</a></p>
+<h4 id="使用-iptables-1">使用 iptables<a hidden class="anchor" aria-hidden="true" href="#使用-iptables-1">#</a></h4>
+<pre tabindex="0"><code>iptables -t nat -A PREROUTING -p tcp -i eth0 --dport 4567 -j DNAT --to-destination 192.168.201.2
+ip6tables -t nat -A PREROUTING -p tcp -i eth0 --dport 4567 -j DNAT --to-destination fcc9::2
+</code></pre><p><a href="#table-of-contents">返回目录</a></p>
+<h2 id="3-以非-root-用户身份运行-phantun-二进制文件可选">3. 以非 root 用户身份运行 Phantun 二进制文件（可选）<a hidden class="anchor" aria-hidden="true" href="#3-以非-root-用户身份运行-phantun-二进制文件可选">#</a></h2>
+<p>不建议将面向网络的应用程序作为 root 用户运行。Phantun 可以以非 root 用户的身份运行，并具有 <code>cap_net_admin</code> 功能。</p>
+<pre tabindex="0"><code>sudo setcap cap_net_admin=+pe phantun_server
+sudo setcap cap_net_admin=+pe phantun_client
+</code></pre><p><a href="#table-of-contents">返回目录</a></p>
+<h2 id="4-启动-phantun-守护进程">4. 启动 Phantun 守护进程<a hidden class="anchor" aria-hidden="true" href="#4-启动-phantun-守护进程">#</a></h2>
+<p><strong>注意：</strong> 使用 <code>-h</code> 选项运行 Phantun 可执行文件以查看完整的详细选项。</p>
+<p><a href="#table-of-contents">返回目录</a></p>
+<h3 id="服务器-1">服务器<a hidden class="anchor" aria-hidden="true" href="#服务器-1">#</a></h3>
+<p>注意：<code>4567</code> 是 Phantun 应该侦听的 TCP 端口，必须与上面指定的 DNAT 规则相对应。<code>127.0.0.1:1234</code> 是用于新连接的 UDP 服务器的地址。</p>
+<pre tabindex="0"><code>RUST_LOG=info /usr/local/bin/phantun_server --local 4567 --remote 127.0.0.1:1234
+</code></pre><p>或者使用主机名和 <code>--remote</code>：</p>
+<pre tabindex="0"><code>RUST_LOG=info /usr/local/bin/phantun_server --local 4567 --remote example.com:1234
+</code></pre><p>注意：服务器默认为 Tun 接口分配 IPv 4 和 IPv 6 私有地址。如果您不希望使用 IPv 6，可以简单地跳过上面创建的 IPv 6 DNAT 规则，并且 Tun 接口上存在 IPv 6 地址不应对服务器产生任何副作用。</p>
+<p><a href="#table-of-contents">返回目录</a></p>
+<h3 id="客户端-1">客户端<a hidden class="anchor" aria-hidden="true" href="#客户端-1">#</a></h3>
+<p>注意：<code>127.0.0.1:1234</code> 是 Phantun 应该侦听的 UDP 地址和端口。<code>10.0.0.1:4567</code> 是 Phantun 服务器的地址。</p>
+<pre tabindex="0"><code>RUST_LOG=info /usr/local/bin/phantun_client --local 127.0.0.1:1234 --remote 10.0.0.1:4567
+</code></pre><p>或者使用主机名和 <code>--remote</code>：</p>
+<pre tabindex="0"><code>RUST_LOG=info /usr/local/bin/phantun_client --local 127.0.0.1:1234 --remote example.com:4567
+</code></pre><!-- raw HTML omitted -->
+<pre tabindex="0"><code>RUST_LOG=info /usr/local/bin/phantun_client --local 127.0.0. 1:1234 --remote [fdxx:: 1234]:4567
+</code></pre><p>也支持带有 AAAA 记录的域名。</p>
+<!-- raw HTML omitted -->
+<p><a href="#table-of-contents">返回目录</a></p>
+<h1 id="mtu-开销">MTU 开销<a hidden class="anchor" aria-hidden="true" href="#mtu-开销">#</a></h1>
+<p>Phantun 旨在将隧道开销最小化。与普通 UDP 数据包相比，其开销如下（以下以 IPv 4为例）：</p>
+<p><strong>标准 UDP 数据包：</strong> <code>20字节IP头 + 8字节UDP头 = 28字节</code></p>
+<p><strong>混淆数据包：</strong> <code>20字节IP头 + 20字节TCP头 = 40字节</code></p>
+<p>请注意，Phantun 除了 IP 和 TCP 头之外，不会添加任何其他头部，以便通过有状态数据包检查！</p>
+<p>Phantun 的额外开销：<code>12字节</code>。换句话说，使用 Phantun 时，UDP 数据包的可用有效负载减少了 12 字节。这是进行此类混淆时可能的最小开销。</p>
+<p><img loading="lazy" src="images/packet-headers.png" alt="数据包头部图表"  />
+</p>
+<p><a href="#table-of-contents">返回目录</a></p>
+<h2 id="wireguard-的-mtu-计算">WireGuard 的 MTU 计算<a hidden class="anchor" aria-hidden="true" href="#wireguard-的-mtu-计算">#</a></h2>
+<p>对于将 Phantun 用于隧道 <a href="https://www.wireguard.com">WireGuard®</a> 的 UDP 数据包的人来说，以下是计算正确 MTU 的一些建议：</p>
+<pre tabindex="0"><code>WireGuard MTU = 接口MTU - IPv4头（20字节）- TCP头（20字节）- WireGuard开销（32字节）
+</code></pre><p>或者</p>
+<pre tabindex="0"><code>WireGuard MTU = 接口MTU - IPv6头（40字节）- TCP头（20字节）- WireGuard开销（32字节）
+</code></pre><p>例如，对于具有 1500 字节 MTU 的以太网接口，WireGuard 接口 MTU 应设置为：</p>
+<p>IPv 4：<code>1500 - 20 - 20 - 32 = 1428字节</code>
+IPv 6：<code>1500 - 40 - 20 - 32 = 1408字节</code></p>
+<p>结果的 Phantun TCP 数据包将是 1500 字节，不超过 1500 的接口 MTU。请注意，强烈建议在 WireGuard 隧道的两端使用相同的接口 MTU，否则可能会出现意外的数据包丢失，并且这些问题通常很难进行故障排除。</p>
+<p><a href="#table-of-contents">返回目录</a></p>
+<h1 id="版本兼容性">版本兼容性<a hidden class="anchor" aria-hidden="true" href="#版本兼容性">#</a></h1>
+<p>虽然 TCP 堆栈相对稳定，但一般期望是在两端运行相同的 Phantun Server/Client 的次要版本，以确保最大的兼容性。</p>
+<p><a href="#table-of-contents">返回目录</a></p>
+<h1 id="文档">文档<a hidden class="anchor" aria-hidden="true" href="#文档">#</a></h1>
+<p>对于希望在自己的项目中使用 <code>fake-tcp</code> 库的用户，请参阅该库的文档：
+<a href="https://docs.rs/fake-tcp">https://docs.rs/fake-tcp</a>。</p>
+<p><a href="#table-of-contents">返回目录</a></p>
+<h1 id="性能">性能<a hidden class="anchor" aria-hidden="true" href="#性能">#</a></h1>
+<p>性能在具有 4 个 vCPU 和 5 Gb/s 网络接口的 2 个 AWS <code>t4g.xlarge</code> 实例上进行了测试，通过 LAN 将 <code>iperf3</code> 的 UDP 流重定向到 Phantun/udp 2 raw 隧道，MTU 已调整以避免分段。</p>
+<p>使用了 Phantun <code>v0.3.2</code> 和 udp 2 raw_arm_asm_aes <code>20200818.0</code>。这些是截至 2022 年 4 月的两个项目的最新发布版本。</p>
+<p>测试命令：<code>iperf3 -c &lt;IP&gt; -p &lt;PORT&gt; -R -u -l 1400 -b 1000m -t 30 -P 5</code></p>
+<table>
+<thead>
+<tr>
+<th>模式</th>
+<th>发送速度</th>
+<th>接收速度</th>
+<th>总体 CPU 使用率</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>直接连接（1 个流）</td>
+<td>3.00 Gbits/sec</td>
+<td>2.37 Gbits/sec</td>
+<td>25%（1 个核心 100%）</td>
+</tr>
+<tr>
+<td>Phantun（1 个流）</td>
+<td>1.30 Gbits/sec</td>
+<td>1.20 Gbits/sec</td>
+<td>60%（1 个核心 100%，3 个核心 50%）</td>
+</tr>
+<tr>
+<td>udp 2 raw（<code>cipher-mode=none</code> <code>auth-mode=none</code> <code>disable-anti-replay</code>）（1 个流）</td>
+<td>1.30 Gbits/sec</td>
+<td>715 Mbits/sec</td>
+<td>40%（1 个核心 100%，1 个核心 50%，2 个核心空闲）</td>
+</tr>
+<tr>
+<td>直接连接（5 个流）</td>
+<td>5.00 Gbits/sec</td>
+<td>3.64 Gbits/sec</td>
+<td>25%（1 个核心 100%）</td>
+</tr>
+<tr>
+<td>Phantun（5 个流）</td>
+<td>5.00 Gbits/sec</td>
+<td>2.38 Gbits/sec</td>
+<td>95%（所有核心都被利用）</td>
+</tr>
+<tr>
+<td>udp 2 raw（<code>cipher-mode=none</code> <code>auth-mode=none</code> <code>disable-anti-replay</code>）（5 个流）</td>
+<td>5.00 Gbits/sec</td>
+<td>770 Mbits/sec</td>
+<td>50%（2 个核心 100%）</td>
+</tr>
+</tbody>
+</table>
+<p>有关 Phantun 中使用的一些技术的写作：<a href="https://idndx.com/writing-highly-efficient-udp-server-in-rust/">在Rust中编写高效的UDP服务器</a>。</p>
+<p><a href="#table-of-contents">返回目录</a></p>
+<h1 id="未来计划">未来计划<a hidden class="anchor" aria-hidden="true" href="#未来计划">#</a></h1>
+<ul>
+<li>将单个 UDP 流负载均衡到多个 TCP 流</li>
+<li>集成测试</li>
+<li>自动插入/删除所需的防火墙规则</li>
+</ul>
+<p><a href="#table-of-contents">返回目录</a></p>
+<h1 id="与-udp-2-raw-的比较">与 udp 2 raw 的比较<a hidden class="anchor" aria-hidden="true" href="#与-udp-2-raw-的比较">#</a></h1>
+<p><a href="https://github.com/wangyu-/udp2raw-tunnel">udp2raw</a> 是另一个由 <a href="https://github.com/wangyu-">@wangyu-</a> 开发的流行项目，与 Phantun 可以做的事情非常相似。实际上，我从 udp 2 raw 中汲取了 Phantun 的灵感。开发 Phantun 的最大原因是在运行 udp 2 raw 时性能不佳（特别是在树莓派等多核系统上）。然而，目标从未是与 udp 2 raw 一样具备完整的功能，而只支持最常见的用例。特别值得注意的是，不支持 UDP over ICMP 和 UDP over UDP 模式，也没有防重放和加密支持。这样做的好处是整体性能更好，MTU 开销更小，因为 TCP 负载中没有额外的头部。</p>
+<p>下面是这两者之间的快速比较，以帮助您选择：</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th style="text-align:center">Phantun</th>
+<th style="text-align:center">udp 2 raw</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>UDP over FakeTCP 混淆</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td>UDP over ICMP 混淆</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td>UDP over UDP 混淆</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td>多线程</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">❌</td>
+</tr>
+<tr>
+<td>吞吐量</td>
+<td style="text-align:center">更好</td>
+<td style="text-align:center">良好</td>
+</tr>
+<tr>
+<td>第 3 层模式</td>
+<td style="text-align:center">TUN 接口</td>
+<td style="text-align:center">原始套接字 + BPF</td>
+</tr>
+<tr>
+<td>隧道 MTU 开销</td>
+<td style="text-align:center">12 字节</td>
+<td style="text-align:center">44 字节</td>
+</tr>
+<tr>
+<td>每个 UDP 连接使用单独的 TCP 连接</td>
+<td style="text-align:center">客户端/服务器</td>
+<td style="text-align:center">仅服务器</td>
+</tr>
+<tr>
+<td>防重放，加密</td>
+<td style="text-align:center">❌</td>
+<td style="text-align:center">✅</td>
+</tr>
+<tr>
+<td>IPv 6</td>
+<td style="text-align:center">✅</td>
+<td style="text-align:center">✅</td>
+</tr>
+</tbody>
+</table>
+<p><a href="#table-of-contents">返回目录</a></p>
+<h1 id="许可证">许可证<a hidden class="anchor" aria-hidden="true" href="#许可证">#</a></h1>
+<p>版权所有 2021-2022 Datong Sun ( <a href="mailto:dndx@idndx.com">dndx@idndx.com</a> )</p>
+<p>根据 Apache 许可证 2.0 版或 MIT 许可证，根据您的选择进行许可。
+项目中的文件可能不得复制、修改或分发，除非符合这些条款。</p>
+<p><a href="#table-of-contents">返回目录</a></p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+<nav class="paginav">
+  <a class="next" href="http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-&#43;-wireguard-%E7%BB%84%E7%BD%91/">
+    <span class="title">Next »</span>
+    <br>
+    <span>使用 Tailscale &#43; WireGuard 组网</span>
+  </a>
+</nav>
+
+  </footer>
+</article>
+    </main>
+    
+<footer class="footer">
+    <span>&copy; 2024 <a href="http://192.168.20.55:1313/">WallBreakerNO4的博客</a></span>
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>
