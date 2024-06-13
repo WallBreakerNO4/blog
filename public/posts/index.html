@@ -94,7 +94,7 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
-    <h2 class="entry-hint-parent">
+    <h2 class="entry-hint-parent">在Ubuntu上安装zsh以及高亮、自动补全插件
       <span class="entry-hint" title="Draft">
         <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" fill="currentColor">
           <path
@@ -104,14 +104,54 @@
     </h2>
   </header>
   <div class="entry-content">
-    <p>Phantun 一个轻量且快速的 UDP 到 TCP 混淆器。
-目录 Phantun 最新版本 概述 用法 1. 启用内核IP转发 2. 添加所需的防火墙规则 客户端 使用nftables 使用iptables 服务器 使用nftables 使用iptables 3. 以非root用户身份运行Phantun二进制文件（可选） 4. 启动Phantun守护进程 服务器 客户端 MTU开销 WireGuard的MTU计算 版本兼容性 文档 性能 未来计划 与udp2raw的比较 许可证 最新版本 v0.6.0
-概述 Phantun 是一个将 UDP 数据包混淆为 TCP 连接的项目。它旨在在最小的处理和封装开销下实现最大的性能。
-它通常用于 UDP 被阻塞/限速而 TCP 允许通过的环境中。
-Phantun 简单地将一系列 UDP 数据包转换为混淆的 TCP 数据包流。Phantun 使用的 TCP 堆栈设计用于通过大多数 L 3/L 4 有状态/无状态防火墙/NAT 设备。它将无法通过 L 7 代理。然而，这种方法的优点是，即使连接看起来像是来自防火墙/NAT 设备的 TCP 连接，也不会出现常见的 UDP over TCP 性能问题，比如重传和流量控制。底层 UDP 特性，如乱序传递，即使连接看起来像是来自防火墙/NAT 设备的 TCP 连接，也将完全保留。...</p>
+    <p>记录一下如何在 Ubuntu 上安装 zsh，以及高亮、自动补全插件和自定义主题
+安装 zsh sudo apt install zsh git fonts-font-awesome 安装 Oh My Zsh Oh My Zsh will not make you a 10x developer… But you may feel like one!
+sh -c &#34;$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&#34; 安装插件和主题 语法高亮 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 自动补全 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 安装主题 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k 配置文件 打开 ~/.zshrc
+nano ~/.zshrc 把 ZSH_THEME 改成 powerlevel10k/powerlevel10k： 在 plugins 处加上 zsh-syntax-highlighting 和 zsh-autosuggestions（用空格隔开）： 配置代理 export https_proxy=http://192....</p>
   </div>
-  <footer class="entry-footer"><span title='2024-03-27 20:13:00 +0000 UTC'>March 27, 2024</span>&nbsp;·&nbsp;WallBreakerNO4</footer>
-  <a class="entry-link" aria-label="post link to " href="http://192.168.20.55:1313/posts/%E6%9C%AA%E5%91%BD%E5%90%8D/"></a>
+  <footer class="entry-footer"><span title='2024-06-13 15:15:00 +0000 UTC'>June 13, 2024</span>&nbsp;·&nbsp;WallBreakerNO4</footer>
+  <a class="entry-link" aria-label="post link to 在Ubuntu上安装zsh以及高亮、自动补全插件" href="http://192.168.20.55:1313/posts/ubuntu-zsh/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">如何为Docker添加代理
+      <span class="entry-hint" title="Draft">
+        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" fill="currentColor">
+          <path
+            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+        </svg>
+      </span>
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>前段时间帮朋友开我的世界服务器，计划使用 docker 来管理服务器。但是在安装的时候发现镜像死活拉不下来。查阅资料发现 docker daemon 是可以配置成通过代理来拉取镜像的模式，结合最近各个镜像站都撤掉了 docker hub 的镜像，我觉得今后大陆的机子想使用 docker，配置代理来访问 docker hub 或许是最合适的方式。
+为 docker daemon 配置代理 首先创建配置文件
+sudo mkdir -p /etc/systemd/system/docker.service.d sudo nano /etc/systemd/system/docker.service.d/proxy.conf 在配置文件内填入以下内容
+[Service] Environment=&#34;HTTP_PROXY=http://[proxy server]:[port]/&#34; Environment=&#34;HTTPS_PROXY=http://[proxy server]:[port]/&#34; Environment=&#34;NO_PROXY=localhost, 127.0.0.1, ::1, .local, .localdomain, 192.168.0.0/16, 172.16.0.0/12, 10.0.0.0/8, 100.64.0.0/10&#34; 我们需要重启 docker daemon 服务来使配置生效
+sudo systemctl daemon-reload sudo systemctl restart docker </p>
+  </div>
+  <footer class="entry-footer"><span title='2024-06-13 15:15:00 +0000 UTC'>June 13, 2024</span>&nbsp;·&nbsp;WallBreakerNO4</footer>
+  <a class="entry-link" aria-label="post link to 如何为Docker添加代理" href="http://192.168.20.55:1313/posts/docker%E4%BB%A3%E7%90%86/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
+    <h2 class="entry-hint-parent">Windows下生成并使用密钥登陆Linux
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>生成密钥 命令：$ ssh-keygen -t rsa 生成的私钥以 .pub 结尾，内容类似如下：
+ssh-rsa AAAAB3NzaC1yc...D4J6QDEnOtzMCIk= zhifa@Wall-PC 上传密钥 登陆 Linux，打开 ~/.ssh/authorized_keys ，并把公钥文件中的内容复制到其中
+设置权限 使用 chmod 将 authorized_keys 文件权限设置为 664
+调整 openSSH 选项 以 root 身份打开 /etc/ssh/sshd_config ，更改以下几项：
+PermitRootLogin no PubkeyAuthentication yes PasswordAuthentication no 重启 sshd 服务
+$ sudo systemctl restart sshd.service
+Windows 设置 打开 .ssh/ 文件夹下的 config 文件，添加类似如下内容
+Host tx #别名 User wall #登陆用户名 Hostname wall-breaker-no4.xyz #服务器地址 PreferredAuthentications publickey #使用密钥登陆 IdentityFile C:\Users\zhifa\.ssh\tx_rsa #私钥地址 </p>
+  </div>
+  <footer class="entry-footer"><span title='2024-06-12 00:00:00 +0000 UTC'>June 12, 2024</span>&nbsp;·&nbsp;WallBreakerNO4</footer>
+  <a class="entry-link" aria-label="post link to Windows下生成并使用密钥登陆Linux" href="http://192.168.20.55:1313/posts/windows%E4%B8%8B%E7%94%9F%E6%88%90%E5%B9%B6%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86linux/"></a>
 </article>
 
 <article class="post-entry"> 
@@ -157,21 +197,6 @@ VPN 较为稳定 需要至少一个公网 IP 速度上限取决于公网 IP 设�
   </div>
   <footer class="entry-footer"><span title='2023-11-28 09:32:00 +0000 UTC'>November 28, 2023</span>&nbsp;·&nbsp;WallBreakerNO4</footer>
   <a class="entry-link" aria-label="post link to 目前我使用的内网穿透方法" href="http://192.168.20.55:1313/posts/%E7%9B%AE%E5%89%8D%E6%88%91%E4%BD%BF%E7%94%A8%E7%9A%84%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%96%B9%E6%B3%95/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">在Ubuntu上安装zsh以及高亮、自动补全插件
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>记录一下如何在 Ubuntu 上安装 zsh，以及高亮、自动补全插件和自定义主题
-安装 zsh sudo apt install zsh git fonts-font-awesome 安装 Oh My Zsh Oh My Zsh will not make you a 10x developer… But you may feel like one!
-sh -c &#34;$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&#34; 安装插件和主题 语法高亮 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 自动补全 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 安装主题 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k 配置文件 打开 ~/.zshrc
-nano ~/.zshrc 把 ZSH_THEME 改成 powerlevel10k/powerlevel10k： 在 plugins 处加上 zsh-syntax-highlighting 和 zsh-autosuggestions（用空格隔开）： 配置代理 export https_proxy=http://192....</p>
-  </div>
-  <footer class="entry-footer"><span title='2023-11-22 00:00:00 +0000 UTC'>November 22, 2023</span>&nbsp;·&nbsp;WallBreakerNO4</footer>
-  <a class="entry-link" aria-label="post link to 在Ubuntu上安装zsh以及高亮、自动补全插件" href="http://192.168.20.55:1313/posts/ubuntu-zsh/"></a>
 </article>
 
 <article class="post-entry"> 

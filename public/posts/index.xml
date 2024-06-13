@@ -6,18 +6,42 @@
     <description>Recent content in Posts on WallBreakerNO4的博客</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>zh</language>
-    <lastBuildDate>Wed, 27 Mar 2024 20:13:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 13 Jun 2024 15:15:00 +0000</lastBuildDate>
     <atom:link href="http://192.168.20.55:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title></title>
-      <link>http://192.168.20.55:1313/posts/%E6%9C%AA%E5%91%BD%E5%90%8D/</link>
-      <pubDate>Wed, 27 Mar 2024 20:13:00 +0000</pubDate>
-      <guid>http://192.168.20.55:1313/posts/%E6%9C%AA%E5%91%BD%E5%90%8D/</guid>
-      <description>Phantun 一个轻量且快速的 UDP 到 TCP 混淆器。
-目录 Phantun 最新版本 概述 用法 1. 启用内核IP转发 2. 添加所需的防火墙规则 客户端 使用nftables 使用iptables 服务器 使用nftables 使用iptables 3. 以非root用户身份运行Phantun二进制文件（可选） 4. 启动Phantun守护进程 服务器 客户端 MTU开销 WireGuard的MTU计算 版本兼容性 文档 性能 未来计划 与udp2raw的比较 许可证 最新版本 v0.6.0
-概述 Phantun 是一个将 UDP 数据包混淆为 TCP 连接的项目。它旨在在最小的处理和封装开销下实现最大的性能。
-它通常用于 UDP 被阻塞/限速而 TCP 允许通过的环境中。
-Phantun 简单地将一系列 UDP 数据包转换为混淆的 TCP 数据包流。Phantun 使用的 TCP 堆栈设计用于通过大多数 L 3/L 4 有状态/无状态防火墙/NAT 设备。它将无法通过 L 7 代理。然而，这种方法的优点是，即使连接看起来像是来自防火墙/NAT 设备的 TCP 连接，也不会出现常见的 UDP over TCP 性能问题，比如重传和流量控制。底层 UDP 特性，如乱序传递，即使连接看起来像是来自防火墙/NAT 设备的 TCP 连接，也将完全保留。</description>
+      <title>在Ubuntu上安装zsh以及高亮、自动补全插件</title>
+      <link>http://192.168.20.55:1313/posts/ubuntu-zsh/</link>
+      <pubDate>Thu, 13 Jun 2024 15:15:00 +0000</pubDate>
+      <guid>http://192.168.20.55:1313/posts/ubuntu-zsh/</guid>
+      <description>记录一下如何在 Ubuntu 上安装 zsh，以及高亮、自动补全插件和自定义主题
+安装 zsh sudo apt install zsh git fonts-font-awesome 安装 Oh My Zsh Oh My Zsh will not make you a 10x developer&amp;hellip; But you may feel like one!
+sh -c &amp;#34;$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&amp;#34; 安装插件和主题 语法高亮 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 自动补全 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 安装主题 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k 配置文件 打开 ~/.zshrc
+nano ~/.zshrc 把 ZSH_THEME 改成 powerlevel10k/powerlevel10k： 在 plugins 处加上 zsh-syntax-highlighting 和 zsh-autosuggestions（用空格隔开）： 配置代理 export https_proxy=http://192.</description>
+    </item>
+    <item>
+      <title>如何为Docker添加代理</title>
+      <link>http://192.168.20.55:1313/posts/docker%E4%BB%A3%E7%90%86/</link>
+      <pubDate>Thu, 13 Jun 2024 15:15:00 +0000</pubDate>
+      <guid>http://192.168.20.55:1313/posts/docker%E4%BB%A3%E7%90%86/</guid>
+      <description>前段时间帮朋友开我的世界服务器，计划使用 docker 来管理服务器。但是在安装的时候发现镜像死活拉不下来。查阅资料发现 docker daemon 是可以配置成通过代理来拉取镜像的模式，结合最近各个镜像站都撤掉了 docker hub 的镜像，我觉得今后大陆的机子想使用 docker，配置代理来访问 docker hub 或许是最合适的方式。
+为 docker daemon 配置代理 首先创建配置文件
+sudo mkdir -p /etc/systemd/system/docker.service.d sudo nano /etc/systemd/system/docker.service.d/proxy.conf 在配置文件内填入以下内容
+[Service] Environment=&amp;#34;HTTP_PROXY=http://[proxy server]:[port]/&amp;#34; Environment=&amp;#34;HTTPS_PROXY=http://[proxy server]:[port]/&amp;#34; Environment=&amp;#34;NO_PROXY=localhost, 127.0.0.1, ::1, .local, .localdomain, 192.168.0.0/16, 172.16.0.0/12, 10.0.0.0/8, 100.64.0.0/10&amp;#34; 我们需要重启 docker daemon 服务来使配置生效
+sudo systemctl daemon-reload sudo systemctl restart docker </description>
+    </item>
+    <item>
+      <title>Windows下生成并使用密钥登陆Linux</title>
+      <link>http://192.168.20.55:1313/posts/windows%E4%B8%8B%E7%94%9F%E6%88%90%E5%B9%B6%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86linux/</link>
+      <pubDate>Wed, 12 Jun 2024 00:00:00 +0000</pubDate>
+      <guid>http://192.168.20.55:1313/posts/windows%E4%B8%8B%E7%94%9F%E6%88%90%E5%B9%B6%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86linux/</guid>
+      <description>生成密钥 命令：$ ssh-keygen -t rsa 生成的私钥以 .pub 结尾，内容类似如下：
+ssh-rsa AAAAB3NzaC1yc...D4J6QDEnOtzMCIk= zhifa@Wall-PC 上传密钥 登陆 Linux，打开 ~/.ssh/authorized_keys ，并把公钥文件中的内容复制到其中
+设置权限 使用 chmod 将 authorized_keys 文件权限设置为 664
+调整 openSSH 选项 以 root 身份打开 /etc/ssh/sshd_config ，更改以下几项：
+PermitRootLogin no PubkeyAuthentication yes PasswordAuthentication no 重启 sshd 服务
+$ sudo systemctl restart sshd.service
+Windows 设置 打开 .ssh/ 文件夹下的 config 文件，添加类似如下内容
+Host tx #别名 User wall #登陆用户名 Hostname wall-breaker-no4.xyz #服务器地址 PreferredAuthentications publickey #使用密钥登陆 IdentityFile C:\Users\zhifa\.ssh\tx_rsa #私钥地址 </description>
     </item>
     <item>
       <title>使用 Tailscale &#43; WireGuard 组网</title>
@@ -41,16 +65,6 @@ Phantun 简单地将一系列 UDP 数据包转换为混淆的 TCP 数据包流�
 哦，选择！ 目前市面上有许多的内网穿透服务，大体上可以分为两类：VPN 和 P2P 打洞。这两者的优缺点如下：
 VPN 较为稳定 需要至少一个公网 IP 速度上限取决于公网 IP 设备 P2P 打洞 无需公网 IP 要访问的内网需要有良好的 NAT 类型 我的选择 对于这两种类型的解决方案，我分别尝试了 WireGuard（VPN）和 ZeroTier（P2P）。最终基于以下理由，我选择了 WireGuard：
 我有一台拥有公网 IP 的服务器 在校内我不需要高速访问宿舍内（如看视频）我可以回宿舍看 由于不需要打洞，相比ZeroTier建立连接所需的时间极短，几乎无感 同样由于不需要打洞，在更换网络环境时（如自习室到教室）时不需要重新建立连接 搭建 WireGuard </description>
-    </item>
-    <item>
-      <title>在Ubuntu上安装zsh以及高亮、自动补全插件</title>
-      <link>http://192.168.20.55:1313/posts/ubuntu-zsh/</link>
-      <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>http://192.168.20.55:1313/posts/ubuntu-zsh/</guid>
-      <description>记录一下如何在 Ubuntu 上安装 zsh，以及高亮、自动补全插件和自定义主题
-安装 zsh sudo apt install zsh git fonts-font-awesome 安装 Oh My Zsh Oh My Zsh will not make you a 10x developer&amp;hellip; But you may feel like one!
-sh -c &amp;#34;$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&amp;#34; 安装插件和主题 语法高亮 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 自动补全 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 安装主题 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k 配置文件 打开 ~/.zshrc
-nano ~/.zshrc 把 ZSH_THEME 改成 powerlevel10k/powerlevel10k： 在 plugins 处加上 zsh-syntax-highlighting 和 zsh-autosuggestions（用空格隔开）： 配置代理 export https_proxy=http://192.</description>
     </item>
     <item>
       <title>博客搭建过程记录</title>
