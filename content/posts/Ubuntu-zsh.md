@@ -1,7 +1,7 @@
 ---
 title: 在Ubuntu上安装zsh以及高亮、自动补全插件
 date: 2023-11-22T00:00:00Z
-draft: "true"
+draft: "false"
 author: WallBreakerNO4
 ---
 记录一下如何在 Ubuntu 上安装 zsh，以及高亮、自动补全插件和自定义主题
