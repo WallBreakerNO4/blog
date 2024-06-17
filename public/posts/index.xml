@@ -9,25 +9,17 @@
     <lastBuildDate>Thu, 13 Jun 2024 15:15:00 +0000</lastBuildDate>
     <atom:link href="http://192.168.20.55:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title>在Ubuntu上安装zsh以及高亮、自动补全插件</title>
-      <link>http://192.168.20.55:1313/posts/ubuntu-zsh/</link>
-      <pubDate>Thu, 13 Jun 2024 15:15:00 +0000</pubDate>
-      <guid>http://192.168.20.55:1313/posts/ubuntu-zsh/</guid>
-      <description>记录一下如何在 Ubuntu 上安装 zsh，以及高亮、自动补全插件和自定义主题
-安装 zsh sudo apt install zsh git fonts-font-awesome 安装 Oh My Zsh Oh My Zsh will not make you a 10x developer&amp;hellip; But you may feel like one!
-sh -c &amp;#34;$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&amp;#34; 安装插件和主题 语法高亮 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 自动补全 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 安装主题 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k 配置文件 打开 ~/.zshrc
-nano ~/.zshrc 把 ZSH_THEME 改成 powerlevel10k/powerlevel10k： 在 plugins 处加上 zsh-syntax-highlighting 和 zsh-autosuggestions（用空格隔开）： 配置代理 export https_proxy=http://192.</description>
-    </item>
-    <item>
       <title>如何为Docker添加代理</title>
       <link>http://192.168.20.55:1313/posts/docker%E4%BB%A3%E7%90%86/</link>
       <pubDate>Thu, 13 Jun 2024 15:15:00 +0000</pubDate>
       <guid>http://192.168.20.55:1313/posts/docker%E4%BB%A3%E7%90%86/</guid>
-      <description>前段时间帮朋友开我的世界服务器，计划使用 docker 来管理服务器。但是在安装的时候发现镜像死活拉不下来。查阅资料发现 docker daemon 是可以配置成通过代理来拉取镜像的模式，结合最近各个镜像站都撤掉了 docker hub 的镜像，我觉得今后大陆的机子想使用 docker，配置代理来访问 docker hub 或许是最合适的方式。
-为 docker daemon 配置代理 首先创建配置文件
-sudo mkdir -p /etc/systemd/system/docker.service.d sudo nano /etc/systemd/system/docker.service.d/proxy.conf 在配置文件内填入以下内容
-[Service] Environment=&amp;#34;HTTP_PROXY=http://[proxy server]:[port]/&amp;#34; Environment=&amp;#34;HTTPS_PROXY=http://[proxy server]:[port]/&amp;#34; Environment=&amp;#34;NO_PROXY=localhost, 127.0.0.1, ::1, .local, .localdomain, 192.168.0.0/16, 172.16.0.0/12, 10.0.0.0/8, 100.64.0.0/10&amp;#34; 我们需要重启 docker daemon 服务来使配置生效
-sudo systemctl daemon-reload sudo systemctl restart docker </description>
+      <description>前段时间，我帮朋友搭建了一个我的世界服务器，并计划使用 Docker 来管理它。然而，在安装过程中，我发现镜像总是无法拉取。经过查阅资料，我发现可以通过配置 Docker Daemon 使用代理来拉取镜像。考虑到最近各个镜像站都撤掉了 Docker Hub 的镜像，我认为配置代理来访问 Docker Hub 可能是未来在大陆使用 Docker 的最佳方式。
+为 Docker Daemon 配置代理 首先，创建配置文件：
+sudo mkdir -p /etc/systemd/system/docker.service.d sudo nano /etc/systemd/system/docker.service.d/proxy.conf 在配置文件中填入以下内容：
+[Service] Environment=&amp;#34;HTTP_PROXY=http://[proxy server IP]:[port]/&amp;#34; Environment=&amp;#34;HTTPS_PROXY=http://[proxy server IP]:[port]/&amp;#34; Environment=&amp;#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.168.0.0/16,172.16.0.0/12,10.0.0.0/8,100.64.0.0/10&amp;#34; 请将 [proxy server]:[port] 替换成代理服务的 IP 和端口
+我们需要重启 Docker Daemon 服务以使配置生效：
+sudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以正常的拉取镜像
+参考 Docker Daemon Systemd 配置文档</description>
     </item>
     <item>
       <title>Windows下生成并使用密钥登陆Linux</title>
@@ -44,16 +36,17 @@ Windows 设置 打开 .ssh/ 文件夹下的 config 文件，添加类似如下�
 Host tx #别名 User wall #登陆用户名 Hostname wall-breaker-no4.xyz #服务器地址 PreferredAuthentications publickey #使用密钥登陆 IdentityFile C:\Users\zhifa\.ssh\tx_rsa #私钥地址 </description>
     </item>
     <item>
-      <title>使用 Tailscale &#43; WireGuard 组网</title>
-      <link>http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-&#43;-wireguard-%E7%BB%84%E7%BD%91/</link>
+      <title>使用 Tailscale 组网</title>
+      <link>http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-%E7%BB%84%E7%BD%91/</link>
       <pubDate>Wed, 27 Mar 2024 20:12:00 +0000</pubDate>
-      <guid>http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-&#43;-wireguard-%E7%BB%84%E7%BD%91/</guid>
+      <guid>http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-%E7%BB%84%E7%BD%91/</guid>
       <description>今年年初，我购入了属于自己的 NAS，并在将其作为 HomeLab All In Boom 搭建了许多服务。 部分自建的服务
 在宿舍的局域网内访问这些服务自然是十分方便的。但平常在校内上课时想访问 NAS 上的服务，就需要一番配置了。
 内网穿透 内网穿透主要有两种：公网 IP 中转 or 打洞直连。这两种方式各有其优缺点：
 公网 IP 中转： 优点：对网络环境（准确说是 NAT 类型）没有要求 缺点：需要公网 IP，如果宿舍没有公网 IP 的话则需要中转服务器 打洞直连： 优点：无需公网 IP 缺点：需要至少一个客户端有良好的 NAT 类型 会同职业寄术学院 UIC 一期宿舍内有三家运营商，分别是电信、移动和联通。其中联通是唯一一家同时提供 PPPoE 拨号和 IPv6 服务。我在搬到一期宿舍前还听说联通可以申请到公网 IP，因此选择了联通。然而现在联通也申请不到公网 IP 了，令人感慨。
 得出结论，警惕 @Steven 的电信诈骗
-在最开始，我选择了使用 WireGuard + 腾讯云轻量服务器作为中转来提供宿舍的内网穿透。这套方案最开始运作的很好，但用久了就暴露出了一些问题：</description>
+在最开始，我选择了使用 WireGuard + 腾讯云轻量服务器作为中转来提供宿舍的内网穿透。这套方案最开始运作的很好，但用久了就暴露出了一些问题：
+配置复杂：WireGuard 的配置文件比较复杂，而在多个设备上管理配置文件简直不是人干的事。这个问题在添加新设备到 WireGuard 网络时尤为突出 带宽低：由于网络的所有流量都需要经过腾讯云中转，而国内服务器的的带宽懂的都懂 因此，我最后选择的方案为使用 Tailscale 组网 </description>
     </item>
     <item>
       <title>目前我使用的内网穿透方法</title>
@@ -65,6 +58,16 @@ Host tx #别名 User wall #登陆用户名 Hostname wall-breaker-no4.xyz #服务
 哦，选择！ 目前市面上有许多的内网穿透服务，大体上可以分为两类：VPN 和 P2P 打洞。这两者的优缺点如下：
 VPN 较为稳定 需要至少一个公网 IP 速度上限取决于公网 IP 设备 P2P 打洞 无需公网 IP 要访问的内网需要有良好的 NAT 类型 我的选择 对于这两种类型的解决方案，我分别尝试了 WireGuard（VPN）和 ZeroTier（P2P）。最终基于以下理由，我选择了 WireGuard：
 我有一台拥有公网 IP 的服务器 在校内我不需要高速访问宿舍内（如看视频）我可以回宿舍看 由于不需要打洞，相比ZeroTier建立连接所需的时间极短，几乎无感 同样由于不需要打洞，在更换网络环境时（如自习室到教室）时不需要重新建立连接 搭建 WireGuard </description>
+    </item>
+    <item>
+      <title>在Ubuntu上安装zsh以及高亮、自动补全插件</title>
+      <link>http://192.168.20.55:1313/posts/ubuntu-zsh/</link>
+      <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
+      <guid>http://192.168.20.55:1313/posts/ubuntu-zsh/</guid>
+      <description>记录一下如何在 Ubuntu 上安装 zsh，以及高亮、自动补全插件和自定义主题
+安装 zsh sudo apt install zsh git fonts-font-awesome 安装 Oh My Zsh Oh My Zsh will not make you a 10x developer&amp;hellip; But you may feel like one!
+sh -c &amp;#34;$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&amp;#34; 安装插件和主题 语法高亮 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 自动补全 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 安装主题 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k 配置文件 打开 ~/.zshrc
+nano ~/.zshrc 把 ZSH_THEME 改成 powerlevel10k/powerlevel10k： 在 plugins 处加上 zsh-syntax-highlighting 和 zsh-autosuggestions（用空格隔开）： 配置代理 export https_proxy=http://[proxy server IP]:[port];export http_proxy=http://[proxy server IP]:[port];export all_proxy=socks5://[proxy server IP]:[port] export no_proxy=&amp;#34;localhost, 127.</description>
     </item>
     <item>
       <title>博客搭建过程记录</title>

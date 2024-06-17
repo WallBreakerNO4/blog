@@ -10,7 +10,8 @@
 <meta name="description" content="前段时间，我帮朋友搭建了一个我的世界服务器，并计划使用 Docker 来管理它。然而，在安装过程中，我发现镜像总是无法拉取。经过查阅资料，我发现可以通过配置 Docker Daemon 使用代理来拉取镜像。考虑到最近各个镜像站都撤掉了 Docker Hub 的镜像，我认为配置代理来访问 Docker Hub 可能是未来在大陆使用 Docker 的最佳方式。
 为 Docker Daemon 配置代理 首先，创建配置文件：
 sudo mkdir -p /etc/systemd/system/docker.service.d sudo nano /etc/systemd/system/docker.service.d/proxy.conf 在配置文件中填入以下内容：
-[Service] Environment=&#34;HTTP_PROXY=http://[proxy server]:[port]/&#34; Environment=&#34;HTTPS_PROXY=http://[proxy server]:[port]/&#34; Environment=&#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.168.0.0/16,172.16.0.0/12,10.0.0.0/8,100.64.0.0/10&#34; 我们需要重启 Docker Daemon 服务以使配置生效：
+[Service] Environment=&#34;HTTP_PROXY=http://[proxy server IP]:[port]/&#34; Environment=&#34;HTTPS_PROXY=http://[proxy server IP]:[port]/&#34; Environment=&#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.168.0.0/16,172.16.0.0/12,10.0.0.0/8,100.64.0.0/10&#34; 请将 [proxy server]:[port] 替换成代理服务的 IP 和端口
+我们需要重启 Docker Daemon 服务以使配置生效：
 sudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以正常的拉取镜像
 参考 Docker Daemon Systemd 配置文档">
 <meta name="author" content="WallBreakerNO4">
@@ -96,12 +97,6 @@ sudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以
     <div class="breadcrumbs"><a href="http://192.168.20.55:1313/">Home</a>&nbsp;»&nbsp;<a href="http://192.168.20.55:1313/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       如何为Docker添加代理
-      <span class="entry-hint" title="Draft">
-        <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
-          <path
-            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
-        </svg>
-      </span>
     </h1>
     <div class="post-meta"><span title='2024-06-13 15:15:00 +0000 UTC'>June 13, 2024</span>&nbsp;·&nbsp;WallBreakerNO4
 
@@ -114,10 +109,13 @@ sudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以
 </span></span><span style="display:flex;"><span>sudo nano /etc/systemd/system/docker.service.d/proxy.conf
 </span></span></code></pre></div><p>在配置文件中填入以下内容：</p>
 <pre tabindex="0"><code class="language-conf" data-lang="conf">[Service]
-Environment=&#34;HTTP_PROXY=http://[proxy server]:[port]/&#34;
-Environment=&#34;HTTPS_PROXY=http://[proxy server]:[port]/&#34;
+Environment=&#34;HTTP_PROXY=http://[proxy server IP]:[port]/&#34;
+Environment=&#34;HTTPS_PROXY=http://[proxy server IP]:[port]/&#34;
 Environment=&#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.168.0.0/16,172.16.0.0/12,10.0.0.0/8,100.64.0.0/10&#34;
-</code></pre><p>我们需要重启 Docker Daemon 服务以使配置生效：</p>
+</code></pre><blockquote>
+<p>请将 <code>[proxy server]:[port]</code> 替换成代理服务的 IP 和端口</p>
+</blockquote>
+<p>我们需要重启 Docker Daemon 服务以使配置生效：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo systemctl daemon-reload
 </span></span><span style="display:flex;"><span>sudo systemctl restart docker
 </span></span></code></pre></div><p>现在，已经可以正常的拉取镜像</p>
