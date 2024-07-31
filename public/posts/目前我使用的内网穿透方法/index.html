@@ -11,7 +11,7 @@
 在重新配置的过程中，除了让人心碎的多拨和分流配置，最让我头疼的就是配置我用来内网穿透的 WireGuard。因此我决定记录一下我目前使用的内网穿透服务，即 WireGuard，以防未来我需要重新配置时又需要头脑风暴。
 哦，选择！ 目前市面上有许多的内网穿透服务，大体上可以分为两类：VPN 和 P2P 打洞。这两者的优缺点如下：
 VPN 较为稳定 需要至少一个公网 IP 速度上限取决于公网 IP 设备 P2P 打洞 无需公网 IP 要访问的内网需要有良好的 NAT 类型 我的选择 对于这两种类型的解决方案，我分别尝试了 WireGuard（VPN）和 ZeroTier（P2P）。最终基于以下理由，我选择了 WireGuard：
-我有一台拥有公网 IP 的服务器 在校内我不需要高速访问宿舍内（如看视频）我可以回宿舍看 由于不需要打洞，相比ZeroTier建立连接所需的时间极短，几乎无感 同样由于不需要打洞，在更换网络环境时（如自习室到教室）时不需要重新建立连接 搭建 WireGuard ">
+我有一台拥有公网 IP 的服务器 在校内我不需要高速访问宿舍内（如看视频）~~~我可以回宿舍看~~~ 由于不需要打洞，相比ZeroTier建立连接所需的时间极短，几乎无感 同样由于不需要打洞，在更换网络环境时（如自习室到教室）时不需要重新建立连接 搭建 WireGuard ">
 <meta name="author" content="WallBreakerNO4">
 <link rel="canonical" href="http://192.168.20.55:1313/posts/%E7%9B%AE%E5%89%8D%E6%88%91%E4%BD%BF%E7%94%A8%E7%9A%84%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%96%B9%E6%B3%95/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
@@ -134,7 +134,7 @@ VPN 较为稳定 需要至少一个公网 IP 速度上限取决于公网 IP 设�
 <p>对于这两种类型的解决方案，我分别尝试了 WireGuard（VPN）和 ZeroTier（P2P）。最终基于以下理由，我选择了 WireGuard：</p>
 <ul>
 <li>我有一台拥有公网 IP 的服务器</li>
-<li>在校内我不需要高速访问宿舍内（如看视频）<del><del>我可以回宿舍看</del></del></li>
+<li>在校内我不需要高速访问宿舍内（如看视频）~~~我可以回宿舍看~~~</li>
 <li>由于不需要打洞，相比ZeroTier建立连接所需的时间极短，几乎无感</li>
 <li>同样由于不需要打洞，在更换网络环境时（如自习室到教室）时不需要重新建立连接</li>
 </ul>
@@ -147,10 +147,10 @@ VPN 较为稳定 需要至少一个公网 IP 速度上限取决于公网 IP 设�
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-%E7%BB%84%E7%BD%91/">
+  <a class="prev" href="http://192.168.20.55:1313/posts/windows%E4%B8%8B%E7%94%9F%E6%88%90%E5%B9%B6%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86linux/">
     <span class="title">« Prev</span>
     <br>
-    <span>使用 Tailscale 组网</span>
+    <span>Windows下生成并使用密钥登陆Linux</span>
   </a>
   <a class="next" href="http://192.168.20.55:1313/posts/ubuntu-zsh/">
     <span class="title">Next »</span>
@@ -164,7 +164,8 @@ VPN 较为稳定 需要至少一个公网 IP 速度上限取决于公网 IP 设�
     </main>
     
 <footer class="footer">
-    <span>&copy; 2024 <a href="http://192.168.20.55:1313/">WallBreakerNO4的博客</a></span>
+        <span>&copy; 2024 <a href="http://192.168.20.55:1313/">WallBreakerNO4的博客</a></span> · 
+
     <span>
         Powered by
         <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &

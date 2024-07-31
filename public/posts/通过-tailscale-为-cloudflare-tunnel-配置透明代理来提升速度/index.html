@@ -5,14 +5,16 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>在Ubuntu上安装zsh以及高亮、自动补全插件 | WallBreakerNO4的博客</title>
+<title>通过 Tailscale 为 CloudFlare Tunnel 配置代透明理来提升速度 | WallBreakerNO4的博客</title>
 <meta name="keywords" content="">
-<meta name="description" content="记录一下如何在 Ubuntu 上安装 zsh，以及高亮、自动补全插件和自定义主题
-安装 zsh sudo apt install zsh git fonts-font-awesome 安装 Oh My Zsh Oh My Zsh will not make you a 10x developer&hellip; But you may feel like one!
-sh -c &#34;$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&#34; 安装插件和主题 语法高亮 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 自动补全 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 安装主题 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k 配置文件 打开 ~/.zshrc
-nano ~/.zshrc 把 ZSH_THEME 改成 powerlevel10k/powerlevel10k： 在 plugins 处加上 zsh-syntax-highlighting 和 zsh-autosuggestions（用空格隔开）： 或者直接使用这条 sed 命令一键替换：">
+<meta name="description" content="CloudFlare 为什么被称为云计算领域的神？在讨论这个问题之前，我想先说说其他云服务提供商相较于 CloudFlare 究竟差在了哪里&hellip;
+好了，不开玩笑了 (‾◡◝)，但 CloudFlare 确实提供了很多实用且免费的服务给我们这些平民玩家，如免费的 Worker 和 CDN 虽然在国内是减速器，以及本文标题提及的 CloudFlare Tunnel。
+CloudFlare Tunnel 是什么 这是官方的产品介绍：官方文章 省流：你可以理解成这是一个类似 frp 的内网穿透服务，你可以将你部署在内网的 http 服务穿透到公网上。不同的是 CloudFlare 在上面集成了 CDN 服务，并且提供了自动 https。最关键的是，只要你将域名托管到 CloudFlare 上，你就可以免费的使用这个服务。
+BUT! CloudFlare 在国内访问速度不佳是众所周知的事 CloudFlare 减速器。 同样的道理，由于使用 CloudFlare Tunnel 的先决条件是在内网的机器能访问到 CloudFlare Tunnel Endpoint，然而在国内去访问这些 Endpoint 并不稳定。导致访问速度慢，甚至服务掉线。
+因此我想到是否可以通过给 Tunnel 添加前置代理的方法来提升速度与稳定性，在一番搜索之后找到这篇文章。然而文章中指出：CloudFlare 官方的态度是不会支持 HTTP/Socks 前置代理 链接。因此，那篇文章中是使用了 V2ray &#43; IPtables 手写路由达成了透明代理。
+受到文章启发，结合本人已经搭建好的 Tailscale 网络，我想到可以使用 Tailscale 的 Subnet routers（子网路由）功能来简单的实现透明代理。">
 <meta name="author" content="WallBreakerNO4">
-<link rel="canonical" href="http://192.168.20.55:1313/posts/ubuntu-zsh/">
+<link rel="canonical" href="http://192.168.20.55:1313/posts/%E9%80%9A%E8%BF%87-tailscale-%E4%B8%BA-cloudflare-tunnel-%E9%85%8D%E7%BD%AE%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86%E6%9D%A5%E6%8F%90%E5%8D%87%E9%80%9F%E5%BA%A6/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.b609c58d5c11bb90b1a54e04005d74ad1ddf22165eb79f5533967e57df9c3b50.css" integrity="sha256-tgnFjVwRu5CxpU4EAF10rR3fIhZet59VM5Z&#43;V9&#43;cO1A=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://192.168.20.55:1313/assets/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://192.168.20.55:1313/assets/favicon-16x16.png">
@@ -21,7 +23,7 @@ nano ~/.zshrc 把 ZSH_THEME 改成 powerlevel10k/powerlevel10k： 在 plugins �
 <link rel="mask-icon" href="http://192.168.20.55:1313/assets/mstile-150x150.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://192.168.20.55:1313/posts/ubuntu-zsh/">
+<link rel="alternate" hreflang="en" href="http://192.168.20.55:1313/posts/%E9%80%9A%E8%BF%87-tailscale-%E4%B8%BA-cloudflare-tunnel-%E9%85%8D%E7%BD%AE%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86%E6%9D%A5%E6%8F%90%E5%8D%87%E9%80%9F%E5%BA%A6/">
 <noscript>
     <style>
         #theme-toggle,
@@ -93,52 +95,32 @@ nano ~/.zshrc 把 ZSH_THEME 改成 powerlevel10k/powerlevel10k： 在 plugins �
   <header class="post-header">
     <div class="breadcrumbs"><a href="http://192.168.20.55:1313/">Home</a>&nbsp;»&nbsp;<a href="http://192.168.20.55:1313/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
-      在Ubuntu上安装zsh以及高亮、自动补全插件
+      通过 Tailscale 为 CloudFlare Tunnel 配置代透明理来提升速度
+      <span class="entry-hint" title="Draft">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
+          <path
+            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+        </svg>
+      </span>
     </h1>
-    <div class="post-meta"><span title='2023-11-22 00:00:00 +0000 UTC'>November 22, 2023</span>&nbsp;·&nbsp;WallBreakerNO4
+    <div class="post-meta"><span title='2024-07-30 16:07:00 +0000 UTC'>July 30, 2024</span>&nbsp;·&nbsp;WallBreakerNO4
 
 </div>
   </header> 
-  <div class="post-content"><p>记录一下如何在 Ubuntu 上安装 zsh，以及高亮、自动补全插件和自定义主题</p>
-<h2 id="安装-zsh">安装 zsh<a hidden class="anchor" aria-hidden="true" href="#安装-zsh">#</a></h2>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo apt install zsh git fonts-font-awesome
-</span></span></code></pre></div><h2 id="安装-oh-my-zsh">安装 Oh My Zsh<a hidden class="anchor" aria-hidden="true" href="#安装-oh-my-zsh">#</a></h2>
-<blockquote>
-<p>Oh My Zsh will not make you a 10x developer&hellip; But you may feel like one!</p>
+  <div class="post-content"><blockquote>
+<p>CloudFlare 为什么被称为云计算领域的神？在讨论这个问题之前，我想先说说其他云服务提供商相较于 CloudFlare 究竟差在了哪里&hellip;</p>
 </blockquote>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sh -c <span style="color:#e6db74">&#34;</span><span style="color:#66d9ef">$(</span>wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -<span style="color:#66d9ef">)</span><span style="color:#e6db74">&#34;</span>
-</span></span></code></pre></div><h2 id="安装插件和主题">安装插件和主题<a hidden class="anchor" aria-hidden="true" href="#安装插件和主题">#</a></h2>
-<h3 id="语法高亮">语法高亮<a hidden class="anchor" aria-hidden="true" href="#语法高亮">#</a></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git clone https://github.com/zsh-users/zsh-syntax-highlighting.git <span style="color:#e6db74">${</span>ZSH_CUSTOM<span style="color:#66d9ef">:-</span>~/.oh-my-zsh/custom<span style="color:#e6db74">}</span>/plugins/zsh-syntax-highlighting
-</span></span></code></pre></div><h3 id="自动补全">自动补全<a hidden class="anchor" aria-hidden="true" href="#自动补全">#</a></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git clone https://github.com/zsh-users/zsh-autosuggestions <span style="color:#e6db74">${</span>ZSH_CUSTOM<span style="color:#66d9ef">:-</span>~/.oh-my-zsh/custom<span style="color:#e6db74">}</span>/plugins/zsh-autosuggestions
-</span></span></code></pre></div><h3 id="安装主题">安装主题<a hidden class="anchor" aria-hidden="true" href="#安装主题">#</a></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git clone --depth<span style="color:#f92672">=</span><span style="color:#ae81ff">1</span> https://github.com/romkatv/powerlevel10k.git <span style="color:#e6db74">${</span>ZSH_CUSTOM<span style="color:#66d9ef">:-</span>$HOME/.oh-my-zsh/custom<span style="color:#e6db74">}</span>/themes/powerlevel10k
-</span></span></code></pre></div><h3 id="配置文件">配置文件<a hidden class="anchor" aria-hidden="true" href="#配置文件">#</a></h3>
-<p>打开 <code>~/.zshrc</code></p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>nano ~/.zshrc
-</span></span></code></pre></div><p>把 <code>ZSH_THEME</code> 改成 <code>powerlevel10k/powerlevel10k</code>：
-<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202311220011285.png#center" alt="image.png"  />
-</p>
-<p>在 <code>plugins</code> 处加上 <code>zsh-syntax-highlighting</code> 和 <code>zsh-autosuggestions</code>（用空格隔开）：
-<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202311220013082.png#center" alt="image.png"  />
-</p>
-<p>或者直接使用这条 sed 命令一键替换：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sed -i <span style="color:#e6db74">&#39;s/^ZSH_THEME=&#34;robbyrussell&#34;/ZSH_THEME=&#34;powerlevel10k\/powerlevel10k&#34;/; s/^plugins=(\(.*\))/plugins=(\1 zsh-syntax-highlighting zsh-autosuggestions)/&#39;</span> ~/.zshrc
-</span></span></code></pre></div><h4 id="配置代理">配置代理<a hidden class="anchor" aria-hidden="true" href="#配置代理">#</a></h4>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>export https_proxy<span style="color:#f92672">=</span>http://<span style="color:#f92672">[</span>proxy server IP<span style="color:#f92672">]</span>:<span style="color:#f92672">[</span>port<span style="color:#f92672">]</span>;export http_proxy<span style="color:#f92672">=</span>http://<span style="color:#f92672">[</span>proxy server IP<span style="color:#f92672">]</span>:<span style="color:#f92672">[</span>port<span style="color:#f92672">]</span>;export all_proxy<span style="color:#f92672">=</span>socks5://<span style="color:#f92672">[</span>proxy server IP<span style="color:#f92672">]</span>:<span style="color:#f92672">[</span>port<span style="color:#f92672">]</span>
-</span></span><span style="display:flex;"><span>export no_proxy<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;localhost, 127.0.0.1, ::1, .local, .localdomain, 192.168.0.0/16, 172.16.0.0/12, 10.0.0.0/8, 100.64.0.0/10&#34;</span>
-</span></span></code></pre></div><blockquote>
-<p>请将 <code>[proxy server]:[port]</code> 替换成代理服务的 IP 和端口</p>
-</blockquote>
-<h3 id="应用更改">应用更改<a hidden class="anchor" aria-hidden="true" href="#应用更改">#</a></h3>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>source ~/.zshrc
-</span></span></code></pre></div><h2 id="总结">总结<a hidden class="anchor" aria-hidden="true" href="#总结">#</a></h2>
-<p>配置 zsh 不难，基本上复制粘贴就行了</p>
-<h2 id="参考">参考<a hidden class="anchor" aria-hidden="true" href="#参考">#</a></h2>
-<blockquote>
-<p><a href="https://itsfoss.com/zsh-ubuntu/">https://itsfoss.com/zsh-ubuntu/</a></p>
-</blockquote>
+<p>好了，不开玩笑了 (‾◡◝)，但 CloudFlare 确实提供了很多实用且免费的服务给我们这些平民玩家，如免费的 Worker 和 CDN <del>虽然在国内是减速器</del>，以及本文标题提及的 CloudFlare Tunnel。</p>
+<h2 id="cloudflare-tunnel-是什么">CloudFlare Tunnel 是什么<a hidden class="anchor" aria-hidden="true" href="#cloudflare-tunnel-是什么">#</a></h2>
+<p>这是官方的产品介绍：<a href="https://www.cloudflare.com/zh-cn/products/tunnel/">官方文章</a>
+省流：你可以理解成这是一个类似 frp 的内网穿透服务，你可以将你部署在内网的 http 服务穿透到公网上。不同的是 CloudFlare 在上面集成了 CDN 服务，并且提供了自动 https。最关键的是，只要你将域名托管到 CloudFlare 上，你就可以免费的使用这个服务。</p>
+<h3 id="but">BUT!<a hidden class="anchor" aria-hidden="true" href="#but">#</a></h3>
+<p>CloudFlare 在国内访问速度不佳是众所周知的事 <del>CloudFlare 减速器</del>。
+<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/20240730160252.png#center" alt="image.png"  />
+
+同样的道理，由于使用 CloudFlare Tunnel 的先决条件是在内网的机器能访问到 CloudFlare Tunnel Endpoint，然而在国内去访问这些 Endpoint 并不稳定。导致访问速度慢，甚至服务掉线。</p>
+<p>因此我想到是否可以通过给 Tunnel 添加前置代理的方法来提升速度与稳定性，在一番搜索之后找到这篇<a href="https://blog.xmgspace.me/archives/cloudflare-tunnel-via-proxy.html">文章</a>。然而文章中指出：CloudFlare 官方的态度是不会支持 HTTP/Socks 前置代理 <a href="https://github.com/cloudflare/cloudflared/issues/350#issuecomment-1706842883">链接</a>。因此，那篇文章中是使用了 V2ray + IPtables 手写路由达成了透明代理。</p>
+<p>受到文章启发，结合本人已经搭建好的 Tailscale 网络，我想到可以使用 Tailscale 的 Subnet routers（子网路由）功能来简单的实现透明代理。</p>
 
 
   </div>
@@ -147,15 +129,15 @@ nano ~/.zshrc 把 ZSH_THEME 改成 powerlevel10k/powerlevel10k： 在 plugins �
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="http://192.168.20.55:1313/posts/%E7%9B%AE%E5%89%8D%E6%88%91%E4%BD%BF%E7%94%A8%E7%9A%84%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%96%B9%E6%B3%95/">
+  <a class="prev" href="http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-%E7%BB%84%E7%BD%91/">
     <span class="title">« Prev</span>
     <br>
-    <span>目前我使用的内网穿透方法</span>
+    <span>使用 Tailscale 组网</span>
   </a>
-  <a class="next" href="http://192.168.20.55:1313/posts/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/">
+  <a class="next" href="http://192.168.20.55:1313/posts/%E5%9C%A8%E5%AE%89%E5%8D%93%E4%B8%8B%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8-clash-%E5%92%8C-tailscale/">
     <span class="title">Next »</span>
     <br>
-    <span>博客搭建过程记录</span>
+    <span>在安卓下同时使用 Clash 和 Tailscale</span>
   </a>
 </nav>
 

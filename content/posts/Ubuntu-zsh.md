@@ -55,6 +55,12 @@ nano ~/.zshrc
 在 `plugins` 处加上 `zsh-syntax-highlighting` 和 `zsh-autosuggestions`（用空格隔开）：
 ![image.png](https://image.wall-breaker-no4.xyz/imgs/202311220013082.png#center)
 
+或者直接使用这条 sed 命令一键替换：
+
+```shell
+sed -i 's/^ZSH_THEME="robbyrussell"/ZSH_THEME="powerlevel10k\/powerlevel10k"/; s/^plugins=(\(.*\))/plugins=(\1 zsh-syntax-highlighting zsh-autosuggestions)/' ~/.zshrc
+```
+
 #### 配置代理
 
 ```shell

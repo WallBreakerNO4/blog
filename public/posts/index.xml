@@ -4,10 +4,49 @@
     <title>Posts on WallBreakerNO4的博客</title>
     <link>http://192.168.20.55:1313/posts/</link>
     <description>Recent content in Posts on WallBreakerNO4的博客</description>
-    <generator>Hugo -- gohugo.io</generator>
+    <generator>Hugo -- 0.129.0</generator>
     <language>zh</language>
-    <lastBuildDate>Thu, 13 Jun 2024 15:15:00 +0000</lastBuildDate>
+    <lastBuildDate>Tue, 30 Jul 2024 20:12:00 +0000</lastBuildDate>
     <atom:link href="http://192.168.20.55:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>使用 Tailscale 组网</title>
+      <link>http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-%E7%BB%84%E7%BD%91/</link>
+      <pubDate>Tue, 30 Jul 2024 20:12:00 +0000</pubDate>
+      <guid>http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-%E7%BB%84%E7%BD%91/</guid>
+      <description>今年年初，我购入了属于自己的 NAS，并在将其作为 HomeLab All In Boom 搭建了许多服务。 部分自建的服务
+在宿舍的局域网内访问这些服务自然是十分方便的。但平常在校内上课时想访问 NAS 上的服务，就需要一番配置了。
+内网穿透 内网穿透主要有两种：公网 IP 中转 or 打洞直连。这两种方式各有其优缺点：
+公网 IP 中转：
+优点：对网络环境（准确说是 NAT 类型）没有要求 缺点：需要公网 IP，如果宿舍没有公网 IP 的话则需要中转服务器 打洞直连：
+优点：无需公网 IP 缺点：需要至少一个客户端有良好的 NAT 类型 图片引用自 Tailscale 官方文档
+在会同职业寄术学院 UIC 一期宿舍内有三家运营商，分别是电信、移动和联通。其中联通是唯一一家同时提供 PPPoE 拨号和 IPv6 服务。我在搬到一期宿舍前还听说联通可以申请到公网 IP，因此选择了联通。然而现在联通也申请不到公网 IP 了，令人感慨。
+得出结论，警惕 @Steven 的电信诈骗
+在最开始，我选择了使用 WireGuard + 腾讯云轻量服务器作为中转来提供宿舍的内网穿透。这套方案最开始运作的很好，但用久了就暴露出了一些问题：
+配置复杂：WireGuard 的配置文件比较复杂，而在多个设备上管理配置文件简直不是人干的事。这个问题在添加新设备到 WireGuard 网络时尤为突出 带宽低：由于网络的所有流量都需要经过腾讯云中转，而国内服务器的的带宽懂的都懂 因此，我最后选择的方案为使用 Tailscale 打洞组网
+Tailscale 是什么 Tailscale 是一种 VPN 服务，使用 WireGuard 协议创建安全的点对点网状网络。它简化了远程访问，通过加密连接设备，不需要复杂配置、中央网关或手动端口转发。Tailscale 通过避免中心化、降低延迟、维持网络间连接连续性，提高了速度、稳定性和可靠性。适用于开发者、小型企业和需要安全、可扩展网络解决方案的大型企业。</description>
+    </item>
+    <item>
+      <title>通过 Tailscale 为 CloudFlare Tunnel 配置代透明理来提升速度</title>
+      <link>http://192.168.20.55:1313/posts/%E9%80%9A%E8%BF%87-tailscale-%E4%B8%BA-cloudflare-tunnel-%E9%85%8D%E7%BD%AE%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86%E6%9D%A5%E6%8F%90%E5%8D%87%E9%80%9F%E5%BA%A6/</link>
+      <pubDate>Tue, 30 Jul 2024 16:07:00 +0000</pubDate>
+      <guid>http://192.168.20.55:1313/posts/%E9%80%9A%E8%BF%87-tailscale-%E4%B8%BA-cloudflare-tunnel-%E9%85%8D%E7%BD%AE%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86%E6%9D%A5%E6%8F%90%E5%8D%87%E9%80%9F%E5%BA%A6/</guid>
+      <description>CloudFlare 为什么被称为云计算领域的神？在讨论这个问题之前，我想先说说其他云服务提供商相较于 CloudFlare 究竟差在了哪里&amp;hellip;
+好了，不开玩笑了 (‾◡◝)，但 CloudFlare 确实提供了很多实用且免费的服务给我们这些平民玩家，如免费的 Worker 和 CDN 虽然在国内是减速器，以及本文标题提及的 CloudFlare Tunnel。
+CloudFlare Tunnel 是什么 这是官方的产品介绍：官方文章 省流：你可以理解成这是一个类似 frp 的内网穿透服务，你可以将你部署在内网的 http 服务穿透到公网上。不同的是 CloudFlare 在上面集成了 CDN 服务，并且提供了自动 https。最关键的是，只要你将域名托管到 CloudFlare 上，你就可以免费的使用这个服务。
+BUT! CloudFlare 在国内访问速度不佳是众所周知的事 CloudFlare 减速器。 同样的道理，由于使用 CloudFlare Tunnel 的先决条件是在内网的机器能访问到 CloudFlare Tunnel Endpoint，然而在国内去访问这些 Endpoint 并不稳定。导致访问速度慢，甚至服务掉线。
+因此我想到是否可以通过给 Tunnel 添加前置代理的方法来提升速度与稳定性，在一番搜索之后找到这篇文章。然而文章中指出：CloudFlare 官方的态度是不会支持 HTTP/Socks 前置代理 链接。因此，那篇文章中是使用了 V2ray + IPtables 手写路由达成了透明代理。
+受到文章启发，结合本人已经搭建好的 Tailscale 网络，我想到可以使用 Tailscale 的 Subnet routers（子网路由）功能来简单的实现透明代理。</description>
+    </item>
+    <item>
+      <title>在安卓下同时使用 Clash 和 Tailscale</title>
+      <link>http://192.168.20.55:1313/posts/%E5%9C%A8%E5%AE%89%E5%8D%93%E4%B8%8B%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8-clash-%E5%92%8C-tailscale/</link>
+      <pubDate>Wed, 19 Jun 2024 23:49:00 +0000</pubDate>
+      <guid>http://192.168.20.55:1313/posts/%E5%9C%A8%E5%AE%89%E5%8D%93%E4%B8%8B%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8-clash-%E5%92%8C-tailscale/</guid>
+      <description>在上一篇文章中，我们已经成功搭建了 Tailscale 网络，并在各个设备上安装了相应的客户端来访问网络。但我们注意到一点：在安卓系统上，同时只能运行一个 VPN 服务，因此 Tailscale 无法与 Clash 同时运行。而且不像 WireGuard，Clash 内核并没有提供对 Tailscale 的支持。
+Clash 对 WireGuard 的支持： https://en.clash.wiki/premium/userspace-wireguard.html
+因此在安卓上，如果希望 Tailscale 和 Clash 共存的话，是需要一番折腾的
+先决条件 在 Google 了一番之后，我发现</description>
+    </item>
     <item>
       <title>如何为Docker添加代理</title>
       <link>http://192.168.20.55:1313/posts/docker%E4%BB%A3%E7%90%86/</link>
@@ -36,19 +75,6 @@ Windows 设置 打开 .ssh/ 文件夹下的 config 文件，添加类似如下�
 Host tx #别名 User wall #登陆用户名 Hostname wall-breaker-no4.xyz #服务器地址 PreferredAuthentications publickey #使用密钥登陆 IdentityFile C:\Users\zhifa\.ssh\tx_rsa #私钥地址 </description>
     </item>
     <item>
-      <title>使用 Tailscale 组网</title>
-      <link>http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-%E7%BB%84%E7%BD%91/</link>
-      <pubDate>Wed, 27 Mar 2024 20:12:00 +0000</pubDate>
-      <guid>http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-%E7%BB%84%E7%BD%91/</guid>
-      <description>今年年初，我购入了属于自己的 NAS，并在将其作为 HomeLab All In Boom 搭建了许多服务。 部分自建的服务
-在宿舍的局域网内访问这些服务自然是十分方便的。但平常在校内上课时想访问 NAS 上的服务，就需要一番配置了。
-内网穿透 内网穿透主要有两种：公网 IP 中转 or 打洞直连。这两种方式各有其优缺点：
-公网 IP 中转： 优点：对网络环境（准确说是 NAT 类型）没有要求 缺点：需要公网 IP，如果宿舍没有公网 IP 的话则需要中转服务器 打洞直连： 优点：无需公网 IP 缺点：需要至少一个客户端有良好的 NAT 类型 会同职业寄术学院 UIC 一期宿舍内有三家运营商，分别是电信、移动和联通。其中联通是唯一一家同时提供 PPPoE 拨号和 IPv6 服务。我在搬到一期宿舍前还听说联通可以申请到公网 IP，因此选择了联通。然而现在联通也申请不到公网 IP 了，令人感慨。
-得出结论，警惕 @Steven 的电信诈骗
-在最开始，我选择了使用 WireGuard + 腾讯云轻量服务器作为中转来提供宿舍的内网穿透。这套方案最开始运作的很好，但用久了就暴露出了一些问题：
-配置复杂：WireGuard 的配置文件比较复杂，而在多个设备上管理配置文件简直不是人干的事。这个问题在添加新设备到 WireGuard 网络时尤为突出 带宽低：由于网络的所有流量都需要经过腾讯云中转，而国内服务器的的带宽懂的都懂 因此，我最后选择的方案为使用 Tailscale 组网 </description>
-    </item>
-    <item>
       <title>目前我使用的内网穿透方法</title>
       <link>http://192.168.20.55:1313/posts/%E7%9B%AE%E5%89%8D%E6%88%91%E4%BD%BF%E7%94%A8%E7%9A%84%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%96%B9%E6%B3%95/</link>
       <pubDate>Tue, 28 Nov 2023 09:32:00 +0000</pubDate>
@@ -57,7 +83,7 @@ Host tx #别名 User wall #登陆用户名 Hostname wall-breaker-no4.xyz #服务
 在重新配置的过程中，除了让人心碎的多拨和分流配置，最让我头疼的就是配置我用来内网穿透的 WireGuard。因此我决定记录一下我目前使用的内网穿透服务，即 WireGuard，以防未来我需要重新配置时又需要头脑风暴。
 哦，选择！ 目前市面上有许多的内网穿透服务，大体上可以分为两类：VPN 和 P2P 打洞。这两者的优缺点如下：
 VPN 较为稳定 需要至少一个公网 IP 速度上限取决于公网 IP 设备 P2P 打洞 无需公网 IP 要访问的内网需要有良好的 NAT 类型 我的选择 对于这两种类型的解决方案，我分别尝试了 WireGuard（VPN）和 ZeroTier（P2P）。最终基于以下理由，我选择了 WireGuard：
-我有一台拥有公网 IP 的服务器 在校内我不需要高速访问宿舍内（如看视频）我可以回宿舍看 由于不需要打洞，相比ZeroTier建立连接所需的时间极短，几乎无感 同样由于不需要打洞，在更换网络环境时（如自习室到教室）时不需要重新建立连接 搭建 WireGuard </description>
+我有一台拥有公网 IP 的服务器 在校内我不需要高速访问宿舍内（如看视频）~~~我可以回宿舍看~~~ 由于不需要打洞，相比ZeroTier建立连接所需的时间极短，几乎无感 同样由于不需要打洞，在更换网络环境时（如自习室到教室）时不需要重新建立连接 搭建 WireGuard </description>
     </item>
     <item>
       <title>在Ubuntu上安装zsh以及高亮、自动补全插件</title>
@@ -67,7 +93,7 @@ VPN 较为稳定 需要至少一个公网 IP 速度上限取决于公网 IP 设�
       <description>记录一下如何在 Ubuntu 上安装 zsh，以及高亮、自动补全插件和自定义主题
 安装 zsh sudo apt install zsh git fonts-font-awesome 安装 Oh My Zsh Oh My Zsh will not make you a 10x developer&amp;hellip; But you may feel like one!
 sh -c &amp;#34;$(wget https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh -O -)&amp;#34; 安装插件和主题 语法高亮 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting 自动补全 git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions 安装主题 git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ${ZSH_CUSTOM:-$HOME/.oh-my-zsh/custom}/themes/powerlevel10k 配置文件 打开 ~/.zshrc
-nano ~/.zshrc 把 ZSH_THEME 改成 powerlevel10k/powerlevel10k： 在 plugins 处加上 zsh-syntax-highlighting 和 zsh-autosuggestions（用空格隔开）： 配置代理 export https_proxy=http://[proxy server IP]:[port];export http_proxy=http://[proxy server IP]:[port];export all_proxy=socks5://[proxy server IP]:[port] export no_proxy=&amp;#34;localhost, 127.</description>
+nano ~/.zshrc 把 ZSH_THEME 改成 powerlevel10k/powerlevel10k： 在 plugins 处加上 zsh-syntax-highlighting 和 zsh-autosuggestions（用空格隔开）： 或者直接使用这条 sed 命令一键替换：</description>
     </item>
     <item>
       <title>博客搭建过程记录</title>
