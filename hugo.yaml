@@ -11,9 +11,7 @@ params:
   homeInfoParams:
     Title: 你好，世界！
     Content: 一个正在学习，但总想着打游戏的人
-  page:
-    comment:
-      enable: true
+  comments: true
 
   #profileMode:
   #  enabled: true
