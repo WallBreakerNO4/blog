@@ -5,17 +5,13 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <meta name="robots" content="noindex, nofollow">
-<title>如何为Docker添加代理 | WallBreakerNO4的博客</title>
+<title>Tailscale 进阶使用教程 - MagicDNS、子网路由和自建中转 | WallBreakerNO4的博客</title>
 <meta name="keywords" content="">
-<meta name="description" content="前段时间，我帮朋友搭建了一个我的世界服务器，并计划使用 Docker 来管理它。然而，在安装过程中，我发现镜像总是无法拉取。经过查阅资料，我发现可以通过配置 Docker Daemon 使用代理来拉取镜像。考虑到最近各个镜像站都撤掉了 Docker Hub 的镜像，我认为配置代理来访问 Docker Hub 可能是未来在大陆使用 Docker 的最佳方式。
-为 Docker Daemon 配置代理 首先，创建配置文件：
-sudo mkdir -p /etc/systemd/system/docker.service.d sudo nano /etc/systemd/system/docker.service.d/proxy.conf 在配置文件中填入以下内容：
-[Service] Environment=&#34;HTTP_PROXY=http://[proxy server IP]:[port]/&#34; Environment=&#34;HTTPS_PROXY=http://[proxy server IP]:[port]/&#34; Environment=&#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.168.0.0/16,172.16.0.0/12,10.0.0.0/8,100.64.0.0/10&#34; 请将 [proxy server]:[port] 替换成代理服务的 IP 和端口
-我们需要重启 Docker Daemon 服务以使配置生效：
-sudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以正常的拉取镜像
-参考 Docker Daemon Systemd 配置文档">
+<meta name="description" content="在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，我将介绍几个 Tailscale 的进阶玩法
+Subnet routes（子网路由） 如果
+自建中转 TODO">
 <meta name="author" content="WallBreakerNO4">
-<link rel="canonical" href="http://192.168.20.55:1313/posts/docker%E4%BB%A3%E7%90%86/">
+<link rel="canonical" href="http://192.168.20.55:1313/posts/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---magicdns%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://192.168.20.55:1313/assets/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://192.168.20.55:1313/assets/favicon-16x16.png">
@@ -24,7 +20,7 @@ sudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以
 <link rel="mask-icon" href="http://192.168.20.55:1313/assets/mstile-150x150.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://192.168.20.55:1313/posts/docker%E4%BB%A3%E7%90%86/">
+<link rel="alternate" hreflang="en" href="http://192.168.20.55:1313/posts/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---magicdns%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/">
 <noscript>
     <style>
         #theme-toggle,
@@ -96,33 +92,23 @@ sudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以
   <header class="post-header">
     <div class="breadcrumbs"><a href="http://192.168.20.55:1313/">Home</a>&nbsp;»&nbsp;<a href="http://192.168.20.55:1313/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
-      如何为Docker添加代理
+      Tailscale 进阶使用教程 - MagicDNS、子网路由和自建中转
+      <span class="entry-hint" title="Draft">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
+          <path
+            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+        </svg>
+      </span>
     </h1>
-    <div class="post-meta"><span title='2024-06-13 15:15:00 +0000 UTC'>June 13, 2024</span>&nbsp;·&nbsp;WallBreakerNO4
+    <div class="post-meta"><span title='2024-07-31 15:42:00 +0000 UTC'>July 31, 2024</span>&nbsp;·&nbsp;WallBreakerNO4
 
 </div>
   </header> 
-  <div class="post-content"><p>前段时间，我帮朋友搭建了一个我的世界服务器，并计划使用 Docker 来管理它。然而，在安装过程中，我发现镜像总是无法拉取。经过查阅资料，我发现可以通过配置 Docker Daemon 使用代理来拉取镜像。考虑到最近各个镜像站都撤掉了 Docker Hub 的镜像，我认为配置代理来访问 Docker Hub 可能是未来在大陆使用 Docker 的最佳方式。</p>
-<h2 id="为-docker-daemon-配置代理">为 Docker Daemon 配置代理<a hidden class="anchor" aria-hidden="true" href="#为-docker-daemon-配置代理">#</a></h2>
-<p>首先，创建配置文件：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo mkdir -p /etc/systemd/system/docker.service.d
-</span></span><span style="display:flex;"><span>sudo nano /etc/systemd/system/docker.service.d/proxy.conf
-</span></span></code></pre></div><p>在配置文件中填入以下内容：</p>
-<pre tabindex="0"><code class="language-conf" data-lang="conf">[Service]
-Environment=&#34;HTTP_PROXY=http://[proxy server IP]:[port]/&#34;
-Environment=&#34;HTTPS_PROXY=http://[proxy server IP]:[port]/&#34;
-Environment=&#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.168.0.0/16,172.16.0.0/12,10.0.0.0/8,100.64.0.0/10&#34;
-</code></pre><blockquote>
-<p>请将 <code>[proxy server]:[port]</code> 替换成代理服务的 IP 和端口</p>
-</blockquote>
-<p>我们需要重启 Docker Daemon 服务以使配置生效：</p>
-<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo systemctl daemon-reload
-</span></span><span style="display:flex;"><span>sudo systemctl restart docker
-</span></span></code></pre></div><p>现在，已经可以正常的拉取镜像</p>
-<h2 id="参考">参考<a hidden class="anchor" aria-hidden="true" href="#参考">#</a></h2>
-<blockquote>
-<p><a href="https://docs.docker.com/config/daemon/systemd/#httphttps-proxy">Docker Daemon Systemd 配置文档</a></p>
-</blockquote>
+  <div class="post-content"><p>在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，我将介绍几个 Tailscale 的进阶玩法</p>
+<h2 id="subnet-routes子网路由">Subnet routes（子网路由）<a hidden class="anchor" aria-hidden="true" href="#subnet-routes子网路由">#</a></h2>
+<p>如果</p>
+<h2 id="自建中转">自建中转<a hidden class="anchor" aria-hidden="true" href="#自建中转">#</a></h2>
+<p>TODO</p>
 
 
   </div>
@@ -131,15 +117,10 @@ Environment=&#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.168.0.
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="http://192.168.20.55:1313/posts/%E5%9C%A8%E5%AE%89%E5%8D%93%E4%B8%8B%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8-clash-%E5%92%8C-tailscale/">
-    <span class="title">« Prev</span>
-    <br>
-    <span>在安卓下同时使用 Clash 和 Tailscale</span>
-  </a>
-  <a class="next" href="http://192.168.20.55:1313/posts/windows%E4%B8%8B%E7%94%9F%E6%88%90%E5%B9%B6%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86linux/">
+  <a class="next" href="http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-%E7%BB%84%E7%BD%91/">
     <span class="title">Next »</span>
     <br>
-    <span>Windows下生成并使用密钥登陆Linux</span>
+    <span>使用 Tailscale 组网</span>
   </a>
 </nav>
 

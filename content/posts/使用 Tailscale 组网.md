@@ -1,7 +1,7 @@
 ---
 title: 使用 Tailscale 组网
-date: 2024-07-30T20:12:00Z
-draft: "true"
+date: 2024-08-01T15:42:00Z
+draft: "false"
 author: WallBreakerNO4
 ---
 
@@ -54,6 +54,7 @@ author: WallBreakerNO4
 - ZeroTier 会默认维护本地设备与每一个 peer 之间的连接，这导致了较大的开销。而 Tailscale 只会在有流量的时候才建立连接。
 - [@Steven](https://blog.steven53.top/) 告诉我当切换网络环境时（比如校内 WiFi 不稳定想用流量时），需要重启 ZeroTier 服务来重新建立连接。而 Tailscale 并不需要重启服务，甚至不会让上层服务（如 SSH）断开。
 - [~~HCC 指定 ICD 提供商~~ ⑤ 导](https://ecwuuuuu.com/) 的鼎立推荐
+- 开箱即用，但也提供了详细的配置以满足自定义需求
 
 ## 使用准备
 
@@ -72,7 +73,7 @@ author: WallBreakerNO4
 
 ![image.png](https://image.wall-breaker-no4.xyz/imgs/20240626140646.png)
 
-> 遇到授权需要同意
+> 同意授权
 
 ![image.png](https://image.wall-breaker-no4.xyz/imgs/20240625150719.png)
 
@@ -96,14 +97,14 @@ author: WallBreakerNO4
 
 现在，设备之间已经可以互相访问了，我们可以 ping 一下试试
 
-![image.png](https://image.wall-breaker-no4.xyz/imgs/20240730180142.png)
+![image.png](https://image.wall-breaker-no4.xyz/imgs/20240731114914.png#center)
 
-注意到这里并没有 ping 设备在 Tailscale 网络内的 IP，而是 ping 了一个域名，并被解析成了设备的 IP。这是由于 Tailscale 默认启动了 MagicDNS 这个功能，其可以将设备名解析成 Tailscale 内的 IP 地址，这样就不用去记每个设备的 IP 了。MagicDNS 还有很多扩展玩法，更多请阅读 Tailscale 官方[文档](https://tailscale.com/kb/1081/magicdns)上的说明
+> 注意到这里并没有 ping 设备在 Tailscale 网络内的 IP，而是 ping 了一个域名，并被解析成了设备的 IP。这是由于 Tailscale 默认启动了 MagicDNS 这个功能，其可以将设备名解析成 Tailscale 内的 IP 地址，这样就不用去记每个设备的 IP 了。
+>
+> MagicDNS 还有很多扩展玩法，如搭建广告过滤 DNS 来为所有设备去除广告。详情请参阅 Tailscale 官方[文档](https://tailscale.com/kb/1081/magicdns)。
 
-## Subnet routes（子网路由）
+如果能正常 ping 通的话，说明 Tailscale 已经配置好了。
 
-子网路由是个非常实用的功能。
+## 尾巴
 
-## 自建中转
-
-TODO
+以上只是 Tailscale 最基本的用法，也是其开箱即用特性的体现。在下一篇文章中，我将介绍 Tailscale 的进阶玩法。

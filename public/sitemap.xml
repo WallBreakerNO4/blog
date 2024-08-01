@@ -2,38 +2,50 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://blog.wall-breaker-no4.xyz/posts/</loc>
+    <loc>http://192.168.20.55:1313/posts/</loc>
     <lastmod>2024-07-30T20:12:00+00:00</lastmod>
   </url><url>
-    <loc>https://blog.wall-breaker-no4.xyz/</loc>
+    <loc>http://192.168.20.55:1313/</loc>
     <lastmod>2024-07-30T20:12:00+00:00</lastmod>
   </url><url>
-    <loc>https://blog.wall-breaker-no4.xyz/posts/docker%E4%BB%A3%E7%90%86/</loc>
+    <loc>http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-%E7%BB%84%E7%BD%91/</loc>
+    <lastmod>2024-07-30T20:12:00+00:00</lastmod>
+  </url><url>
+    <loc>http://192.168.20.55:1313/posts/%E9%80%9A%E8%BF%87-tailscale-%E4%B8%BA-cloudflare-tunnel-%E9%85%8D%E7%BD%AE%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86%E6%9D%A5%E6%8F%90%E5%8D%87%E9%80%9F%E5%BA%A6/</loc>
+    <lastmod>2024-07-30T16:07:00+00:00</lastmod>
+  </url><url>
+    <loc>http://192.168.20.55:1313/posts/%E5%9C%A8%E5%AE%89%E5%8D%93%E4%B8%8B%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8-clash-%E5%92%8C-tailscale/</loc>
+    <lastmod>2024-06-19T23:49:00+00:00</lastmod>
+  </url><url>
+    <loc>http://192.168.20.55:1313/posts/docker%E4%BB%A3%E7%90%86/</loc>
     <lastmod>2024-06-13T15:15:00+00:00</lastmod>
   </url><url>
-    <loc>https://blog.wall-breaker-no4.xyz/posts/windows%E4%B8%8B%E7%94%9F%E6%88%90%E5%B9%B6%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86linux/</loc>
+    <loc>http://192.168.20.55:1313/posts/windows%E4%B8%8B%E7%94%9F%E6%88%90%E5%B9%B6%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86linux/</loc>
     <lastmod>2024-06-12T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://blog.wall-breaker-no4.xyz/posts/ubuntu-zsh/</loc>
+    <loc>http://192.168.20.55:1313/posts/%E7%9B%AE%E5%89%8D%E6%88%91%E4%BD%BF%E7%94%A8%E7%9A%84%E5%86%85%E7%BD%91%E7%A9%BF%E9%80%8F%E6%96%B9%E6%B3%95/</loc>
+    <lastmod>2023-11-28T09:32:00+00:00</lastmod>
+  </url><url>
+    <loc>http://192.168.20.55:1313/posts/ubuntu-zsh/</loc>
     <lastmod>2023-11-22T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>https://blog.wall-breaker-no4.xyz/posts/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/</loc>
+    <loc>http://192.168.20.55:1313/posts/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/</loc>
     <lastmod>2023-11-20T15:46:00+00:00</lastmod>
   </url><url>
-    <loc>https://blog.wall-breaker-no4.xyz/posts/ts3/</loc>
+    <loc>http://192.168.20.55:1313/posts/ts3/</loc>
     <lastmod>2023-11-16T17:19:00+00:00</lastmod>
   </url><url>
-    <loc>https://blog.wall-breaker-no4.xyz/posts/my-first-post/</loc>
+    <loc>http://192.168.20.55:1313/posts/my-first-post/</loc>
     <lastmod>2023-11-16T14:19:00+00:00</lastmod>
   </url><url>
-    <loc>https://blog.wall-breaker-no4.xyz/categories/</loc>
+    <loc>http://192.168.20.55:1313/categories/</loc>
   </url><url>
-    <loc>https://blog.wall-breaker-no4.xyz/tags/</loc>
+    <loc>http://192.168.20.55:1313/tags/</loc>
   </url><url>
-    <loc>https://blog.wall-breaker-no4.xyz/about/</loc>
+    <loc>http://192.168.20.55:1313/about/</loc>
   </url><url>
-    <loc>https://blog.wall-breaker-no4.xyz/archives/</loc>
+    <loc>http://192.168.20.55:1313/archives/</loc>
   </url><url>
-    <loc>https://blog.wall-breaker-no4.xyz/friends/</loc>
+    <loc>http://192.168.20.55:1313/friends/</loc>
   </url>
 </urlset>
