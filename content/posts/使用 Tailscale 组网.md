@@ -53,7 +53,7 @@ author: WallBreakerNO4
 
 - ZeroTier 会默认维护本地设备与每一个 peer 之间的连接，这导致了较大的开销。而 Tailscale 只会在有流量的时候才建立连接。
 - [@Steven](https://blog.steven53.top/) 告诉我当切换网络环境时（比如校内 WiFi 不稳定想用流量时），需要重启 ZeroTier 服务来重新建立连接。而 Tailscale 并不需要重启服务，甚至不会让上层服务（如 SSH）断开。
-- [~~HCC 指定 ICD 提供商~~ ⑤ 导](https://ecwuuuuu.com/) 的鼎立推荐
+- [~~HCC 指定 IDC 提供商~~ ⑤ 导](https://ecwuuuuu.com/) 的鼎立推荐
 - 开箱即用，但也提供了详细的配置以满足自定义需求
 
 ## 使用准备
