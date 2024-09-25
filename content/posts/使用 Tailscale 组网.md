@@ -31,9 +31,7 @@ author: WallBreakerNO4
 
 ---
 
-在~~会同职业寄术学院~~ UIC 一期宿舍内有三家运营商，分别是电信、移动和联通。其中联通是唯一一家同时提供 PPPoE 拨号和 IPv6 服务。我在搬到一期宿舍前还听说联通可以申请到公网 IP，因此选择了联通。然而现在联通也申请不到公网 IP 了，令人感慨。
-
-> ~~得出结论，警惕 [@Steven](https://blog.steven53.top/) 的电信诈骗~~
+在~~会同职业寄术学院~~ UIC 一期宿舍内有三家运营商，分别是电信、移动和联通。其中联通是唯一一家同时提供 PPPoE 拨号和 IPv6 的运营商。在搬到一期宿舍前我还听说联通可以申请到公网 IP，因此选择了联通。然而现在联通也申请不到公网 IP 了，令人感慨。~~得出结论，警惕 [@Steven](https://blog.steven53.top/) 的电信诈骗~~
 
 在最开始，我选择了使用 WireGuard + 腾讯云轻量服务器作为中转来提供宿舍的内网穿透。这套方案最开始运作的很好，但用久了就暴露出了一些问题：
 
@@ -49,7 +47,7 @@ author: WallBreakerNO4
 >
 > _[原文](https://tailscale.com/kb/1151/what-is-tailscale) 使用 ChatGPT 总结_
 
-个人选择 Tailsale 而不是 ZeroTier 是因为以下三个原因：
+个人选择 Tailsale 而不是 ZeroTier 是因为以下四个原因：
 
 - ZeroTier 会默认维护本地设备与每一个 peer 之间的连接，这导致了较大的开销。而 Tailscale 只会在有流量的时候才建立连接。
 - [@Steven](https://blog.steven53.top/) 告诉我当切换网络环境时（比如校内 WiFi 不稳定想用流量时），需要重启 ZeroTier 服务来重新建立连接。而 Tailscale 并不需要重启服务，甚至不会让上层服务（如 SSH）断开。
@@ -107,4 +105,4 @@ author: WallBreakerNO4
 
 ## 尾巴
 
-以上只是 Tailscale 最基本的用法，也是其开箱即用特性的体现。在下一篇文章中，我将介绍 Tailscale 的进阶玩法。
+以上只是 Tailscale 最基本的用法，也是其开箱即用特性的体现。~~在下一篇文章中，我将介绍 Tailscale 的进阶玩法。~~ 大三开学了，先咕咕咕了

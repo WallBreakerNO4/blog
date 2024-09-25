@@ -123,6 +123,28 @@
 
 <article class="post-entry"> 
   <header class="entry-header">
+    <h2 class="entry-hint-parent">使用 Tailscale 组网
+    </h2>
+  </header>
+  <div class="entry-content">
+    <p>今年年初，我购入了属于自己的 NAS，并在将其作为 HomeLab All In Boom 搭建了许多服务。 部分自建的服务
+在宿舍的局域网内访问这些服务自然是十分方便的。但平常在校内上课时想访问 NAS 上的服务，就需要一番配置了。
+内网穿透 内网穿透主要有两种：公网 IP 中转 or 打洞直连。这两种方式各有其优缺点：
+公网 IP 中转：
+优点：对网络环境（准确说是 NAT 类型）没有要求 缺点：需要公网 IP，如果宿舍没有公网 IP 的话则需要中转服务器 打洞直连：
+优点：无需公网 IP 缺点：需要至少一个客户端有良好的 NAT 类型 图片引用自 Tailscale 官方文档
+在会同职业寄术学院 UIC 一期宿舍内有三家运营商，分别是电信、移动和联通。其中联通是唯一一家同时提供 PPPoE 拨号和 IPv6 的运营商。在搬到一期宿舍前我还听说联通可以申请到公网 IP，因此选择了联通。然而现在联通也申请不到公网 IP 了，令人感慨。得出结论，警惕 @Steven 的电信诈骗
+在最开始，我选择了使用 WireGuard &#43; 腾讯云轻量服务器作为中转来提供宿舍的内网穿透。这套方案最开始运作的很好，但用久了就暴露出了一些问题：
+配置复杂：WireGuard 的配置文件比较复杂，而在多个设备上管理配置文件简直不是人干的事。这个问题在添加新设备到 WireGuard 网络时尤为突出 带宽低：由于网络的所有流量都需要经过腾讯云中转，而国内服务器的的带宽懂的都懂 因此，我最后选择的方案为使用 Tailscale 打洞组网
+Tailscale 是什么 Tailscale 是一种 VPN 服务，使用 WireGuard 协议创建安全的点对点网状网络。它简化了远程访问，通过加密连接设备，不需要复杂配置、中央网关或手动端口转发。Tailscale 通过避免中心化、降低延迟、维持网络间连接连续性，提高了速度、稳定性和可靠性。适用于开发者、小型企业和需要安全、可扩展网络解决方案的大型企业。
+原文 使用 ChatGPT 总结...</p>
+  </div>
+  <footer class="entry-footer"><span title='2024-08-01 15:42:00 +0000 UTC'>August 1, 2024</span>&nbsp;·&nbsp;WallBreakerNO4</footer>
+  <a class="entry-link" aria-label="post link to 使用 Tailscale 组网" href="http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-%E7%BB%84%E7%BD%91/"></a>
+</article>
+
+<article class="post-entry"> 
+  <header class="entry-header">
     <h2 class="entry-hint-parent">Tailscale 进阶使用教程 - MagicDNS、子网路由和自建中转
       <span class="entry-hint" title="Draft">
         <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" fill="currentColor">
@@ -133,40 +155,12 @@
     </h2>
   </header>
   <div class="entry-content">
-    <p>在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，我将介绍几个 Tailscale 的进阶玩法
-Subnet routes（子网路由） 如果
+    <p>在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，我将介绍几个 Tailscale 的进阶玩法。
+Subnet routes（子网路由） 如果你有
 自建中转 TODO</p>
   </div>
   <footer class="entry-footer"><span title='2024-07-31 15:42:00 +0000 UTC'>July 31, 2024</span>&nbsp;·&nbsp;WallBreakerNO4</footer>
-  <a class="entry-link" aria-label="post link to Tailscale 进阶使用教程 - MagicDNS、子网路由和自建中转" href="http://192.168.20.55:1313/posts/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---magicdns%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/"></a>
-</article>
-
-<article class="post-entry"> 
-  <header class="entry-header">
-    <h2 class="entry-hint-parent">使用 Tailscale 组网
-      <span class="entry-hint" title="Draft">
-        <svg xmlns="http://www.w3.org/2000/svg" height="20" viewBox="0 -960 960 960" fill="currentColor">
-          <path
-            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
-        </svg>
-      </span>
-    </h2>
-  </header>
-  <div class="entry-content">
-    <p>今年年初，我购入了属于自己的 NAS，并在将其作为 HomeLab All In Boom 搭建了许多服务。 部分自建的服务
-在宿舍的局域网内访问这些服务自然是十分方便的。但平常在校内上课时想访问 NAS 上的服务，就需要一番配置了。
-内网穿透 内网穿透主要有两种：公网 IP 中转 or 打洞直连。这两种方式各有其优缺点：
-公网 IP 中转：
-优点：对网络环境（准确说是 NAT 类型）没有要求 缺点：需要公网 IP，如果宿舍没有公网 IP 的话则需要中转服务器 打洞直连：
-优点：无需公网 IP 缺点：需要至少一个客户端有良好的 NAT 类型 图片引用自 Tailscale 官方文档
-在会同职业寄术学院 UIC 一期宿舍内有三家运营商，分别是电信、移动和联通。其中联通是唯一一家同时提供 PPPoE 拨号和 IPv6 服务。我在搬到一期宿舍前还听说联通可以申请到公网 IP，因此选择了联通。然而现在联通也申请不到公网 IP 了，令人感慨。
-得出结论，警惕 @Steven 的电信诈骗
-在最开始，我选择了使用 WireGuard &#43; 腾讯云轻量服务器作为中转来提供宿舍的内网穿透。这套方案最开始运作的很好，但用久了就暴露出了一些问题：
-配置复杂：WireGuard 的配置文件比较复杂，而在多个设备上管理配置文件简直不是人干的事。这个问题在添加新设备到 WireGuard 网络时尤为突出 带宽低：由于网络的所有流量都需要经过腾讯云中转，而国内服务器的的带宽懂的都懂 因此，我最后选择的方案为使用 Tailscale 打洞组网
-Tailscale 是什么 Tailscale 是一种 VPN 服务，使用 WireGuard 协议创建安全的点对点网状网络。它简化了远程访问，通过加密连接设备，不需要复杂配置、中央网关或手动端口转发。Tailscale 通过避免中心化、降低延迟、维持网络间连接连续性，提高了速度、稳定性和可靠性。适用于开发者、小型企业和需要安全、可扩展网络解决方案的大型企业。...</p>
-  </div>
-  <footer class="entry-footer"><span title='2024-07-30 20:12:00 +0000 UTC'>July 30, 2024</span>&nbsp;·&nbsp;WallBreakerNO4</footer>
-  <a class="entry-link" aria-label="post link to 使用 Tailscale 组网" href="http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-%E7%BB%84%E7%BD%91/"></a>
+  <a class="entry-link" aria-label="post link to Tailscale 进阶使用教程 - MagicDNS、子网路由和自建中转" href="http://192.168.20.55:1313/posts/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1magicdns%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/"></a>
 </article>
 
 <article class="post-entry"> 

@@ -6,21 +6,12 @@
     <description>Recent content on WallBreakerNO4的博客</description>
     <generator>Hugo -- 0.129.0</generator>
     <language>zh</language>
-    <lastBuildDate>Wed, 31 Jul 2024 15:42:00 +0000</lastBuildDate>
+    <lastBuildDate>Thu, 01 Aug 2024 15:42:00 +0000</lastBuildDate>
     <atom:link href="http://192.168.20.55:1313/index.xml" rel="self" type="application/rss+xml" />
-    <item>
-      <title>Tailscale 进阶使用教程 - MagicDNS、子网路由和自建中转</title>
-      <link>http://192.168.20.55:1313/posts/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---magicdns%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/</link>
-      <pubDate>Wed, 31 Jul 2024 15:42:00 +0000</pubDate>
-      <guid>http://192.168.20.55:1313/posts/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---magicdns%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/</guid>
-      <description>在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，我将介绍几个 Tailscale 的进阶玩法
-Subnet routes（子网路由） 如果
-自建中转 TODO</description>
-    </item>
     <item>
       <title>使用 Tailscale 组网</title>
       <link>http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-%E7%BB%84%E7%BD%91/</link>
-      <pubDate>Tue, 30 Jul 2024 20:12:00 +0000</pubDate>
+      <pubDate>Thu, 01 Aug 2024 15:42:00 +0000</pubDate>
       <guid>http://192.168.20.55:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-%E7%BB%84%E7%BD%91/</guid>
       <description>今年年初，我购入了属于自己的 NAS，并在将其作为 HomeLab All In Boom 搭建了许多服务。 部分自建的服务
 在宿舍的局域网内访问这些服务自然是十分方便的。但平常在校内上课时想访问 NAS 上的服务，就需要一番配置了。
@@ -28,11 +19,20 @@ Subnet routes（子网路由） 如果
 公网 IP 中转：
 优点：对网络环境（准确说是 NAT 类型）没有要求 缺点：需要公网 IP，如果宿舍没有公网 IP 的话则需要中转服务器 打洞直连：
 优点：无需公网 IP 缺点：需要至少一个客户端有良好的 NAT 类型 图片引用自 Tailscale 官方文档
-在会同职业寄术学院 UIC 一期宿舍内有三家运营商，分别是电信、移动和联通。其中联通是唯一一家同时提供 PPPoE 拨号和 IPv6 服务。我在搬到一期宿舍前还听说联通可以申请到公网 IP，因此选择了联通。然而现在联通也申请不到公网 IP 了，令人感慨。
-得出结论，警惕 @Steven 的电信诈骗
+在会同职业寄术学院 UIC 一期宿舍内有三家运营商，分别是电信、移动和联通。其中联通是唯一一家同时提供 PPPoE 拨号和 IPv6 的运营商。在搬到一期宿舍前我还听说联通可以申请到公网 IP，因此选择了联通。然而现在联通也申请不到公网 IP 了，令人感慨。得出结论，警惕 @Steven 的电信诈骗
 在最开始，我选择了使用 WireGuard + 腾讯云轻量服务器作为中转来提供宿舍的内网穿透。这套方案最开始运作的很好，但用久了就暴露出了一些问题：
 配置复杂：WireGuard 的配置文件比较复杂，而在多个设备上管理配置文件简直不是人干的事。这个问题在添加新设备到 WireGuard 网络时尤为突出 带宽低：由于网络的所有流量都需要经过腾讯云中转，而国内服务器的的带宽懂的都懂 因此，我最后选择的方案为使用 Tailscale 打洞组网
-Tailscale 是什么 Tailscale 是一种 VPN 服务，使用 WireGuard 协议创建安全的点对点网状网络。它简化了远程访问，通过加密连接设备，不需要复杂配置、中央网关或手动端口转发。Tailscale 通过避免中心化、降低延迟、维持网络间连接连续性，提高了速度、稳定性和可靠性。适用于开发者、小型企业和需要安全、可扩展网络解决方案的大型企业。</description>
+Tailscale 是什么 Tailscale 是一种 VPN 服务，使用 WireGuard 协议创建安全的点对点网状网络。它简化了远程访问，通过加密连接设备，不需要复杂配置、中央网关或手动端口转发。Tailscale 通过避免中心化、降低延迟、维持网络间连接连续性，提高了速度、稳定性和可靠性。适用于开发者、小型企业和需要安全、可扩展网络解决方案的大型企业。
+原文 使用 ChatGPT 总结</description>
+    </item>
+    <item>
+      <title>Tailscale 进阶使用教程 - MagicDNS、子网路由和自建中转</title>
+      <link>http://192.168.20.55:1313/posts/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1magicdns%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/</link>
+      <pubDate>Wed, 31 Jul 2024 15:42:00 +0000</pubDate>
+      <guid>http://192.168.20.55:1313/posts/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1magicdns%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/</guid>
+      <description>在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，我将介绍几个 Tailscale 的进阶玩法。
+Subnet routes（子网路由） 如果你有
+自建中转 TODO</description>
     </item>
     <item>
       <title>通过 Tailscale 为 CloudFlare Tunnel 配置代透明理来提升速度</title>
@@ -157,7 +157,7 @@ wall-breaker-no4.xyz 这个域名，是我在 18 岁生日时给自己购买的�
       <link>http://192.168.20.55:1313/friends/</link>
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       <guid>http://192.168.20.55:1313/friends/</guid>
-      <description>Steven 社恐本恐，澡堂中的主宰者 ECWU 高贵的钻石糕手 CrazyAndrin 可可爱爱小狐狸 黑末水鱼 女装大佬 本列表的顺序没有特殊含义</description>
+      <description>Steven 社恐本恐，澡堂中的主宰者 ECWU 钻石糕手 CrazyAndrin 可可爱爱小狐狸 黑墨水鱼 有个可爱的妹妹（确信） 渺宙凛弦 渺之舟，宇之奏 Junjie Liu 大湾区人 Rin Nin 本列表的顺序没有特殊含义</description>
     </item>
   </channel>
 </rss>
