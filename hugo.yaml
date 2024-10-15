@@ -8,6 +8,7 @@ build:
   buildFuture: true
 
 params:
+  env: production
   homeInfoParams:
     Title: 你好，世界！
     Content: 一个正在学习，但总想着打游戏的人

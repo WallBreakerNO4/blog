@@ -4,20 +4,19 @@
 <head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<meta name="robots" content="noindex, nofollow">
+<meta name="robots" content="index, follow">
 <title>Tailscale 进阶使用教程 - MagicDNS、子网路由和自建中转 | WallBreakerNO4的博客</title>
 <meta name="keywords" content="">
 <meta name="description" content="在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，我将介绍几个 Tailscale 的进阶玩法。
 Subnet routes（子网路由） 假设你有好几台设备，上边都部署了一些服务。这些设备在同一个局域网内，你希望你在外网时可以访问在这些设备上的服务。正常情况下，我们需要在每一台设备上都安装 tailscale 客户端，才能实现这样的需求。我们注意到，这些设备都在同一局域网（网段）下，因此我们可以使用 tailscale 自带的 subnet routes 来优化我们的组网。
 Subnet routes 的官方文章 太长不看版：Subnet routes（子网路由）是通过 Tailscale 连接远程网络（子网）的方法。配置 subnet routes 后，设备可以通过 Tailscale VPN 访问其他设备所在的本地网络，无需直接连接。
-假设我们的局域网配置如下图，局域网 IP 段为 192.168.1.0/24
-自己配置时请替换为实际 IP 段
+假设我们的局域网配置如下图，局域网 IP 段为 192.168.1.0/24，自己配置时请替换为实际 IP 段
 我们可以将 tailscale 安装在任意一个设备上，在成功加入 tailscale 网络后，可以通过以下命令来添加子网
 如果你用的路由器运行着 openwrt，那么可以参考 openwrt 的官方文章 来安装 tailscale
 sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34; 然后去 tailscale 控制台，找到对应的设备，找到编辑路由设置 最后将刚刚添加的子网勾选并保存 现在 tailscale 网络里的所有设备（配置为子网路由网关的设备除外）访问 192.168.1.0/24 这个网段的流量都会被路由到这个设备，这样便实现了子网路由
-自建中转 ">
+自建中转 前文说到，tailscale 需要良好的 NAT 环境才能打洞成功并直连。但在部分情况下，tailscale 无法成功打洞。在这种情况下，tailscale 会选择使用 derp 来中转流量，也就是类似传统 VPN 的形式">
 <meta name="author" content="WallBreakerNO4">
-<link rel="canonical" href="http://192.168.20.55:1313/posts/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1magicdns%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/">
+<link rel="canonical" href="http://192.168.20.55:1313/posts/%E8%8D%89%E7%A8%BF/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1magicdns%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
 <link rel="icon" href="http://192.168.20.55:1313/assets/favicon.ico">
 <link rel="icon" type="image/png" sizes="16x16" href="http://192.168.20.55:1313/assets/favicon-16x16.png">
@@ -26,7 +25,7 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34; 然后去 tailsca
 <link rel="mask-icon" href="http://192.168.20.55:1313/assets/mstile-150x150.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://192.168.20.55:1313/posts/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1magicdns%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/">
+<link rel="alternate" hreflang="en" href="http://192.168.20.55:1313/posts/%E8%8D%89%E7%A8%BF/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1magicdns%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/">
 <noscript>
     <style>
         #theme-toggle,
@@ -36,6 +35,87 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34; 然后去 tailsca
 
     </style>
 </noscript>
+  
+
+<meta property="og:title" content="Tailscale 进阶使用教程 - MagicDNS、子网路由和自建中转" />
+<meta property="og:description" content="在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，我将介绍几个 Tailscale 的进阶玩法。
+Subnet routes（子网路由） 假设你有好几台设备，上边都部署了一些服务。这些设备在同一个局域网内，你希望你在外网时可以访问在这些设备上的服务。正常情况下，我们需要在每一台设备上都安装 tailscale 客户端，才能实现这样的需求。我们注意到，这些设备都在同一局域网（网段）下，因此我们可以使用 tailscale 自带的 subnet routes 来优化我们的组网。
+Subnet routes 的官方文章 太长不看版：Subnet routes（子网路由）是通过 Tailscale 连接远程网络（子网）的方法。配置 subnet routes 后，设备可以通过 Tailscale VPN 访问其他设备所在的本地网络，无需直接连接。
+假设我们的局域网配置如下图，局域网 IP 段为 192.168.1.0/24，自己配置时请替换为实际 IP 段
+我们可以将 tailscale 安装在任意一个设备上，在成功加入 tailscale 网络后，可以通过以下命令来添加子网
+如果你用的路由器运行着 openwrt，那么可以参考 openwrt 的官方文章 来安装 tailscale
+sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34; 然后去 tailscale 控制台，找到对应的设备，找到编辑路由设置 最后将刚刚添加的子网勾选并保存 现在 tailscale 网络里的所有设备（配置为子网路由网关的设备除外）访问 192.168.1.0/24 这个网段的流量都会被路由到这个设备，这样便实现了子网路由
+自建中转 前文说到，tailscale 需要良好的 NAT 环境才能打洞成功并直连。但在部分情况下，tailscale 无法成功打洞。在这种情况下，tailscale 会选择使用 derp 来中转流量，也就是类似传统 VPN 的形式" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://192.168.20.55:1313/posts/%E8%8D%89%E7%A8%BF/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1magicdns%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-07-31T15:42:00+00:00" />
+<meta property="article:modified_time" content="2024-07-31T15:42:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="Tailscale 进阶使用教程 - MagicDNS、子网路由和自建中转"/>
+<meta name="twitter:description" content="在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，我将介绍几个 Tailscale 的进阶玩法。
+Subnet routes（子网路由） 假设你有好几台设备，上边都部署了一些服务。这些设备在同一个局域网内，你希望你在外网时可以访问在这些设备上的服务。正常情况下，我们需要在每一台设备上都安装 tailscale 客户端，才能实现这样的需求。我们注意到，这些设备都在同一局域网（网段）下，因此我们可以使用 tailscale 自带的 subnet routes 来优化我们的组网。
+Subnet routes 的官方文章 太长不看版：Subnet routes（子网路由）是通过 Tailscale 连接远程网络（子网）的方法。配置 subnet routes 后，设备可以通过 Tailscale VPN 访问其他设备所在的本地网络，无需直接连接。
+假设我们的局域网配置如下图，局域网 IP 段为 192.168.1.0/24，自己配置时请替换为实际 IP 段
+我们可以将 tailscale 安装在任意一个设备上，在成功加入 tailscale 网络后，可以通过以下命令来添加子网
+如果你用的路由器运行着 openwrt，那么可以参考 openwrt 的官方文章 来安装 tailscale
+sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34; 然后去 tailscale 控制台，找到对应的设备，找到编辑路由设置 最后将刚刚添加的子网勾选并保存 现在 tailscale 网络里的所有设备（配置为子网路由网关的设备除外）访问 192.168.1.0/24 这个网段的流量都会被路由到这个设备，这样便实现了子网路由
+自建中转 前文说到，tailscale 需要良好的 NAT 环境才能打洞成功并直连。但在部分情况下，tailscale 无法成功打洞。在这种情况下，tailscale 会选择使用 derp 来中转流量，也就是类似传统 VPN 的形式"/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://192.168.20.55:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "Tailscale 进阶使用教程 - MagicDNS、子网路由和自建中转",
+      "item": "http://192.168.20.55:1313/posts/%E8%8D%89%E7%A8%BF/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1magicdns%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "Tailscale 进阶使用教程 - MagicDNS、子网路由和自建中转",
+  "name": "Tailscale 进阶使用教程 - MagicDNS、子网路由和自建中转",
+  "description": "在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，我将介绍几个 Tailscale 的进阶玩法。\nSubnet routes（子网路由） 假设你有好几台设备，上边都部署了一些服务。这些设备在同一个局域网内，你希望你在外网时可以访问在这些设备上的服务。正常情况下，我们需要在每一台设备上都安装 tailscale 客户端，才能实现这样的需求。我们注意到，这些设备都在同一局域网（网段）下，因此我们可以使用 tailscale 自带的 subnet routes 来优化我们的组网。\nSubnet routes 的官方文章 太长不看版：Subnet routes（子网路由）是通过 Tailscale 连接远程网络（子网）的方法。配置 subnet routes 后，设备可以通过 Tailscale VPN 访问其他设备所在的本地网络，无需直接连接。\n假设我们的局域网配置如下图，局域网 IP 段为 192.168.1.0/24，自己配置时请替换为实际 IP 段\n我们可以将 tailscale 安装在任意一个设备上，在成功加入 tailscale 网络后，可以通过以下命令来添加子网\n如果你用的路由器运行着 openwrt，那么可以参考 openwrt 的官方文章 来安装 tailscale\nsudo tailscale set --advertise-routes=\u0026#34;192.168.1.0/24\u0026#34; 然后去 tailscale 控制台，找到对应的设备，找到编辑路由设置 最后将刚刚添加的子网勾选并保存 现在 tailscale 网络里的所有设备（配置为子网路由网关的设备除外）访问 192.168.1.0/24 这个网段的流量都会被路由到这个设备，这样便实现了子网路由\n自建中转 前文说到，tailscale 需要良好的 NAT 环境才能打洞成功并直连。但在部分情况下，tailscale 无法成功打洞。在这种情况下，tailscale 会选择使用 derp 来中转流量，也就是类似传统 VPN 的形式",
+  "keywords": [
+    
+  ],
+  "articleBody": "在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，我将介绍几个 Tailscale 的进阶玩法。\nSubnet routes（子网路由） 假设你有好几台设备，上边都部署了一些服务。这些设备在同一个局域网内，你希望你在外网时可以访问在这些设备上的服务。正常情况下，我们需要在每一台设备上都安装 tailscale 客户端，才能实现这样的需求。我们注意到，这些设备都在同一局域网（网段）下，因此我们可以使用 tailscale 自带的 subnet routes 来优化我们的组网。\nSubnet routes 的官方文章 太长不看版：Subnet routes（子网路由）是通过 Tailscale 连接远程网络（子网）的方法。配置 subnet routes 后，设备可以通过 Tailscale VPN 访问其他设备所在的本地网络，无需直接连接。\n假设我们的局域网配置如下图，局域网 IP 段为 192.168.1.0/24，自己配置时请替换为实际 IP 段\n我们可以将 tailscale 安装在任意一个设备上，在成功加入 tailscale 网络后，可以通过以下命令来添加子网\n如果你用的路由器运行着 openwrt，那么可以参考 openwrt 的官方文章 来安装 tailscale\nsudo tailscale set --advertise-routes=\"192.168.1.0/24\" 然后去 tailscale 控制台，找到对应的设备，找到编辑路由设置 最后将刚刚添加的子网勾选并保存 现在 tailscale 网络里的所有设备（配置为子网路由网关的设备除外）访问 192.168.1.0/24 这个网段的流量都会被路由到这个设备，这样便实现了子网路由\n自建中转 前文说到，tailscale 需要良好的 NAT 环境才能打洞成功并直连。但在部分情况下，tailscale 无法成功打洞。在这种情况下，tailscale 会选择使用 derp 来中转流量，也就是类似传统 VPN 的形式\n你可以使用这个 python 工具来测试你所在的网络是什么 NAT 环境 基本上，我们需要在 P2P 连接中需要至少有一个客户端拥有 Full Cone NAT 或者更好的公网 IP 才能打洞成功\n这并不是回退到 derp，tailscale 会在一开始就使用 derp 来建立连接中转流量，并在打洞成功后使用 P2P 连接，这保证了 tailscale 在各种网络环境下的可用性\n但是，tailscale 在国内并没有并没有 derp 节点。而由于我大清自有国情，这些在海外的节点的连接质量并不好，因此我们需要自建 derp 节点来改善我们在两个客户端都没有良好 NAT 类型时的连接质量\n",
+  "wordCount" : "102",
+  "inLanguage": "en",
+  "datePublished": "2024-07-31T15:42:00Z",
+  "dateModified": "2024-07-31T15:42:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "WallBreakerNO4"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://192.168.20.55:1313/posts/%E8%8D%89%E7%A8%BF/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1magicdns%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "WallBreakerNO4的博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://192.168.20.55:1313/assets/favicon.ico"
+    }
+  }
+}
+</script>
 </head>
 
 <body class=" dark" id="top">
@@ -117,10 +197,7 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34; 然后去 tailsca
 <p>Subnet routes 的<a href="https://tailscale.com/kb/1019/subnets">官方文章</a>
 太长不看版：Subnet routes（子网路由）是通过 Tailscale 连接远程网络（子网）的方法。配置 subnet routes 后，设备可以通过 Tailscale VPN 访问其他设备所在的本地网络，无需直接连接。</p>
 </blockquote>
-<p>假设我们的局域网配置如下图，局域网 IP 段为 <code>192.168.1.0/24</code></p>
-<blockquote>
-<p><strong>自己配置时请替换为实际 IP 段</strong></p>
-</blockquote>
+<p>假设我们的局域网配置如下图，局域网 IP 段为 <code>192.168.1.0/24</code>，<strong>自己配置时请替换为实际 IP 段</strong></p>
 <p><img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202410111635185.png" alt="tailscale subnet.drawio.png"  />
 </p>
 <p>我们可以将 tailscale 安装在任意一个设备上，在成功加入 tailscale 网络后，可以通过以下命令来添加子网</p>
@@ -136,6 +213,17 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34; 然后去 tailsca
 
 现在 tailscale 网络里的所有设备（配置为子网路由网关的设备除外）访问 <code>192.168.1.0/24</code> 这个网段的流量都会被路由到这个设备，这样便实现了子网路由</p>
 <h2 id="自建中转">自建中转<a hidden class="anchor" aria-hidden="true" href="#自建中转">#</a></h2>
+<p>前文说到，tailscale 需要良好的 NAT 环境才能打洞成功并直连。但在部分情况下，tailscale 无法成功打洞。在这种情况下，tailscale 会选择使用 derp 来中转流量，也就是类似传统 VPN 的形式</p>
+<blockquote>
+<p>你可以使用这个 <a href="https://pypi.org/project/yapystun/">python 工具</a>来测试你所在的网络是什么 NAT 环境
+基本上，我们需要在 P2P 连接中需要至少有一个客户端拥有 Full Cone NAT 或者更好的公网 IP 才能打洞成功</p>
+</blockquote>
+<p><img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/20240620000934.png#center" alt="image.png"  />
+</p>
+<blockquote>
+<p>这并不是回退到 derp，tailscale 会在一开始就使用 derp 来建立连接中转流量，并在打洞成功后使用 P2P 连接，这保证了 tailscale 在各种网络环境下的可用性</p>
+</blockquote>
+<p><strong>但是</strong>，tailscale 在国内并没有并没有 derp 节点。而由于我大清自有国情，这些在海外的节点的连接质量并不好，因此我们需要自建 derp 节点来改善我们在两个客户端都没有良好 NAT 类型时的连接质量</p>
 
 
   </div>
@@ -149,7 +237,7 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34; 然后去 tailsca
     <br>
     <span>使用 Tailscale 组网</span>
   </a>
-  <a class="next" href="http://192.168.20.55:1313/posts/%E9%80%9A%E8%BF%87-tailscale-%E4%B8%BA-cloudflare-tunnel-%E9%85%8D%E7%BD%AE%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86%E6%9D%A5%E6%8F%90%E5%8D%87%E9%80%9F%E5%BA%A6/">
+  <a class="next" href="http://192.168.20.55:1313/posts/%E8%8D%89%E7%A8%BF/%E9%80%9A%E8%BF%87-tailscale-%E4%B8%BA-cloudflare-tunnel-%E9%85%8D%E7%BD%AE%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86%E6%9D%A5%E6%8F%90%E5%8D%87%E9%80%9F%E5%BA%A6/">
     <span class="title">Next »</span>
     <br>
     <span>通过 Tailscale 为 CloudFlare Tunnel 配置代透明理来提升速度</span>

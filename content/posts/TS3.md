@@ -4,7 +4,9 @@ date: 2023-11-16T17:19:00Z
 draft: false
 author: WallBreakerNO4
 ---
-> **TeamSpeak 最新版为 TeamSpeak 5，操作界面有很大的变化，这篇文章已经过时，仅供参考**
+> ~~**TeamSpeak 最新版为 TeamSpeak 5，操作界面有很大的变化，这篇文章已经过时，仅供参考**~~
+> 
+> TeamSpeak 5 超级垃圾，不如 TeamSpeak 3 一根，占用又高，所以这篇文章没有过时🥰🥰
 
 ## 0x00 | 前言 | 什么是 TeamSpeak 3？
 

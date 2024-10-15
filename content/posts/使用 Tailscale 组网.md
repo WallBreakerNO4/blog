@@ -24,7 +24,7 @@ author: WallBreakerNO4
 
 - 打洞直连：
   - 优点：无需公网 IP
-  - 缺点：需要至少一个客户端有良好的 NAT 类型
+  - 缺点：在 P2P 连接中需要至少一个客户端有良好的 NAT 类型
     ![image.png](https://image.wall-breaker-no4.xyz/imgs/20240620000945.png#center)
 
 > 图片引用自 Tailscale [官方文档](https://tailscale.com/kb/1151/what-is-tailscale)
@@ -102,7 +102,11 @@ author: WallBreakerNO4
 > MagicDNS 还有很多扩展玩法，如搭建广告过滤 DNS 来为所有设备去除广告。详情请参阅 Tailscale 官方[文档](https://tailscale.com/kb/1081/magicdns)。
 
 如果能正常 ping 通的话，说明 Tailscale 已经配置好了。
+### 对防火墙的设置
 
+如果你服务器拥有公网 IP（动态、静态都算），但却无法打洞成功，请检查防火墙设置，将 `41641/udp` 端口放开。
+
+> [What firewall ports should I open to use Tailscale?](https://tailscale.com/kb/1082/firewall-ports)
 ## 尾巴
 
 以上只是 Tailscale 最基本的用法，也是其开箱即用特性的体现。~~在下一篇文章中，我将介绍 Tailscale 的进阶玩法。~~ 大三开学了，先咕咕咕了
