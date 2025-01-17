@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en" dir="auto">
+
+<head><script src="/livereload.js?mindelay=10&amp;v=2&amp;port=1313&amp;path=livereload" data-no-instant defer></script><meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta name="robots" content="index, follow">
+<title>白嫖腾讯云GPU跑Stable Diffusion | WallBreakerNO4的博客</title>
+<meta name="keywords" content="">
+<meta name="description" content="AI 绘画并不是一个离我们很远的话题，随着基于 diffusion 架构的 stable diffusion 的诞生，各式各样的绘图模型如井喷式诞生。如果想在本地跑 AIGC 的绘画软件，那么一块强大的 GPU 是必不可少的。但不是所有人都是臭打游戏的拥有一块 GPU，因此我在这里介绍如何白嫖腾讯云的免费 GPU 来运行 Stable Diffusion WebUI
+
+感谢 Linux Do 上的网友将这个白嫖的方法分享出来
+
+准备
+首先打开 https://ide.cloud.tencent.com/dashboard/gpu-workspace ，登录后便能进入到这一个界面（图中是我已经创建好的，请忽略）：
+
+
+
+腾讯云在 Cloud Studio 中提供了一个月 10000 分钟的 GPU 时长（2025 年 1 月 1 日后），免费的 GPU 配置为 Tesla T4，拥有 16G 的显存。这用于跑 Stable Diffusion WebUI 已经绰绰有余了。
+美中不足的是，这个在排除了系统自带占用后，只有 30G 的空间，稍微有点小
+
+新建一个工作空间：
+
+
+名称随便，能记住就行，模板选择 Pytorch：
+
+
+进入新建好的工作空间 VScode 换皮
+
+
+将左侧的示例删除：
+
+
+新建一个终端：
+
+
+
+
+安装 WebUI
+克隆项目（使用 Github Proxy 代理）到本地并进入 webui 文件夹：">
+<meta name="author" content="WallBreakerNO4">
+<link rel="canonical" href="http://100.119.72.3:1313/posts/%E8%8D%89%E7%A8%BF/%E7%99%BD%E5%AB%96%E8%85%BE%E8%AE%AF%E4%BA%91gpu%E8%B7%91stable-diffusion-webui/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://100.119.72.3:1313/assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://100.119.72.3:1313/assets/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://100.119.72.3:1313/assets/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://100.119.72.3:1313/assets/apple-touch-icon.png">
+<link rel="mask-icon" href="http://100.119.72.3:1313/assets/mstile-150x150.png">
+<meta name="theme-color" content="#2e2e33">
+<meta name="msapplication-TileColor" content="#2e2e33">
+<link rel="alternate" hreflang="en" href="http://100.119.72.3:1313/posts/%E8%8D%89%E7%A8%BF/%E7%99%BD%E5%AB%96%E8%85%BE%E8%AE%AF%E4%BA%91gpu%E8%B7%91stable-diffusion-webui/">
+<noscript>
+    <style>
+        #theme-toggle,
+        .top-link {
+            display: none;
+        }
+
+    </style>
+</noscript><meta property="og:title" content="白嫖腾讯云GPU跑Stable Diffusion" />
+<meta property="og:description" content="AI 绘画并不是一个离我们很远的话题，随着基于 diffusion 架构的 stable diffusion 的诞生，各式各样的绘图模型如井喷式诞生。如果想在本地跑 AIGC 的绘画软件，那么一块强大的 GPU 是必不可少的。但不是所有人都是臭打游戏的拥有一块 GPU，因此我在这里介绍如何白嫖腾讯云的免费 GPU 来运行 Stable Diffusion WebUI
+
+感谢 Linux Do 上的网友将这个白嫖的方法分享出来
+
+准备
+首先打开 https://ide.cloud.tencent.com/dashboard/gpu-workspace ，登录后便能进入到这一个界面（图中是我已经创建好的，请忽略）：
+
+
+
+腾讯云在 Cloud Studio 中提供了一个月 10000 分钟的 GPU 时长（2025 年 1 月 1 日后），免费的 GPU 配置为 Tesla T4，拥有 16G 的显存。这用于跑 Stable Diffusion WebUI 已经绰绰有余了。
+美中不足的是，这个在排除了系统自带占用后，只有 30G 的空间，稍微有点小
+
+新建一个工作空间：
+
+
+名称随便，能记住就行，模板选择 Pytorch：
+
+
+进入新建好的工作空间 VScode 换皮
+
+
+将左侧的示例删除：
+
+
+新建一个终端：
+
+
+
+
+安装 WebUI
+克隆项目（使用 Github Proxy 代理）到本地并进入 webui 文件夹：" />
+<meta property="og:type" content="article" />
+<meta property="og:url" content="http://100.119.72.3:1313/posts/%E8%8D%89%E7%A8%BF/%E7%99%BD%E5%AB%96%E8%85%BE%E8%AE%AF%E4%BA%91gpu%E8%B7%91stable-diffusion-webui/" /><meta property="article:section" content="posts" />
+<meta property="article:published_time" content="2024-12-21T00:27:00+00:00" />
+<meta property="article:modified_time" content="2024-12-21T00:27:00+00:00" />
+
+<meta name="twitter:card" content="summary"/>
+<meta name="twitter:title" content="白嫖腾讯云GPU跑Stable Diffusion"/>
+<meta name="twitter:description" content="AI 绘画并不是一个离我们很远的话题，随着基于 diffusion 架构的 stable diffusion 的诞生，各式各样的绘图模型如井喷式诞生。如果想在本地跑 AIGC 的绘画软件，那么一块强大的 GPU 是必不可少的。但不是所有人都是臭打游戏的拥有一块 GPU，因此我在这里介绍如何白嫖腾讯云的免费 GPU 来运行 Stable Diffusion WebUI
+
+感谢 Linux Do 上的网友将这个白嫖的方法分享出来
+
+准备
+首先打开 https://ide.cloud.tencent.com/dashboard/gpu-workspace ，登录后便能进入到这一个界面（图中是我已经创建好的，请忽略）：
+
+
+
+腾讯云在 Cloud Studio 中提供了一个月 10000 分钟的 GPU 时长（2025 年 1 月 1 日后），免费的 GPU 配置为 Tesla T4，拥有 16G 的显存。这用于跑 Stable Diffusion WebUI 已经绰绰有余了。
+美中不足的是，这个在排除了系统自带占用后，只有 30G 的空间，稍微有点小
+
+新建一个工作空间：
+
+
+名称随便，能记住就行，模板选择 Pytorch：
+
+
+进入新建好的工作空间 VScode 换皮
+
+
+将左侧的示例删除：
+
+
+新建一个终端：
+
+
+
+
+安装 WebUI
+克隆项目（使用 Github Proxy 代理）到本地并进入 webui 文件夹："/>
+
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position":  1 ,
+      "name": "Posts",
+      "item": "http://100.119.72.3:1313/posts/"
+    }, 
+    {
+      "@type": "ListItem",
+      "position":  2 ,
+      "name": "白嫖腾讯云GPU跑Stable Diffusion",
+      "item": "http://100.119.72.3:1313/posts/%E8%8D%89%E7%A8%BF/%E7%99%BD%E5%AB%96%E8%85%BE%E8%AE%AF%E4%BA%91gpu%E8%B7%91stable-diffusion-webui/"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "白嫖腾讯云GPU跑Stable Diffusion",
+  "name": "白嫖腾讯云GPU跑Stable Diffusion",
+  "description": "AI 绘画并不是一个离我们很远的话题，随着基于 diffusion 架构的 stable diffusion 的诞生，各式各样的绘图模型如井喷式诞生。如果想在本地跑 AIGC 的绘画软件，那么一块强大的 GPU 是必不可少的。但不是所有人都是臭打游戏的拥有一块 GPU，因此我在这里介绍如何白嫖腾讯云的免费 GPU 来运行 Stable Diffusion WebUI\n感谢 Linux Do 上的网友将这个白嫖的方法分享出来\n准备 首先打开 https://ide.cloud.tencent.com/dashboard/gpu-workspace ，登录后便能进入到这一个界面（图中是我已经创建好的，请忽略）： 腾讯云在 Cloud Studio 中提供了一个月 10000 分钟的 GPU 时长（2025 年 1 月 1 日后），免费的 GPU 配置为 Tesla T4，拥有 16G 的显存。这用于跑 Stable Diffusion WebUI 已经绰绰有余了。 美中不足的是，这个在排除了系统自带占用后，只有 30G 的空间，稍微有点小\n新建一个工作空间： 名称随便，能记住就行，模板选择 Pytorch： 进入新建好的工作空间 VScode 换皮 将左侧的示例删除： 新建一个终端： 安装 WebUI 克隆项目（使用 Github Proxy 代理）到本地并进入 webui 文件夹：\n",
+  "keywords": [
+    
+  ],
+  "articleBody": "AI 绘画并不是一个离我们很远的话题，随着基于 diffusion 架构的 stable diffusion 的诞生，各式各样的绘图模型如井喷式诞生。如果想在本地跑 AIGC 的绘画软件，那么一块强大的 GPU 是必不可少的。但不是所有人都是臭打游戏的拥有一块 GPU，因此我在这里介绍如何白嫖腾讯云的免费 GPU 来运行 Stable Diffusion WebUI\n感谢 Linux Do 上的网友将这个白嫖的方法分享出来\n准备 首先打开 https://ide.cloud.tencent.com/dashboard/gpu-workspace ，登录后便能进入到这一个界面（图中是我已经创建好的，请忽略）： 腾讯云在 Cloud Studio 中提供了一个月 10000 分钟的 GPU 时长（2025 年 1 月 1 日后），免费的 GPU 配置为 Tesla T4，拥有 16G 的显存。这用于跑 Stable Diffusion WebUI 已经绰绰有余了。 美中不足的是，这个在排除了系统自带占用后，只有 30G 的空间，稍微有点小\n新建一个工作空间： 名称随便，能记住就行，模板选择 Pytorch： 进入新建好的工作空间 VScode 换皮 将左侧的示例删除： 新建一个终端： 安装 WebUI 克隆项目（使用 Github Proxy 代理）到本地并进入 webui 文件夹：\ngit clone https://ghfast.top/https://github.com/lllyasviel/stable-diffusion-webui-forge.git cd stable-diffusion-webui-forge Github Proxy 项目的域名很容易被墙，请去项目最新发布地址查看可用域名，并将后续使用 Github Proxy 的域名替换\n将自带的 pytorch 删除（版本太老了），创建 venv 并安装最新版的 pytorch：\npip uninstall torch torchvision torchaudio python -m venv venv source venv/bin/activate pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124 可能会比较慢，但国内没有 pytorch 的镜像源了，只能这样嗯下\n打开 stable-diffusion-webui-forge/modules/launch_utils.py 文件，将里面所有的 https://github.com 替换为 https://ghfast.top/https://github.com，在第一次启动 webui 安装插件时走镜像加速安装 使用 ctrl + H 进行替换\n安装工作空间缺失的组件（aria2 是用于下载模型的，如果你喜欢使用 wget 的话就不用安装）：\napt update \u0026\u0026 apt install aria2 google-perftools bc libgl1 -y 修改 stable-diffusion-webui-forge/webui-user.sh，取消 export COMMANDLINE_ARGS=\"\" 这一行的注释，并修改为：\nexport COMMANDLINE_ARGS=\"--listen --enable-insecure-extension-access --api --theme dark --cuda-malloc\" 进入 stable-diffusion-webui-forge/models/Stable-diffusion 下载模型：\n对于画二次元图片，我推荐 Laxhar Dream Lab 训练的 NoobAI-XL 系列模型：Huggingface 地址，Civitai 地址\ncd stable-diffusion-webui-forge/models/Stable-diffusion # 由于 HuggingFace 被墙，使用 HF-mirror 下载 aria2c -x 16 -o NoobAI-XL-Vpred-v1.0.safetensors \"https://hf-mirror.com/Laxhar/noobai-XL-Vpred-1.0/resolve/main/NoobAI-XL-Vpred-v1.0.safetensors?download=true\" # HuggingFace 下载链接 # aria2c -x 16 -o NoobAI-XL-Vpred-v1.0.safetensors \"https://huggingface.co/Laxhar/noobai-XL-Vpred-1.0/resolve/main/NoobAI-XL-Vpred-v1.0.safetensors?download=true\" 返回 webui 根目录，并启动 webui：\ncd /workspace/stable-diffusion-webui-forge/ ./webui.sh -f 由于是 root 身份，需要添加 -f 参数才能启动 webui\n终端出现类似以下输出时，webui 便启动成功了\nRunning on local URL: http://0.0.0.0:7860 To create a public link, set `share=True` in `launch()`. Startup time: 47.7s (prepare environment: 12.1s, launcher: 0.6s, import torch: 12.2s, initialize shared: 0.1s, other imports: 0.5s, load scripts: 2.2s, initialize google blockly: 14.1s, create ui: 2.6s, gradio launch: 1.4s, add APIs: 1.7s). 访问 WebUI 由于腾讯云的这个工作空间并不提供外部访问端口的功能，我们需要使用内网穿透工具来访问 webui\n",
+  "wordCount" : "247",
+  "inLanguage": "en",
+  "datePublished": "2024-12-21T00:27:00Z",
+  "dateModified": "2024-12-21T00:27:00Z",
+  "author":{
+    "@type": "Person",
+    "name": "WallBreakerNO4"
+  },
+  "mainEntityOfPage": {
+    "@type": "WebPage",
+    "@id": "http://100.119.72.3:1313/posts/%E8%8D%89%E7%A8%BF/%E7%99%BD%E5%AB%96%E8%85%BE%E8%AE%AF%E4%BA%91gpu%E8%B7%91stable-diffusion-webui/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "WallBreakerNO4的博客",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "http://100.119.72.3:1313/assets/favicon.ico"
+    }
+  }
+}
+</script>
+</head>
+
+<body class=" dark" id="top">
+<script>
+    if (localStorage.getItem("pref-theme") === "light") {
+        document.body.classList.remove('dark')
+    }
+
+</script>
+
+<header class="header">
+    <nav class="nav">
+        <div class="logo">
+            <a href="http://100.119.72.3:1313/" accesskey="h" title="WallBreakerNO4的博客 (Alt + H)">WallBreakerNO4的博客</a>
+            <div class="logo-switches">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                    <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+                    </svg>
+                    <svg id="sun" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
+                        fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                        stroke-linejoin="round">
+                        <circle cx="12" cy="12" r="5"></circle>
+                        <line x1="12" y1="1" x2="12" y2="3"></line>
+                        <line x1="12" y1="21" x2="12" y2="23"></line>
+                        <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+                        <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+                        <line x1="1" y1="12" x2="3" y2="12"></line>
+                        <line x1="21" y1="12" x2="23" y2="12"></line>
+                        <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+                        <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+                    </svg>
+                </button>
+            </div>
+        </div>
+        <ul id="menu">
+            <li>
+                <a href="http://100.119.72.3:1313/friends/" title="朋友">
+                    <span>朋友</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://100.119.72.3:1313/about/" title="关于">
+                    <span>关于</span>
+                </a>
+            </li>
+            <li>
+                <a href="http://100.119.72.3:1313/archives" title="存档">
+                    <span>存档</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+</header>
+<main class="main">
+
+<article class="post-single">
+  <header class="post-header">
+    <div class="breadcrumbs"><a href="http://100.119.72.3:1313/">Home</a>&nbsp;»&nbsp;<a href="http://100.119.72.3:1313/posts/">Posts</a></div>
+    <h1 class="post-title entry-hint-parent">
+      白嫖腾讯云GPU跑Stable Diffusion
+      <span class="entry-hint" title="Draft">
+        <svg xmlns="http://www.w3.org/2000/svg" height="35" viewBox="0 -960 960 960" fill="currentColor">
+          <path
+            d="M160-410v-60h300v60H160Zm0-165v-60h470v60H160Zm0-165v-60h470v60H160Zm360 580v-123l221-220q9-9 20-13t22-4q12 0 23 4.5t20 13.5l37 37q9 9 13 20t4 22q0 11-4.5 22.5T862.09-380L643-160H520Zm300-263-37-37 37 37ZM580-220h38l121-122-18-19-19-18-122 121v38Zm141-141-19-18 37 37-18-19Z" />
+        </svg>
+      </span>
+    </h1>
+    <div class="post-meta"><span title='2024-12-21 00:27:00 +0000 UTC'>December 21, 2024</span>&nbsp;·&nbsp;WallBreakerNO4
+
+</div>
+  </header> 
+  <div class="post-content"><p>AI 绘画并不是一个离我们很远的话题，随着基于 diffusion 架构的 stable diffusion 的诞生，各式各样的绘图模型如井喷式诞生。如果想在本地跑 AIGC 的绘画软件，那么一块强大的 GPU 是必不可少的。但不是所有人都<del>是臭打游戏的</del>拥有一块 GPU，因此我在这里介绍如何白嫖腾讯云的免费 GPU 来运行 Stable Diffusion WebUI</p>
+<blockquote>
+<p>感谢 <a href="https://linux.do/t/topic/262176">Linux Do</a> 上的网友将这个白嫖的方法分享出来</p>
+</blockquote>
+<h2 id="准备">准备<a hidden class="anchor" aria-hidden="true" href="#准备">#</a></h2>
+<p>首先打开 <a href="https://ide.cloud.tencent.com/dashboard/gpu-workspace">https://ide.cloud.tencent.com/dashboard/gpu-workspace</a> ，登录后便能进入到这一个界面（图中是我已经创建好的，请忽略）：
+<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210041980.png" alt="image.png"  />
+</p>
+<blockquote>
+<p>腾讯云在 Cloud Studio 中提供了一个月 10000 分钟的 GPU 时长（2025 年 1 月 1 日后），免费的 GPU 配置为 Tesla T4，拥有 16G 的显存。这用于跑 Stable Diffusion WebUI 已经绰绰有余了。
+美中不足的是，这个在排除了系统自带占用后，只有 30G 的空间，稍微有点小</p>
+</blockquote>
+<p>新建一个工作空间：
+<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210046512.png" alt="image.png"  />
+</p>
+<p>名称随便，能记住就行，模板选择 Pytorch：
+<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210047611.png" alt="image.png"  />
+</p>
+<p>进入新建好的工作空间 <del>VScode 换皮</del>
+<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210122200.png" alt="image.png"  />
+</p>
+<p>将左侧的示例删除：
+<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210124619.png" alt="image.png"  />
+</p>
+<p>新建一个终端：
+<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210126986.png" alt="image.png"  />
+
+<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210127485.png" alt="image.png"  />
+</p>
+<h2 id="安装-webui">安装 WebUI<a hidden class="anchor" aria-hidden="true" href="#安装-webui">#</a></h2>
+<p>克隆项目（使用 Github Proxy 代理）到本地并进入 webui 文件夹：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git clone https://ghfast.top/https://github.com/lllyasviel/stable-diffusion-webui-forge.git
+</span></span><span style="display:flex;"><span>cd stable-diffusion-webui-forge
+</span></span></code></pre></div><blockquote>
+<p>Github Proxy 项目的域名很容易被墙，请去项目最新发布<a href="https://ghproxy.link/">地址</a>查看可用域名，并将后续使用 Github Proxy 的域名替换</p>
+</blockquote>
+<p>将自带的 pytorch 删除（版本太老了），创建 venv 并安装最新版的 pytorch：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pip uninstall torch torchvision torchaudio
+</span></span><span style="display:flex;"><span>python -m venv venv
+</span></span><span style="display:flex;"><span>source venv/bin/activate
+</span></span><span style="display:flex;"><span>pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
+</span></span></code></pre></div><blockquote>
+<p>可能会比较慢，但国内没有 pytorch 的镜像源了，只能这样嗯下</p>
+</blockquote>
+<p>打开 <code>stable-diffusion-webui-forge/modules/launch_utils.py</code> 文件，将里面所有的 <code>https://github.com</code> 替换为 <code>https://ghfast.top/https://github.com</code>，在第一次启动 webui 安装插件时走镜像加速安装
+<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210146890.png" alt="image.png"  />
+</p>
+<blockquote>
+<p>使用 <code>ctrl + H</code> 进行替换</p>
+</blockquote>
+<p>安装工作空间缺失的组件（<code>aria2</code> 是用于下载模型的，如果你喜欢使用 <code>wget</code> 的话就不用安装）：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>apt update <span style="color:#f92672">&amp;&amp;</span> apt install aria2 google-perftools bc libgl1 -y
+</span></span></code></pre></div><p>修改 <code>stable-diffusion-webui-forge/webui-user.sh</code>，取消 <code>export COMMANDLINE_ARGS=&quot;&quot;</code> 这一行的注释，并修改为：</p>
+<pre tabindex="0"><code>export COMMANDLINE_ARGS=&#34;--listen --enable-insecure-extension-access --api --theme dark --cuda-malloc&#34;
+</code></pre><p><img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210151109.png" alt="image.png"  />
+</p>
+<p>进入 <code>stable-diffusion-webui-forge/models/Stable-diffusion</code> 下载模型：</p>
+<blockquote>
+<p>对于画二次元图片，我推荐 Laxhar Dream Lab 训练的 NoobAI-XL 系列模型：<a href="https://huggingface.co/Laxhar">Huggingface 地址</a>，<a href="https://civitai.com/models/833294/noobai-xl-nai-xl">Civitai 地址</a></p>
+</blockquote>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd stable-diffusion-webui-forge/models/Stable-diffusion
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># 由于 HuggingFace 被墙，使用 HF-mirror 下载</span>
+</span></span><span style="display:flex;"><span>aria2c -x <span style="color:#ae81ff">16</span> -o NoobAI-XL-Vpred-v1.0.safetensors <span style="color:#e6db74">&#34;https://hf-mirror.com/Laxhar/noobai-XL-Vpred-1.0/resolve/main/NoobAI-XL-Vpred-v1.0.safetensors?download=true&#34;</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># HuggingFace 下载链接</span>
+</span></span><span style="display:flex;"><span><span style="color:#75715e"># aria2c -x 16 -o NoobAI-XL-Vpred-v1.0.safetensors &#34;https://huggingface.co/Laxhar/noobai-XL-Vpred-1.0/resolve/main/NoobAI-XL-Vpred-v1.0.safetensors?download=true&#34;</span>
+</span></span></code></pre></div><p>返回 webui 根目录，并启动 webui：</p>
+<div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd /workspace/stable-diffusion-webui-forge/
+</span></span><span style="display:flex;"><span>./webui.sh -f
+</span></span></code></pre></div><blockquote>
+<p>由于是 root 身份，需要添加 <code>-f</code> 参数才能启动 webui</p>
+</blockquote>
+<p>终端出现类似以下输出时，webui 便启动成功了</p>
+<pre tabindex="0"><code>Running on local URL:  http://0.0.0.0:7860
+
+To create a public link, set `share=True` in `launch()`.
+Startup time: 47.7s (prepare environment: 12.1s, launcher: 0.6s, import torch: 12.2s, initialize shared: 0.1s, other imports: 0.5s, load scripts: 2.2s, initialize google blockly: 14.1s, create ui: 2.6s, gradio launch: 1.4s, add APIs: 1.7s).
+</code></pre><p><img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210226475.png" alt="image.png"  />
+</p>
+<h2 id="访问-webui">访问 WebUI<a hidden class="anchor" aria-hidden="true" href="#访问-webui">#</a></h2>
+<p>由于腾讯云的这个工作空间并不提供外部访问端口的功能，我们需要使用内网穿透工具来访问 webui</p>
+
+
+  </div>
+
+  <footer class="post-footer">
+    <ul class="post-tags">
+    </ul>
+<nav class="paginav">
+  <a class="prev" href="http://100.119.72.3:1313/posts/%E8%8D%89%E7%A8%BF/%E5%A6%82%E4%BD%95%E7%94%A8sd%E6%9D%A5%E6%B6%A9%E6%B6%A9/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>如何用SD来涩涩</span>
+  </a>
+  <a class="next" href="http://100.119.72.3:1313/posts/%E8%8D%89%E7%A8%BF/%E8%AE%B0%E5%BD%95%E4%B8%80%E4%B8%8B%E7%BB%99%E5%AE%B6%E9%87%8C%E5%8D%87%E7%BA%A7%E4%BC%81%E4%B8%9A%E7%BA%A7%E7%BB%84%E7%BD%91%E8%B8%A9%E7%9A%84%E5%9D%91/">
+    <span class="title">Next »</span>
+    <br>
+    <span></span>
+  </a>
+</nav>
+
+  </footer><script
+  src="https://giscus.app/client.js"
+  data-repo="WallBreakerNO4/blog"
+  data-repo-id="R_kgDOKttXig"
+  data-category="Announcements"
+  data-category-id="DIC_kwDOKttXis4ChSmC"
+  data-mapping="pathname"
+  data-strict="0"
+  data-reactions-enabled="1"
+  data-emit-metadata="0"
+  data-input-position="bottom"
+  data-theme="noborder_gray"
+  data-lang="zh-CN"
+  crossorigin="anonymous"
+  async
+></script>
+
+</article>
+    </main>
+    
+<footer class="footer">
+        <span>&copy; 2025 <a href="http://100.119.72.3:1313/">WallBreakerNO4的博客</a></span> · 
+
+    <span>
+        Powered by
+        <a href="https://gohugo.io/" rel="noopener noreferrer" target="_blank">Hugo</a> &
+        <a href="https://github.com/adityatelange/hugo-PaperMod/" rel="noopener" target="_blank">PaperMod</a>
+    </span>
+</footer>
+<a href="#top" aria-label="go to top" title="Go to Top (Alt + G)" class="top-link" id="top-link" accesskey="g">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 12 6" fill="currentColor">
+        <path d="M12 6H0l6-6z" />
+    </svg>
+</a>
+
+<script>
+    let menu = document.getElementById('menu')
+    if (menu) {
+        menu.scrollLeft = localStorage.getItem("menu-scroll-position");
+        menu.onscroll = function () {
+            localStorage.setItem("menu-scroll-position", menu.scrollLeft);
+        }
+    }
+
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener("click", function (e) {
+            e.preventDefault();
+            var id = this.getAttribute("href").substr(1);
+            if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView({
+                    behavior: "smooth"
+                });
+            } else {
+                document.querySelector(`[id='${decodeURIComponent(id)}']`).scrollIntoView();
+            }
+            if (id === "top") {
+                history.replaceState(null, null, " ");
+            } else {
+                history.pushState(null, null, `#${id}`);
+            }
+        });
+    });
+
+</script>
+<script>
+    var mybutton = document.getElementById("top-link");
+    window.onscroll = function () {
+        if (document.body.scrollTop > 800 || document.documentElement.scrollTop > 800) {
+            mybutton.style.visibility = "visible";
+            mybutton.style.opacity = "1";
+        } else {
+            mybutton.style.visibility = "hidden";
+            mybutton.style.opacity = "0";
+        }
+    };
+
+</script>
+<script>
+    document.getElementById("theme-toggle").addEventListener("click", () => {
+        if (document.body.className.includes("dark")) {
+            document.body.classList.remove('dark');
+            localStorage.setItem("pref-theme", 'light');
+        } else {
+            document.body.classList.add('dark');
+            localStorage.setItem("pref-theme", 'dark');
+        }
+    })
+
+</script>
+<script>
+    document.querySelectorAll('pre > code').forEach((codeblock) => {
+        const container = codeblock.parentNode.parentNode;
+
+        const copybutton = document.createElement('button');
+        copybutton.classList.add('copy-code');
+        copybutton.innerHTML = 'copy';
+
+        function copyingDone() {
+            copybutton.innerHTML = 'copied!';
+            setTimeout(() => {
+                copybutton.innerHTML = 'copy';
+            }, 2000);
+        }
+
+        copybutton.addEventListener('click', (cb) => {
+            if ('clipboard' in navigator) {
+                navigator.clipboard.writeText(codeblock.textContent);
+                copyingDone();
+                return;
+            }
+
+            const range = document.createRange();
+            range.selectNodeContents(codeblock);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+            try {
+                document.execCommand('copy');
+                copyingDone();
+            } catch (e) { };
+            selection.removeRange(range);
+        });
+
+        if (container.classList.contains("highlight")) {
+            container.appendChild(copybutton);
+        } else if (container.parentNode.firstChild == container) {
+            
+        } else if (codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.nodeName == "TABLE") {
+            
+            codeblock.parentNode.parentNode.parentNode.parentNode.parentNode.appendChild(copybutton);
+        } else {
+            
+            codeblock.parentNode.appendChild(copybutton);
+        }
+    });
+</script>
+</body>
+
+</html>

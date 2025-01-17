@@ -8,23 +8,37 @@
 <title>如何为Docker添加代理 | WallBreakerNO4的博客</title>
 <meta name="keywords" content="">
 <meta name="description" content="前段时间，我帮朋友搭建了一个我的世界服务器，并计划使用 Docker 来管理它。然而，在安装过程中，我发现镜像总是无法拉取。经过查阅资料，我发现可以通过配置 Docker Daemon 使用代理来拉取镜像。考虑到最近各个镜像站都撤掉了 Docker Hub 的镜像，我认为配置代理来访问 Docker Hub 可能是未来在大陆使用 Docker 的最佳方式。
-为 Docker Daemon 配置代理 首先，创建配置文件：
-sudo mkdir -p /etc/systemd/system/docker.service.d sudo nano /etc/systemd/system/docker.service.d/proxy.conf 在配置文件中填入以下内容：
-[Service] Environment=&#34;HTTP_PROXY=http://[proxy server IP]:[port]/&#34; Environment=&#34;HTTPS_PROXY=http://[proxy server IP]:[port]/&#34; Environment=&#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.168.0.0/16,172.16.0.0/12,10.0.0.0/8,100.64.0.0/10&#34; 请将 [proxy server]:[port] 替换成代理服务的 IP 和端口
+为 Docker Daemon 配置代理
+首先，创建配置文件：
+sudo mkdir -p /etc/systemd/system/docker.service.d
+sudo nano /etc/systemd/system/docker.service.d/proxy.conf
+在配置文件中填入以下内容：
+[Service]
+Environment=&#34;HTTP_PROXY=http://[proxy server IP]:[port]/&#34;
+Environment=&#34;HTTPS_PROXY=http://[proxy server IP]:[port]/&#34;
+Environment=&#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.168.0.0/16,172.16.0.0/12,10.0.0.0/8,100.64.0.0/10&#34;
+
+请将 [proxy server]:[port] 替换成代理服务的 IP 和端口
+
 我们需要重启 Docker Daemon 服务以使配置生效：
-sudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以正常的拉取镜像
-参考 Docker Daemon Systemd 配置文档">
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+现在，已经可以正常的拉取镜像
+参考
+
+Docker Daemon Systemd 配置文档
+">
 <meta name="author" content="WallBreakerNO4">
-<link rel="canonical" href="http://192.168.20.55:1313/posts/docker%E4%BB%A3%E7%90%86/">
+<link rel="canonical" href="http://100.119.72.3:1313/posts/docker%E4%BB%A3%E7%90%86/">
 <link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://192.168.20.55:1313/assets/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://192.168.20.55:1313/assets/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://192.168.20.55:1313/assets/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://192.168.20.55:1313/assets/apple-touch-icon.png">
-<link rel="mask-icon" href="http://192.168.20.55:1313/assets/mstile-150x150.png">
+<link rel="icon" href="http://100.119.72.3:1313/assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://100.119.72.3:1313/assets/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://100.119.72.3:1313/assets/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://100.119.72.3:1313/assets/apple-touch-icon.png">
+<link rel="mask-icon" href="http://100.119.72.3:1313/assets/mstile-150x150.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://192.168.20.55:1313/posts/docker%E4%BB%A3%E7%90%86/">
+<link rel="alternate" hreflang="en" href="http://100.119.72.3:1313/posts/docker%E4%BB%A3%E7%90%86/">
 <noscript>
     <style>
         #theme-toggle,
@@ -33,31 +47,56 @@ sudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以
         }
 
     </style>
-</noscript>
-  
-
-<meta property="og:title" content="如何为Docker添加代理" />
+</noscript><meta property="og:title" content="如何为Docker添加代理" />
 <meta property="og:description" content="前段时间，我帮朋友搭建了一个我的世界服务器，并计划使用 Docker 来管理它。然而，在安装过程中，我发现镜像总是无法拉取。经过查阅资料，我发现可以通过配置 Docker Daemon 使用代理来拉取镜像。考虑到最近各个镜像站都撤掉了 Docker Hub 的镜像，我认为配置代理来访问 Docker Hub 可能是未来在大陆使用 Docker 的最佳方式。
-为 Docker Daemon 配置代理 首先，创建配置文件：
-sudo mkdir -p /etc/systemd/system/docker.service.d sudo nano /etc/systemd/system/docker.service.d/proxy.conf 在配置文件中填入以下内容：
-[Service] Environment=&#34;HTTP_PROXY=http://[proxy server IP]:[port]/&#34; Environment=&#34;HTTPS_PROXY=http://[proxy server IP]:[port]/&#34; Environment=&#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.168.0.0/16,172.16.0.0/12,10.0.0.0/8,100.64.0.0/10&#34; 请将 [proxy server]:[port] 替换成代理服务的 IP 和端口
+为 Docker Daemon 配置代理
+首先，创建配置文件：
+sudo mkdir -p /etc/systemd/system/docker.service.d
+sudo nano /etc/systemd/system/docker.service.d/proxy.conf
+在配置文件中填入以下内容：
+[Service]
+Environment=&#34;HTTP_PROXY=http://[proxy server IP]:[port]/&#34;
+Environment=&#34;HTTPS_PROXY=http://[proxy server IP]:[port]/&#34;
+Environment=&#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.168.0.0/16,172.16.0.0/12,10.0.0.0/8,100.64.0.0/10&#34;
+
+请将 [proxy server]:[port] 替换成代理服务的 IP 和端口
+
 我们需要重启 Docker Daemon 服务以使配置生效：
-sudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以正常的拉取镜像
-参考 Docker Daemon Systemd 配置文档" />
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+现在，已经可以正常的拉取镜像
+参考
+
+Docker Daemon Systemd 配置文档
+" />
 <meta property="og:type" content="article" />
-<meta property="og:url" content="http://192.168.20.55:1313/posts/docker%E4%BB%A3%E7%90%86/" /><meta property="article:section" content="posts" />
+<meta property="og:url" content="http://100.119.72.3:1313/posts/docker%E4%BB%A3%E7%90%86/" /><meta property="article:section" content="posts" />
 <meta property="article:published_time" content="2024-06-13T15:15:00+00:00" />
 <meta property="article:modified_time" content="2024-06-13T15:15:00+00:00" />
 
 <meta name="twitter:card" content="summary"/>
 <meta name="twitter:title" content="如何为Docker添加代理"/>
 <meta name="twitter:description" content="前段时间，我帮朋友搭建了一个我的世界服务器，并计划使用 Docker 来管理它。然而，在安装过程中，我发现镜像总是无法拉取。经过查阅资料，我发现可以通过配置 Docker Daemon 使用代理来拉取镜像。考虑到最近各个镜像站都撤掉了 Docker Hub 的镜像，我认为配置代理来访问 Docker Hub 可能是未来在大陆使用 Docker 的最佳方式。
-为 Docker Daemon 配置代理 首先，创建配置文件：
-sudo mkdir -p /etc/systemd/system/docker.service.d sudo nano /etc/systemd/system/docker.service.d/proxy.conf 在配置文件中填入以下内容：
-[Service] Environment=&#34;HTTP_PROXY=http://[proxy server IP]:[port]/&#34; Environment=&#34;HTTPS_PROXY=http://[proxy server IP]:[port]/&#34; Environment=&#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.168.0.0/16,172.16.0.0/12,10.0.0.0/8,100.64.0.0/10&#34; 请将 [proxy server]:[port] 替换成代理服务的 IP 和端口
+为 Docker Daemon 配置代理
+首先，创建配置文件：
+sudo mkdir -p /etc/systemd/system/docker.service.d
+sudo nano /etc/systemd/system/docker.service.d/proxy.conf
+在配置文件中填入以下内容：
+[Service]
+Environment=&#34;HTTP_PROXY=http://[proxy server IP]:[port]/&#34;
+Environment=&#34;HTTPS_PROXY=http://[proxy server IP]:[port]/&#34;
+Environment=&#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.168.0.0/16,172.16.0.0/12,10.0.0.0/8,100.64.0.0/10&#34;
+
+请将 [proxy server]:[port] 替换成代理服务的 IP 和端口
+
 我们需要重启 Docker Daemon 服务以使配置生效：
-sudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以正常的拉取镜像
-参考 Docker Daemon Systemd 配置文档"/>
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+现在，已经可以正常的拉取镜像
+参考
+
+Docker Daemon Systemd 配置文档
+"/>
 
 
 <script type="application/ld+json">
@@ -69,13 +108,13 @@ sudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "http://192.168.20.55:1313/posts/"
+      "item": "http://100.119.72.3:1313/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "如何为Docker添加代理",
-      "item": "http://192.168.20.55:1313/posts/docker%E4%BB%A3%E7%90%86/"
+      "item": "http://100.119.72.3:1313/posts/docker%E4%BB%A3%E7%90%86/"
     }
   ]
 }
@@ -86,7 +125,7 @@ sudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以
   "@type": "BlogPosting",
   "headline": "如何为Docker添加代理",
   "name": "如何为Docker添加代理",
-  "description": "前段时间，我帮朋友搭建了一个我的世界服务器，并计划使用 Docker 来管理它。然而，在安装过程中，我发现镜像总是无法拉取。经过查阅资料，我发现可以通过配置 Docker Daemon 使用代理来拉取镜像。考虑到最近各个镜像站都撤掉了 Docker Hub 的镜像，我认为配置代理来访问 Docker Hub 可能是未来在大陆使用 Docker 的最佳方式。\n为 Docker Daemon 配置代理 首先，创建配置文件：\nsudo mkdir -p /etc/systemd/system/docker.service.d sudo nano /etc/systemd/system/docker.service.d/proxy.conf 在配置文件中填入以下内容：\n[Service] Environment=\u0026#34;HTTP_PROXY=http://[proxy server IP]:[port]/\u0026#34; Environment=\u0026#34;HTTPS_PROXY=http://[proxy server IP]:[port]/\u0026#34; Environment=\u0026#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.168.0.0/16,172.16.0.0/12,10.0.0.0/8,100.64.0.0/10\u0026#34; 请将 [proxy server]:[port] 替换成代理服务的 IP 和端口\n我们需要重启 Docker Daemon 服务以使配置生效：\nsudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以正常的拉取镜像\n参考 Docker Daemon Systemd 配置文档",
+  "description": "前段时间，我帮朋友搭建了一个我的世界服务器，并计划使用 Docker 来管理它。然而，在安装过程中，我发现镜像总是无法拉取。经过查阅资料，我发现可以通过配置 Docker Daemon 使用代理来拉取镜像。考虑到最近各个镜像站都撤掉了 Docker Hub 的镜像，我认为配置代理来访问 Docker Hub 可能是未来在大陆使用 Docker 的最佳方式。\n为 Docker Daemon 配置代理 首先，创建配置文件：\nsudo mkdir -p /etc/systemd/system/docker.service.d sudo nano /etc/systemd/system/docker.service.d/proxy.conf 在配置文件中填入以下内容：\n[Service] Environment=\u0026#34;HTTP_PROXY=http://[proxy server IP]:[port]/\u0026#34; Environment=\u0026#34;HTTPS_PROXY=http://[proxy server IP]:[port]/\u0026#34; Environment=\u0026#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.168.0.0/16,172.16.0.0/12,10.0.0.0/8,100.64.0.0/10\u0026#34; 请将 [proxy server]:[port] 替换成代理服务的 IP 和端口\n我们需要重启 Docker Daemon 服务以使配置生效：\nsudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以正常的拉取镜像\n参考 Docker Daemon Systemd 配置文档\n",
   "keywords": [
     
   ],
@@ -101,14 +140,14 @@ sudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://192.168.20.55:1313/posts/docker%E4%BB%A3%E7%90%86/"
+    "@id": "http://100.119.72.3:1313/posts/docker%E4%BB%A3%E7%90%86/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "WallBreakerNO4的博客",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://192.168.20.55:1313/assets/favicon.ico"
+      "url": "http://100.119.72.3:1313/assets/favicon.ico"
     }
   }
 }
@@ -126,7 +165,7 @@ sudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://192.168.20.55:1313/" accesskey="h" title="WallBreakerNO4的博客 (Alt + H)">WallBreakerNO4的博客</a>
+            <a href="http://100.119.72.3:1313/" accesskey="h" title="WallBreakerNO4的博客 (Alt + H)">WallBreakerNO4的博客</a>
             <div class="logo-switches">
                 <button id="theme-toggle" accesskey="t" title="(Alt + T)">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
@@ -152,17 +191,17 @@ sudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以
         </div>
         <ul id="menu">
             <li>
-                <a href="http://192.168.20.55:1313/friends/" title="朋友">
+                <a href="http://100.119.72.3:1313/friends/" title="朋友">
                     <span>朋友</span>
                 </a>
             </li>
             <li>
-                <a href="http://192.168.20.55:1313/about/" title="关于">
+                <a href="http://100.119.72.3:1313/about/" title="关于">
                     <span>关于</span>
                 </a>
             </li>
             <li>
-                <a href="http://192.168.20.55:1313/archives" title="存档">
+                <a href="http://100.119.72.3:1313/archives" title="存档">
                     <span>存档</span>
                 </a>
             </li>
@@ -173,7 +212,7 @@ sudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="http://192.168.20.55:1313/">Home</a>&nbsp;»&nbsp;<a href="http://192.168.20.55:1313/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://100.119.72.3:1313/">Home</a>&nbsp;»&nbsp;<a href="http://100.119.72.3:1313/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       如何为Docker添加代理
     </h1>
@@ -210,12 +249,12 @@ Environment=&#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.168.0.
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="http://192.168.20.55:1313/posts/%E8%8D%89%E7%A8%BF/%E5%9C%A8%E5%AE%89%E5%8D%93%E4%B8%8B%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8-clash-%E5%92%8C-tailscale/">
+  <a class="prev" href="http://100.119.72.3:1313/posts/%E8%8D%89%E7%A8%BF/%E5%9C%A8%E5%AE%89%E5%8D%93%E4%B8%8B%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8-clash-%E5%92%8C-tailscale/">
     <span class="title">« Prev</span>
     <br>
     <span>在安卓下同时使用 Clash 和 Tailscale</span>
   </a>
-  <a class="next" href="http://192.168.20.55:1313/posts/windows%E4%B8%8B%E7%94%9F%E6%88%90%E5%B9%B6%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86linux/">
+  <a class="next" href="http://100.119.72.3:1313/posts/windows%E4%B8%8B%E7%94%9F%E6%88%90%E5%B9%B6%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86linux/">
     <span class="title">Next »</span>
     <br>
     <span>Windows下生成并使用密钥登陆Linux</span>
@@ -243,7 +282,7 @@ Environment=&#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.168.0.
     </main>
     
 <footer class="footer">
-        <span>&copy; 2024 <a href="http://192.168.20.55:1313/">WallBreakerNO4的博客</a></span> · 
+        <span>&copy; 2025 <a href="http://100.119.72.3:1313/">WallBreakerNO4的博客</a></span> · 
 
     <span>
         Powered by

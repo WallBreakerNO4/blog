@@ -27,7 +27,7 @@ params:
   #      url: "/archive"
   #    - name: Github
   #      url: "https://github.com/"
-
+  social: true
   socialIcons: # optional
     - name: "bilibili"
       url: "https://space.bilibili.com/28978056"
