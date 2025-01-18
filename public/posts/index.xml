@@ -6,10 +6,40 @@
     <description>Recent content in Posts on WallBreakerNO4的博客</description>
     <generator>Hugo -- 0.141.0</generator>
     <language>zh</language>
-    <lastBuildDate>Sat, 21 Dec 2024 00:27:00 +0000</lastBuildDate>
+    <lastBuildDate>Fri, 17 Jan 2025 15:42:00 +0000</lastBuildDate>
     <atom:link href="http://100.119.72.3:1313/posts/index.xml" rel="self" type="application/rss+xml" />
     <item>
-      <title></title>
+      <title>Tailscale 进阶使用教程 - 子网路由和自建中转</title>
+      <link>http://100.119.72.3:1313/posts/7.tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/</link>
+      <pubDate>Fri, 17 Jan 2025 15:42:00 +0000</pubDate>
+      <guid>http://100.119.72.3:1313/posts/7.tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/</guid>
+      <description>&lt;p&gt;在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，如标题所示，我将介绍两个 Tailscale 的进阶玩法。&lt;/p&gt;
+&lt;h2 id=&#34;subnet-routes子网路由&#34;&gt;Subnet routes（子网路由）&lt;/h2&gt;
+&lt;p&gt;假设你有好几台设备，上边都部署了一些服务。这些设备在同一个局域网内，你希望你在外网时可以访问在这些设备上的服务。正常情况下，我们需要在每一台设备上都安装 Tailscale 客户端，才能实现这样的需求。我们注意到，这些设备都在同一局域网（网段）下，因此我们可以使用 Tailscale 自带的 subnet routes 来优化我们的组网。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;Subnet routes 的&lt;a href=&#34;https://Tailscale.com/kb/1019/subnets&#34;&gt;官方文章&lt;/a&gt;
+太长不看版：Subnet routes（子网路由）是通过 Tailscale 连接远程网络（子网）的方法。配置 subnet routes 后，设备可以通过 Tailscale VPN 访问其他设备所在的本地网络，无需直接连接。&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;假设我们的局域网配置如下图，局域网 IP 段为 &lt;code&gt;192.168.1.0/24&lt;/code&gt;，&lt;strong&gt;自己配置时请替换为实际 IP 段&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://image.wall-breaker-no4.xyz/imgs/202410111635185.png&#34; alt=&#34;Tailscale subnet.drawio.png&#34;  /&gt;
+&lt;/p&gt;
+&lt;p&gt;我们可以将 Tailscale 安装在任意一个设备上，在成功加入 Tailscale 网络后，可以通过以下命令来添加子网&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;如果你用的路由器运行着 openwrt，那么可以参考 openwrt 的&lt;a href=&#34;https://openwrt.org/docs/guide-user/services/vpn/Tailscale/start&#34;&gt;官方文章&lt;/a&gt; 来安装 Tailscale&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tailscale set --advertise-routes&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;192.168.1.0/24&amp;#34;&lt;/span&gt;
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后去 &lt;a href=&#34;https://login.Tailscale.com/admin/machines&#34;&gt;Tailscale 控制台&lt;/a&gt;，找到对应的设备，找到编辑路由设置
+&lt;img loading=&#34;lazy&#34; src=&#34;https://image.wall-breaker-no4.xyz/imgs/202410111644921.png#center&#34; alt=&#34;image.png&#34;  /&gt;
+
+最后将刚刚添加的子网勾选并保存
+&lt;img loading=&#34;lazy&#34; src=&#34;https://image.wall-breaker-no4.xyz/imgs/202410111648375.png#center&#34; alt=&#34;image.png&#34;  /&gt;
+
+现在 Tailscale 网络里的所有设备（配置为子网路由网关的设备除外）访问 &lt;code&gt;192.168.1.0/24&lt;/code&gt; 这个网段的流量都会被路由到这个设备，这样便实现了子网路由&lt;/p&gt;
+&lt;h2 id=&#34;自建中转&#34;&gt;自建中转&lt;/h2&gt;
+&lt;p&gt;前文说到，Tailscale 需要良好的 NAT 环境才能打洞成功并直连。但在部分情况下，Tailscale 无法成功打洞。在这种情况下，Tailscale 会选择使用 derp 来中转流量，也就是类似传统 VPN 的形式&lt;/p&gt;</description>
+    </item>
+    <item>
+      <title>如何用SD来涩涩</title>
       <link>http://100.119.72.3:1313/posts/%E8%8D%89%E7%A8%BF/%E5%A6%82%E4%BD%95%E7%94%A8sd%E6%9D%A5%E6%B6%A9%E6%B6%A9/</link>
       <pubDate>Sat, 21 Dec 2024 00:27:00 +0000</pubDate>
       <guid>http://100.119.72.3:1313/posts/%E8%8D%89%E7%A8%BF/%E5%A6%82%E4%BD%95%E7%94%A8sd%E6%9D%A5%E6%B6%A9%E6%B6%A9/</guid>
@@ -69,9 +99,9 @@
     </item>
     <item>
       <title>使用 Tailscale 组网</title>
-      <link>http://100.119.72.3:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-%E7%BB%84%E7%BD%91/</link>
+      <link>http://100.119.72.3:1313/posts/6.%E4%BD%BF%E7%94%A8-tailscale-%E7%BB%84%E7%BD%91/</link>
       <pubDate>Thu, 01 Aug 2024 15:42:00 +0000</pubDate>
-      <guid>http://100.119.72.3:1313/posts/%E4%BD%BF%E7%94%A8-tailscale-%E7%BB%84%E7%BD%91/</guid>
+      <guid>http://100.119.72.3:1313/posts/6.%E4%BD%BF%E7%94%A8-tailscale-%E7%BB%84%E7%BD%91/</guid>
       <description>&lt;p&gt;今年年初，我购入了属于自己的 NAS，并在将其作为 HomeLab &lt;del&gt;All In Boom&lt;/del&gt; 搭建了许多服务。
 &lt;img loading=&#34;lazy&#34; src=&#34;https://image.wall-breaker-no4.xyz/imgs/202403222130140.png#center&#34; alt=&#34;image.png&#34;  /&gt;
 &lt;/p&gt;
@@ -119,66 +149,6 @@
 &lt;p&gt;Tailscale 是一种 VPN 服务，使用 WireGuard 协议创建安全的点对点网状网络。它简化了远程访问，通过加密连接设备，不需要复杂配置、中央网关或手动端口转发。Tailscale 通过避免中心化、降低延迟、维持网络间连接连续性，提高了速度、稳定性和可靠性。适用于开发者、小型企业和需要安全、可扩展网络解决方案的大型企业。&lt;/p&gt;</description>
     </item>
     <item>
-      <title>Tailscale 进阶使用教程 - MagicDNS、子网路由和自建中转</title>
-      <link>http://100.119.72.3:1313/posts/%E8%8D%89%E7%A8%BF/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1magicdns%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/</link>
-      <pubDate>Wed, 31 Jul 2024 15:42:00 +0000</pubDate>
-      <guid>http://100.119.72.3:1313/posts/%E8%8D%89%E7%A8%BF/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1magicdns%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/</guid>
-      <description>&lt;p&gt;在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，我将介绍几个 Tailscale 的进阶玩法。&lt;/p&gt;
-&lt;h2 id=&#34;subnet-routes子网路由&#34;&gt;Subnet routes（子网路由）&lt;/h2&gt;
-&lt;p&gt;假设你有好几台设备，上边都部署了一些服务。这些设备在同一个局域网内，你希望你在外网时可以访问在这些设备上的服务。正常情况下，我们需要在每一台设备上都安装 tailscale 客户端，才能实现这样的需求。我们注意到，这些设备都在同一局域网（网段）下，因此我们可以使用 tailscale 自带的 subnet routes 来优化我们的组网。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Subnet routes 的&lt;a href=&#34;https://tailscale.com/kb/1019/subnets&#34;&gt;官方文章&lt;/a&gt;
-太长不看版：Subnet routes（子网路由）是通过 Tailscale 连接远程网络（子网）的方法。配置 subnet routes 后，设备可以通过 Tailscale VPN 访问其他设备所在的本地网络，无需直接连接。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;假设我们的局域网配置如下图，局域网 IP 段为 &lt;code&gt;192.168.1.0/24&lt;/code&gt;，&lt;strong&gt;自己配置时请替换为实际 IP 段&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://image.wall-breaker-no4.xyz/imgs/202410111635185.png&#34; alt=&#34;tailscale subnet.drawio.png&#34;  /&gt;
-&lt;/p&gt;
-&lt;p&gt;我们可以将 tailscale 安装在任意一个设备上，在成功加入 tailscale 网络后，可以通过以下命令来添加子网&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;如果你用的路由器运行着 openwrt，那么可以参考 openwrt 的&lt;a href=&#34;https://openwrt.org/docs/guide-user/services/vpn/tailscale/start&#34;&gt;官方文章&lt;/a&gt; 来安装 tailscale&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tailscale set --advertise-routes&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;192.168.1.0/24&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后去 &lt;a href=&#34;https://login.tailscale.com/admin/machines&#34;&gt;tailscale 控制台&lt;/a&gt;，找到对应的设备，找到编辑路由设置
-&lt;img loading=&#34;lazy&#34; src=&#34;https://image.wall-breaker-no4.xyz/imgs/202410111644921.png#center&#34; alt=&#34;image.png&#34;  /&gt;
-
-最后将刚刚添加的子网勾选并保存
-&lt;img loading=&#34;lazy&#34; src=&#34;https://image.wall-breaker-no4.xyz/imgs/202410111648375.png#center&#34; alt=&#34;image.png&#34;  /&gt;
-
-现在 tailscale 网络里的所有设备（配置为子网路由网关的设备除外）访问 &lt;code&gt;192.168.1.0/24&lt;/code&gt; 这个网段的流量都会被路由到这个设备，这样便实现了子网路由&lt;/p&gt;
-&lt;h2 id=&#34;自建中转&#34;&gt;自建中转&lt;/h2&gt;
-&lt;p&gt;前文说到，tailscale 需要良好的 NAT 环境才能打洞成功并直连。但在部分情况下，tailscale 无法成功打洞。在这种情况下，tailscale 会选择使用 derp 来中转流量，也就是类似传统 VPN 的形式&lt;/p&gt;</description>
-    </item>
-    <item>
-      <title>Tailscale 进阶使用教程 - MagicDNS、子网路由和自建中转</title>
-      <link>http://100.119.72.3:1313/posts/%E8%8D%89%E7%A8%BF/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1magicdns%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC.sync-conflict-20250117-161409-rgaci7e/</link>
-      <pubDate>Wed, 31 Jul 2024 15:42:00 +0000</pubDate>
-      <guid>http://100.119.72.3:1313/posts/%E8%8D%89%E7%A8%BF/tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1magicdns%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC.sync-conflict-20250117-161409-rgaci7e/</guid>
-      <description>&lt;p&gt;在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，我将介绍几个 Tailscale 的进阶玩法。&lt;/p&gt;
-&lt;h2 id=&#34;subnet-routes子网路由&#34;&gt;Subnet routes（子网路由）&lt;/h2&gt;
-&lt;p&gt;假设你有好几台设备，上边都部署了一些服务。这些设备在同一个局域网内，你希望你在外网时可以访问在这些设备上的服务。正常情况下，我们需要在每一台设备上都安装 tailscale 客户端，才能实现这样的需求。我们注意到，这些设备都在同一局域网（网段）下，因此我们可以使用 tailscale 自带的 subnet routes 来优化我们的组网。&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;Subnet routes 的&lt;a href=&#34;https://tailscale.com/kb/1019/subnets&#34;&gt;官方文章&lt;/a&gt;
-太长不看版：Subnet routes（子网路由）是通过 Tailscale 连接远程网络（子网）的方法。配置 subnet routes 后，设备可以通过 Tailscale VPN 访问其他设备所在的本地网络，无需直接连接。&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;假设我们的局域网配置如下图，局域网 IP 段为 &lt;code&gt;192.168.1.0/24&lt;/code&gt;，&lt;strong&gt;自己配置时请替换为实际 IP 段&lt;/strong&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img loading=&#34;lazy&#34; src=&#34;https://image.wall-breaker-no4.xyz/imgs/202410111635185.png&#34; alt=&#34;tailscale subnet.drawio.png&#34;  /&gt;
-&lt;/p&gt;
-&lt;p&gt;我们可以将 tailscale 安装在任意一个设备上，在成功加入 tailscale 网络后，可以通过以下命令来添加子网&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;如果你用的路由器运行着 openwrt，那么可以参考 openwrt 的&lt;a href=&#34;https://openwrt.org/docs/guide-user/services/vpn/tailscale/start&#34;&gt;官方文章&lt;/a&gt; 来安装 tailscale&lt;/p&gt;
-&lt;/blockquote&gt;
-&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo tailscale set --advertise-routes&lt;span style=&#34;color:#f92672&#34;&gt;=&lt;/span&gt;&lt;span style=&#34;color:#e6db74&#34;&gt;&amp;#34;192.168.1.0/24&amp;#34;&lt;/span&gt;
-&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;p&gt;然后去 &lt;a href=&#34;https://login.tailscale.com/admin/machines&#34;&gt;tailscale 控制台&lt;/a&gt;，找到对应的设备，找到编辑路由设置
-&lt;img loading=&#34;lazy&#34; src=&#34;https://image.wall-breaker-no4.xyz/imgs/202410111644921.png#center&#34; alt=&#34;image.png&#34;  /&gt;
-
-最后将刚刚添加的子网勾选并保存
-&lt;img loading=&#34;lazy&#34; src=&#34;https://image.wall-breaker-no4.xyz/imgs/202410111648375.png#center&#34; alt=&#34;image.png&#34;  /&gt;
-
-现在 tailscale 网络里的所有设备（配置为子网路由网关的设备除外）访问 &lt;code&gt;192.168.1.0/24&lt;/code&gt; 这个网段的流量都会被路由到这个设备，这样便实现了子网路由&lt;/p&gt;
-&lt;h2 id=&#34;自建中转&#34;&gt;自建中转&lt;/h2&gt;
-&lt;p&gt;前文说到，tailscale 需要良好的 NAT 环境才能打洞成功并直连。但在部分情况下，tailscale 无法成功打洞。在这种情况下，tailscale 会选择使用 derp 来中转流量，也就是类似传统 VPN 的形式&lt;/p&gt;</description>
-    </item>
-    <item>
       <title>通过 Tailscale 为 CloudFlare Tunnel 配置代透明理来提升速度</title>
       <link>http://100.119.72.3:1313/posts/%E8%8D%89%E7%A8%BF/%E9%80%9A%E8%BF%87-tailscale-%E4%B8%BA-cloudflare-tunnel-%E9%85%8D%E7%BD%AE%E9%80%8F%E6%98%8E%E4%BB%A3%E7%90%86%E6%9D%A5%E6%8F%90%E5%8D%87%E9%80%9F%E5%BA%A6/</link>
       <pubDate>Tue, 30 Jul 2024 16:07:00 +0000</pubDate>
@@ -213,9 +183,9 @@
     </item>
     <item>
       <title>如何为Docker添加代理</title>
-      <link>http://100.119.72.3:1313/posts/docker%E4%BB%A3%E7%90%86/</link>
+      <link>http://100.119.72.3:1313/posts/5.docker%E4%BB%A3%E7%90%86/</link>
       <pubDate>Thu, 13 Jun 2024 15:15:00 +0000</pubDate>
-      <guid>http://100.119.72.3:1313/posts/docker%E4%BB%A3%E7%90%86/</guid>
+      <guid>http://100.119.72.3:1313/posts/5.docker%E4%BB%A3%E7%90%86/</guid>
       <description>&lt;p&gt;前段时间，我帮朋友搭建了一个我的世界服务器，并计划使用 Docker 来管理它。然而，在安装过程中，我发现镜像总是无法拉取。经过查阅资料，我发现可以通过配置 Docker Daemon 使用代理来拉取镜像。考虑到最近各个镜像站都撤掉了 Docker Hub 的镜像，我认为配置代理来访问 Docker Hub 可能是未来在大陆使用 Docker 的最佳方式。&lt;/p&gt;
 &lt;h2 id=&#34;为-docker-daemon-配置代理&#34;&gt;为 Docker Daemon 配置代理&lt;/h2&gt;
 &lt;p&gt;首先，创建配置文件：&lt;/p&gt;
@@ -240,9 +210,9 @@ Environment=&amp;#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.16
     </item>
     <item>
       <title>Windows下生成并使用密钥登陆Linux</title>
-      <link>http://100.119.72.3:1313/posts/windows%E4%B8%8B%E7%94%9F%E6%88%90%E5%B9%B6%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86linux/</link>
+      <link>http://100.119.72.3:1313/posts/4.windows%E4%B8%8B%E7%94%9F%E6%88%90%E5%B9%B6%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86linux/</link>
       <pubDate>Wed, 12 Jun 2024 00:00:00 +0000</pubDate>
-      <guid>http://100.119.72.3:1313/posts/windows%E4%B8%8B%E7%94%9F%E6%88%90%E5%B9%B6%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86linux/</guid>
+      <guid>http://100.119.72.3:1313/posts/4.windows%E4%B8%8B%E7%94%9F%E6%88%90%E5%B9%B6%E4%BD%BF%E7%94%A8%E5%AF%86%E9%92%A5%E7%99%BB%E9%99%86linux/</guid>
       <description>&lt;h3 id=&#34;生成密钥&#34;&gt;生成密钥&lt;/h3&gt;
 &lt;p&gt;命令：&lt;code&gt;$ ssh-keygen -t rsa&lt;/code&gt;
 生成的私钥以 &lt;code&gt;.pub&lt;/code&gt; 结尾，内容类似如下：&lt;/p&gt;
@@ -312,9 +282,9 @@ PasswordAuthentication no
     </item>
     <item>
       <title>在Ubuntu上安装zsh以及高亮、自动补全插件</title>
-      <link>http://100.119.72.3:1313/posts/ubuntu-zsh/</link>
+      <link>http://100.119.72.3:1313/posts/3.ubuntu-zsh/</link>
       <pubDate>Wed, 22 Nov 2023 00:00:00 +0000</pubDate>
-      <guid>http://100.119.72.3:1313/posts/ubuntu-zsh/</guid>
+      <guid>http://100.119.72.3:1313/posts/3.ubuntu-zsh/</guid>
       <description>&lt;p&gt;记录一下如何在 Ubuntu 上安装 zsh，以及高亮、自动补全插件和自定义主题&lt;/p&gt;
 &lt;h2 id=&#34;安装-zsh&#34;&gt;安装 zsh&lt;/h2&gt;
 &lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo apt install zsh git fonts-font-awesome
@@ -343,9 +313,9 @@ PasswordAuthentication no
     </item>
     <item>
       <title>博客搭建过程记录</title>
-      <link>http://100.119.72.3:1313/posts/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/</link>
+      <link>http://100.119.72.3:1313/posts/2.%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/</link>
       <pubDate>Mon, 20 Nov 2023 15:46:00 +0000</pubDate>
-      <guid>http://100.119.72.3:1313/posts/%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/</guid>
+      <guid>http://100.119.72.3:1313/posts/2.%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/</guid>
       <description>&lt;h2 id=&#34;前言&#34;&gt;前言&lt;/h2&gt;
 &lt;p&gt;本人是一位计算机专业的学生，而学习计算机往往需要在网上自学很多内容。在网上搜索资料的的时候，抛开臭名昭著的 CSDN &lt;del&gt;虽然里面还是有一些不错的内容&lt;/del&gt;，最常见到的就是各式各样的个人博客。这些个人博客往往质量都相当高，我从这些博客中学习到了相当多的知识，收获颇丰。秉着“前人栽树，后人乘凉”的思想，在享受了那么多人栽的树后，我也决定搭个自己的博客。不求能做到栽树的水平，能够记录自己的学习经历，也已经很满意了。&lt;/p&gt;
 &lt;h2 id=&#34;域名&#34;&gt;域名&lt;/h2&gt;
@@ -387,9 +357,9 @@ PasswordAuthentication no
     </item>
     <item>
       <title>TeamSpeak 3 客户端使用教程</title>
-      <link>http://100.119.72.3:1313/posts/ts3/</link>
+      <link>http://100.119.72.3:1313/posts/1.ts3/</link>
       <pubDate>Thu, 16 Nov 2023 17:19:00 +0000</pubDate>
-      <guid>http://100.119.72.3:1313/posts/ts3/</guid>
+      <guid>http://100.119.72.3:1313/posts/1.ts3/</guid>
       <description>&lt;blockquote&gt;
 &lt;p&gt;&lt;del&gt;&lt;strong&gt;TeamSpeak 最新版为 TeamSpeak 5，操作界面有很大的变化，这篇文章已经过时，仅供参考&lt;/strong&gt;&lt;/del&gt;&lt;/p&gt;
 &lt;p&gt;TeamSpeak 5 超级垃圾，不如 TeamSpeak 3 一根，占用又高，所以这篇文章没有过时🥰🥰&lt;/p&gt;
@@ -422,9 +392,9 @@ PasswordAuthentication no
     </item>
     <item>
       <title>Hello World</title>
-      <link>http://100.119.72.3:1313/posts/my-first-post/</link>
+      <link>http://100.119.72.3:1313/posts/0.my-first-post/</link>
       <pubDate>Thu, 16 Nov 2023 14:19:00 +0000</pubDate>
-      <guid>http://100.119.72.3:1313/posts/my-first-post/</guid>
+      <guid>http://100.119.72.3:1313/posts/0.my-first-post/</guid>
       <description>&lt;p&gt;第一篇博客总得是 Hello World 吧&lt;/p&gt;</description>
     </item>
   </channel>
