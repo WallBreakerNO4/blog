@@ -212,7 +212,7 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34; 然后去 Tailsca
 家里最初的网络 由于在最开始装修时，没有提前在墙里布网线，我家的无线网一直都不好用。
 我家的户型图如下
 图待补
-我家的光猫在客厅的位置，与卧室之间隔了两堵承重墙，因此卧室的位置型号极其糟糕，家里最开始使用了电力猫和无线网桥，但效果都不尽人意。最后在我高中的时候，家里决定重新扯一下网线，让每个房间都有网络
+我家的光猫在客厅的位置，与卧室之间隔了两堵承重墙，因此卧室的位置信号极其糟糕，家里最开始使用了电力猫和无线网桥，但效果都不尽人意。在我高中的时候，家里决定重新扯一下网线，让每个房间都有网络
 这次改造前的网络</p>
   </div>
   <footer class="entry-footer"><span title='2024-11-03 16:34:00 +0000 UTC'>November 3, 2024</span>&nbsp;·&nbsp;WallBreakerNO4</footer>
@@ -277,10 +277,9 @@ BUT! CloudFlare 在国内访问速度不佳是众所周知的事 CloudFlare 减�
     </h2>
   </header>
   <div class="entry-content">
-    <p>在上一篇文章中，我们已经成功搭建了 Tailscale 网络，并在各个设备上安装了相应的客户端来访问网络。但我们注意到一点：在安卓系统上，同时只能运行一个 VPN 服务，因此 Tailscale 无法与 Clash 同时运行。而且不像 WireGuard，Clash 内核并没有提供对 Tailscale 的支持。
+    <p>在之前的文章中，我们已经成功搭建了 Tailscale 网络，并在各个设备上安装了相应的客户端来访问网络。但我们注意到一点：在安卓系统上，同时只能运行一个 VPN 服务，因此 Tailscale 无法与 Clash 同时运行。而且不像 WireGuard，Clash 内核并没有提供对 Tailscale 的支持。
 Clash 对 WireGuard 的支持： https://en.clash.wiki/premium/userspace-wireguard.html
-因此在安卓上，如果希望 Tailscale 和 Clash 共存的话，是需要一番折腾的
-先决条件 在 Google 了一番之后，我发现
+在 Google 了一番之后，我发现这个项目：Magisk Tailscaled，
 </p>
   </div>
   <footer class="entry-footer"><span title='2024-06-19 23:49:00 +0000 UTC'>June 19, 2024</span>&nbsp;·&nbsp;WallBreakerNO4</footer>
@@ -316,9 +315,9 @@ sudo systemctl daemon-reload sudo systemctl restart docker 现在，已经可以
 ssh-rsa AAAAB3NzaC1yc...D4J6QDEnOtzMCIk= zhifa@Wall-PC 上传密钥 登陆 Linux，打开 ~/.ssh/authorized_keys ，并把公钥文件中的内容复制到其中
 设置权限 使用 chmod 将 authorized_keys 文件权限设置为 664
 调整 openSSH 选项 以 root 身份打开 /etc/ssh/sshd_config ，更改以下几项：
-PermitRootLogin no PubkeyAuthentication yes PasswordAuthentication no 重启 sshd 服务
-$ sudo systemctl restart sshd.service
-Windows 设置 打开 .ssh/ 文件夹下的 config 文件，添加类似如下内容
+PermitRootLogin no PubkeyAuthentication yes PasswordAuthentication no 或者直接使用 sed 命令来修改：
+sudo sed -i -E &#39;s/^#?(PermitRootLogin|PubkeyAuthentication|PasswordAuthentication)[[:space:]]&#43;.*/\1 no/; s/^#?PubkeyAuthentication[[:space:]]&#43;.*/PubkeyAuthentication yes/&#39; /etc/ssh/sshd_config 重启 sshd 服务
+sudo systemctl restart sshd.service Windows 设置 打开 .ssh/ 文件夹下的 config 文件，添加类似如下内容
 Host tx #别名 User wall #登陆用户名 Hostname wall-breaker-no4.xyz #服务器地址 PreferredAuthentications publickey #使用密钥登陆 IdentityFile C:\Users\zhifa\.ssh\tx_rsa #私钥地址 </p>
   </div>
   <footer class="entry-footer"><span title='2024-06-12 00:00:00 +0000 UTC'>June 12, 2024</span>&nbsp;·&nbsp;WallBreakerNO4</footer>

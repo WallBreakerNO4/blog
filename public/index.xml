@@ -94,7 +94,7 @@
 &lt;blockquote&gt;
 &lt;p&gt;图待补&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;我家的光猫在客厅的位置，与卧室之间隔了两堵承重墙，因此卧室的位置型号极其糟糕，家里最开始使用了电力猫和无线网桥，但效果都不尽人意。最后在我高中的时候，家里决定重新扯一下网线，让每个房间都有网络&lt;/p&gt;
+&lt;p&gt;我家的光猫在客厅的位置，与卧室之间隔了两堵承重墙，因此卧室的位置信号极其糟糕，家里最开始使用了电力猫和无线网桥，但效果都不尽人意。在我高中的时候，家里决定重新扯一下网线，让每个房间都有网络&lt;/p&gt;
 &lt;h2 id=&#34;这次改造前的网络&#34;&gt;这次改造前的网络&lt;/h2&gt;</description>
     </item>
     <item>
@@ -173,13 +173,11 @@
       <link>http://100.119.72.3:1313/posts/%E8%8D%89%E7%A8%BF/%E5%9C%A8%E5%AE%89%E5%8D%93%E4%B8%8B%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8-clash-%E5%92%8C-tailscale/</link>
       <pubDate>Wed, 19 Jun 2024 23:49:00 +0000</pubDate>
       <guid>http://100.119.72.3:1313/posts/%E8%8D%89%E7%A8%BF/%E5%9C%A8%E5%AE%89%E5%8D%93%E4%B8%8B%E5%90%8C%E6%97%B6%E4%BD%BF%E7%94%A8-clash-%E5%92%8C-tailscale/</guid>
-      <description>&lt;p&gt;在上一篇文章中，我们已经成功搭建了 Tailscale 网络，并在各个设备上安装了相应的客户端来访问网络。但我们注意到一点：在安卓系统上，同时只能运行一个 VPN 服务，因此 Tailscale 无法与 Clash 同时运行。而且不像 WireGuard，Clash 内核并没有提供对 Tailscale 的支持。&lt;/p&gt;
+      <description>&lt;p&gt;在之前的文章中，我们已经成功搭建了 Tailscale 网络，并在各个设备上安装了相应的客户端来访问网络。但我们注意到一点：在安卓系统上，同时只能运行一个 VPN 服务，因此 Tailscale 无法与 Clash 同时运行。而且不像 WireGuard，Clash 内核并没有提供对 Tailscale 的支持。&lt;/p&gt;
 &lt;blockquote&gt;
 &lt;p&gt;Clash 对 WireGuard 的支持： &lt;a href=&#34;https://en.clash.wiki/premium/userspace-wireguard.html&#34;&gt;https://en.clash.wiki/premium/userspace-wireguard.html&lt;/a&gt;&lt;/p&gt;
 &lt;/blockquote&gt;
-&lt;p&gt;因此在安卓上，如果希望 Tailscale 和 Clash 共存的话，是需要一番折腾的&lt;/p&gt;
-&lt;h2 id=&#34;先决条件&#34;&gt;先决条件&lt;/h2&gt;
-&lt;p&gt;在 Google 了一番之后，我发现&lt;/p&gt;</description>
+&lt;p&gt;在 Google 了一番之后，我发现这个项目：&lt;a href=&#34;https://github.com/Magisk-Modules-Alt-Repo/Magisk-Tailscaled&#34;&gt;Magisk Tailscaled&lt;/a&gt;，&lt;/p&gt;</description>
     </item>
     <item>
       <title>如何为Docker添加代理</title>
@@ -229,9 +227,13 @@ Environment=&amp;#34;NO_PROXY=localhost,127.0.0.1,::1,.local,.localdomain,192.16
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;PermitRootLogin no
 PubkeyAuthentication yes
 PasswordAuthentication no
-&lt;/code&gt;&lt;/pre&gt;&lt;p&gt;重启 &lt;code&gt;sshd&lt;/code&gt; 服务&lt;/p&gt;
-&lt;p&gt;&lt;code&gt;$ sudo systemctl restart sshd.service&lt;/code&gt;&lt;/p&gt;
-&lt;hr&gt;
+&lt;/code&gt;&lt;/pre&gt;&lt;blockquote&gt;
+&lt;p&gt;或者直接使用 &lt;code&gt;sed&lt;/code&gt; 命令来修改：&lt;/p&gt;
+&lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;sudo sed -i -E &amp;#39;s/^#?(PermitRootLogin|PubkeyAuthentication|PasswordAuthentication)[[:space:]]+.*/\1 no/; s/^#?PubkeyAuthentication[[:space:]]+.*/PubkeyAuthentication yes/&amp;#39; /etc/ssh/sshd_config
+&lt;/code&gt;&lt;/pre&gt;&lt;/blockquote&gt;
+&lt;p&gt;重启 &lt;code&gt;sshd&lt;/code&gt; 服务&lt;/p&gt;
+&lt;div class=&#34;highlight&#34;&gt;&lt;pre tabindex=&#34;0&#34; style=&#34;color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;&#34;&gt;&lt;code class=&#34;language-shell&#34; data-lang=&#34;shell&#34;&gt;&lt;span style=&#34;display:flex;&#34;&gt;&lt;span&gt;sudo systemctl restart sshd.service
+&lt;/span&gt;&lt;/span&gt;&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;hr&gt;
 &lt;h3 id=&#34;windows-设置&#34;&gt;Windows 设置&lt;/h3&gt;
 &lt;p&gt;打开 &lt;code&gt;.ssh/&lt;/code&gt; 文件夹下的 &lt;code&gt;config&lt;/code&gt; 文件，添加类似如下内容&lt;/p&gt;
 &lt;pre tabindex=&#34;0&#34;&gt;&lt;code&gt;Host tx   #别名
