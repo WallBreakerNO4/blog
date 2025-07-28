@@ -13,35 +13,30 @@ Subnet routes（子网路由）
 
 Subnet routes 的官方文章
 太长不看版：Subnet routes（子网路由）是通过 Tailscale 连接远程网络（子网）的方法。配置 subnet routes 后，设备可以通过 Tailscale VPN 访问其他设备所在的本地网络，无需直接连接。
-
 假设我们的局域网配置如下图，局域网 IP 段为 192.168.1.0/24，自己配置时请替换为实际 IP 段
-
 
 我们可以将 Tailscale 安装在任意一个设备上，在成功加入 Tailscale 网络后，可以通过以下命令来添加子网
 
 如果你用的路由器运行着 openwrt，那么可以参考 openwrt 的官方文章 来安装 Tailscale
-
 sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34;
 然后去 Tailscale 控制台，找到对应的设备，找到编辑路由设置
 
-
 最后将刚刚添加的子网勾选并保存
-
 
 现在 Tailscale 网络里的所有设备（配置为子网路由网关的设备除外）访问 192.168.1.0/24 这个网段的流量都会被路由到这个设备，这样便实现了子网路由
 自建中转
 前文说到，Tailscale 需要良好的 NAT 环境才能打洞成功并直连。但在部分情况下，Tailscale 无法成功打洞。在这种情况下，Tailscale 会选择使用 derp 来中转流量，也就是类似传统 VPN 的形式">
 <meta name="author" content="WallBreakerNO4">
-<link rel="canonical" href="http://100.119.72.3:1313/posts/7.tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://100.119.72.3:1313/assets/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://100.119.72.3:1313/assets/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://100.119.72.3:1313/assets/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://100.119.72.3:1313/assets/apple-touch-icon.png">
-<link rel="mask-icon" href="http://100.119.72.3:1313/assets/mstile-150x150.png">
+<link rel="canonical" href="http://localhost:1313/posts/7.tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.8fe10233a706bc87f2e08b3cf97b8bd4c0a80f10675a143675d59212121037c0.css" integrity="sha256-j&#43;ECM6cGvIfy4Is8&#43;XuL1MCoDxBnWhQ2ddWSEhIQN8A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/assets/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/assets/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/assets/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/assets/mstile-150x150.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://100.119.72.3:1313/posts/7.tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/7.tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/">
 <noscript>
     <style>
         #theme-toggle,
@@ -50,62 +45,43 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34;
         }
 
     </style>
-</noscript><meta property="og:title" content="Tailscale 进阶使用教程 - 子网路由和自建中转" />
-<meta property="og:description" content="在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，如标题所示，我将介绍两个 Tailscale 的进阶玩法。
-Subnet routes（子网路由）
-假设你有好几台设备，上边都部署了一些服务。这些设备在同一个局域网内，你希望你在外网时可以访问在这些设备上的服务。正常情况下，我们需要在每一台设备上都安装 Tailscale 客户端，才能实现这样的需求。我们注意到，这些设备都在同一局域网（网段）下，因此我们可以使用 Tailscale 自带的 subnet routes 来优化我们的组网。
-
-Subnet routes 的官方文章
-太长不看版：Subnet routes（子网路由）是通过 Tailscale 连接远程网络（子网）的方法。配置 subnet routes 后，设备可以通过 Tailscale VPN 访问其他设备所在的本地网络，无需直接连接。
-
+</noscript><meta property="og:url" content="http://localhost:1313/posts/7.tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/">
+  <meta property="og:site_name" content="WallBreakerNO4的博客">
+  <meta property="og:title" content="Tailscale 进阶使用教程 - 子网路由和自建中转">
+  <meta property="og:description" content="在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，如标题所示，我将介绍两个 Tailscale 的进阶玩法。
+Subnet routes（子网路由） 假设你有好几台设备，上边都部署了一些服务。这些设备在同一个局域网内，你希望你在外网时可以访问在这些设备上的服务。正常情况下，我们需要在每一台设备上都安装 Tailscale 客户端，才能实现这样的需求。我们注意到，这些设备都在同一局域网（网段）下，因此我们可以使用 Tailscale 自带的 subnet routes 来优化我们的组网。
+Subnet routes 的官方文章 太长不看版：Subnet routes（子网路由）是通过 Tailscale 连接远程网络（子网）的方法。配置 subnet routes 后，设备可以通过 Tailscale VPN 访问其他设备所在的本地网络，无需直接连接。
 假设我们的局域网配置如下图，局域网 IP 段为 192.168.1.0/24，自己配置时请替换为实际 IP 段
-
-
 我们可以将 Tailscale 安装在任意一个设备上，在成功加入 Tailscale 网络后，可以通过以下命令来添加子网
-
 如果你用的路由器运行着 openwrt，那么可以参考 openwrt 的官方文章 来安装 Tailscale
-
-sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34;
-然后去 Tailscale 控制台，找到对应的设备，找到编辑路由设置
-
-
-最后将刚刚添加的子网勾选并保存
-
-
-现在 Tailscale 网络里的所有设备（配置为子网路由网关的设备除外）访问 192.168.1.0/24 这个网段的流量都会被路由到这个设备，这样便实现了子网路由
-自建中转
-前文说到，Tailscale 需要良好的 NAT 环境才能打洞成功并直连。但在部分情况下，Tailscale 无法成功打洞。在这种情况下，Tailscale 会选择使用 derp 来中转流量，也就是类似传统 VPN 的形式" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://100.119.72.3:1313/posts/7.tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2025-01-17T15:42:00+00:00" />
-<meta property="article:modified_time" content="2025-01-17T15:42:00+00:00" />
-
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="Tailscale 进阶使用教程 - 子网路由和自建中转"/>
+sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34; 然后去 Tailscale 控制台，找到对应的设备，找到编辑路由设置 最后将刚刚添加的子网勾选并保存 现在 Tailscale 网络里的所有设备（配置为子网路由网关的设备除外）访问 192.168.1.0/24 这个网段的流量都会被路由到这个设备，这样便实现了子网路由
+自建中转 前文说到，Tailscale 需要良好的 NAT 环境才能打洞成功并直连。但在部分情况下，Tailscale 无法成功打洞。在这种情况下，Tailscale 会选择使用 derp 来中转流量，也就是类似传统 VPN 的形式">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-01-17T15:42:00+00:00">
+    <meta property="article:modified_time" content="2025-01-17T15:42:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tailscale 进阶使用教程 - 子网路由和自建中转">
 <meta name="twitter:description" content="在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，如标题所示，我将介绍两个 Tailscale 的进阶玩法。
 Subnet routes（子网路由）
 假设你有好几台设备，上边都部署了一些服务。这些设备在同一个局域网内，你希望你在外网时可以访问在这些设备上的服务。正常情况下，我们需要在每一台设备上都安装 Tailscale 客户端，才能实现这样的需求。我们注意到，这些设备都在同一局域网（网段）下，因此我们可以使用 Tailscale 自带的 subnet routes 来优化我们的组网。
 
 Subnet routes 的官方文章
 太长不看版：Subnet routes（子网路由）是通过 Tailscale 连接远程网络（子网）的方法。配置 subnet routes 后，设备可以通过 Tailscale VPN 访问其他设备所在的本地网络，无需直接连接。
-
 假设我们的局域网配置如下图，局域网 IP 段为 192.168.1.0/24，自己配置时请替换为实际 IP 段
-
 
 我们可以将 Tailscale 安装在任意一个设备上，在成功加入 Tailscale 网络后，可以通过以下命令来添加子网
 
 如果你用的路由器运行着 openwrt，那么可以参考 openwrt 的官方文章 来安装 Tailscale
-
 sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34;
 然后去 Tailscale 控制台，找到对应的设备，找到编辑路由设置
 
-
 最后将刚刚添加的子网勾选并保存
-
 
 现在 Tailscale 网络里的所有设备（配置为子网路由网关的设备除外）访问 192.168.1.0/24 这个网段的流量都会被路由到这个设备，这样便实现了子网路由
 自建中转
-前文说到，Tailscale 需要良好的 NAT 环境才能打洞成功并直连。但在部分情况下，Tailscale 无法成功打洞。在这种情况下，Tailscale 会选择使用 derp 来中转流量，也就是类似传统 VPN 的形式"/>
+前文说到，Tailscale 需要良好的 NAT 环境才能打洞成功并直连。但在部分情况下，Tailscale 无法成功打洞。在这种情况下，Tailscale 会选择使用 derp 来中转流量，也就是类似传统 VPN 的形式">
 
 
 <script type="application/ld+json">
@@ -117,13 +93,13 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34;
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "http://100.119.72.3:1313/posts/"
+      "item": "http://localhost:1313/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "Tailscale 进阶使用教程 - 子网路由和自建中转",
-      "item": "http://100.119.72.3:1313/posts/7.tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/"
+      "item": "http://localhost:1313/posts/7.tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/"
     }
   ]
 }
@@ -138,7 +114,7 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34;
   "keywords": [
     
   ],
-  "articleBody": "在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，如标题所示，我将介绍两个 Tailscale 的进阶玩法。\nSubnet routes（子网路由） 假设你有好几台设备，上边都部署了一些服务。这些设备在同一个局域网内，你希望你在外网时可以访问在这些设备上的服务。正常情况下，我们需要在每一台设备上都安装 Tailscale 客户端，才能实现这样的需求。我们注意到，这些设备都在同一局域网（网段）下，因此我们可以使用 Tailscale 自带的 subnet routes 来优化我们的组网。\nSubnet routes 的官方文章 太长不看版：Subnet routes（子网路由）是通过 Tailscale 连接远程网络（子网）的方法。配置 subnet routes 后，设备可以通过 Tailscale VPN 访问其他设备所在的本地网络，无需直接连接。\n假设我们的局域网配置如下图，局域网 IP 段为 192.168.1.0/24，自己配置时请替换为实际 IP 段\n我们可以将 Tailscale 安装在任意一个设备上，在成功加入 Tailscale 网络后，可以通过以下命令来添加子网\n如果你用的路由器运行着 openwrt，那么可以参考 openwrt 的官方文章 来安装 Tailscale\nsudo tailscale set --advertise-routes=\"192.168.1.0/24\" 然后去 Tailscale 控制台，找到对应的设备，找到编辑路由设置 最后将刚刚添加的子网勾选并保存 现在 Tailscale 网络里的所有设备（配置为子网路由网关的设备除外）访问 192.168.1.0/24 这个网段的流量都会被路由到这个设备，这样便实现了子网路由\n自建中转 前文说到，Tailscale 需要良好的 NAT 环境才能打洞成功并直连。但在部分情况下，Tailscale 无法成功打洞。在这种情况下，Tailscale 会选择使用 derp 来中转流量，也就是类似传统 VPN 的形式\n你可以使用这个 python 工具来测试你所在的网络是什么 NAT 环境 基本上，我们需要在 P2P 连接中需要至少有一个客户端拥有 Full Cone NAT 或者更好的公网 IP 才能打洞成功\n这并不是回退到 derp，Tailscale 会在一开始就使用 derp 来建立连接中转流量，并在打洞成功后使用 P2P 连接，这保证了 Tailscale 在各种网络环境下的可用性，同时加快了创建连接的速度\n但是，Tailscale 在国内并没有并没有 derp 节点。而由于种种原因 我大清自有国情，这些在海外的节点的连接质量并不好。因此我们需要自建 derp 节点，来改善我们在两个客户端都没有良好 NAT 类型时的连接质量。\n自建 derp 服务器有一个前提是拥有公网 IP 的服务器。准确的说，是拥有公网 IPv4 的服务器。并且需要暴露两个端口，分别用于提供 HTTPS 和 STUN 服务。\n实际上，使用 NATv4 服务器来搭建 derp 服务器也是可行的，只不过需要修改所用的端口\n按照官方的说明，derp 协议（全称 Detoured Encrypted Routing Protoco）是运行在 http 之上的，因此自建 derp 需要一个域名用于提供 https 服务。但不巧的是，在国内域名需要备案才能提供网站。所以我们可以采取 IP 直连的方式来建立和配置 derp 服务器，从而绕过域名备案。这个方法参考了这篇文章，并使用了文章作者构建的 docker 镜像。但请注意，IP 直连的部署方法并不不是官方推荐的方法\n使用域名 由于我是懒人，不想申请并维护 SSL 证书，因此我使用 derp + caddy 反代来搭建 derp 服务器，这样的好处是可以在已经部署了 caddy 的服务器上快速搭建起 derp 服务，且可以使用标准 443 端口而无需修改端口\n直接使用 docker compose 来部署：\nservices: derper: restart: always ports: - '3478:3478/udp' # STUN 端口 - '[derp-https-port]:[derp-https-port]/tcp' # https 端口 environment: - DERP_DOMAIN=derp-us.wall-breaker-no4.xyz - 'DERP_ADDR=:[derp-https-port]' image: fredliang/derper DERP_ADDR 环境变量中的 : 不能去除\n然后修改 Caddyfile，加入以下内容：\n[your-domain] { tls { get_certificate Tailscale } reverse_proxy http://localhost:[derp-https-port] } 请将 [derp-https-port] 和 [your-domain] 替换为实际使用的端口和域名\n访问你的域名，如果能访问以下页面则说明已经搭建成功了\n访问 Tailscale 的 ACL 控制界面，这个控制文件实际上是个 json5 格式的文件。在 \"derpMap\" 块内添加以下内容：\n// 前略 \"derpMap\": { \"OmitDefaultRegions\": true, // 如果只想使用自建的 derp 结点的话，就启用这条配置 \"Regions\": { \"970\": { // 区域 ID，在 900~999 之间选一个 \"RegionID\": 970, // 区域 ID，在 900~999 之间选一个 \"RegionCode\": \"YourRegionCode\", // 区域代码 \"RegionName\": \"YourRegionName\", // 区域名 \"Nodes\": [ { \"Name\": \"YourNodeName\", // derp 节点名 \"RegionID\": 970, // 区域 ID，在 900~999 之间选一个 \"HostName\": \"your-derp-domain\", // 节点所用域名 \"IPv4\": \"your-derp-ip\" // 加快解析速度 } ] } // 如果有更多自建 derp 节点，在此添加，格式同上 } } 在保存前建议将 ACL 控制文件用格式检查工具确认是否存在语法错误：在线 JSON5 验证\n在任意安装了 Tailscale 的终端上执行以下命令：\nTailscale netcheck 如果配置正确，应该能看到类似以下的输出：\nReport: * Time: 2025-01-17T09:26:14.5408586Z * UDP: true * IPv4: yes, 114.xx.xx.xx:49768 * IPv6: no, but OS has support * MappingVariesByDestIP: true * PortMapping: * CaptivePortal: false * Nearest DERP: YourRegionName * DERP latency: - YourRegionCode: 38.7ms (YourRegionName) IP 直连 由于官方的 derper 实现默认禁用了 IP 直连的方式，我们需要克隆官方仓库到本地，修改源代码并编译才能启用 IP 直连。具体方法可以参考这篇文章和 B 站上的这个视频。\n同时，这篇文章的作者已经编译好了修改后的 derper 并打包成了 docker 镜像，因此我们可以直接使用 docker compose 来部署：\nservices: ip_derper: restart: unless-stopped ports: - '[https-port]:443/tcp' - '[STUN-port]:3478/udp' container_name: derper image: ghcr.io/yangchuansheng/ip_derper 请将 [https-port] 和 [STUN-port] 替换为实际使用的端口\n经测试，可以使用 NATv4 的服务器，只需要将 [https-port] 和 [STUN-port] 这两个端口暴露到公网即可\n同理，通过访问 https://[your-server's-ip]:[https-port] ，你也可以打开这个界面： 只不过由于 IP 直连的方式的证书是自签名的，打开时浏览器会提示不安全，无视即可 同样访问 Tailscale 的 ACL 控制界面并修改：\n// 前略 \"derpMap\": { \"OmitDefaultRegions\": true, // 如果只想使用自建的 derp 结点的话，就启用这条配置 \"Regions\": { \"970\": { // 区域 ID，在 900~999 之间选一个 \"RegionID\": 970, // 区域 ID，在 900~999 之间选一个 \"RegionCode\": \"YourRegionCode\", // 区域代码 \"RegionName\": \"YourRegionName\", // 区域名 \"Nodes\": [ { \"Name\": \"YourNodeName\", // derp 节点名 \"RegionID\": 970, // 区域 ID，在 900~999 之间选一个 \"HostName\": \"your-derp-ip\", // 节点所用 IP \"IPv4\": \"your-derp-ip\", // 节点所用 IP \"DERPPort\": [https-port], // 节点 Https 端口 \"STUNPort\": [STUN-port], // 节点 STUN 端口 \"InsecureForTests\": true // 必须启用这一条才能使用 IP 直连 } ] } // 如果有更多自建 derp 节点，在此添加，格式同上 } } 在任意安装了 Tailscale 的终端上执行以下命令：\nTailscale netcheck 如果配置正确，应该能看到类似以下的输出：\nReport: * Time: 2025-01-17T09:26:14.5408586Z * UDP: true * IPv4: yes, 114.xx.xx.xx:49768 * IPv6: no, but OS has support * MappingVariesByDestIP: true * PortMapping: * CaptivePortal: false * Nearest DERP: YourRegionName * DERP latency: - YourRegionCode: 38.7ms (YourRegionName) 参考 https://tailscale.com/kb/1019/subnets https://tailscale.com/kb/1118/custom-derp-servers https://openwrt.org/docs/guide-user/services/vpn/Tailscale/start https://pypi.org/project/yapystun/ https://icloudnative.io/posts/custom-derp-servers/ https://github.com/yangchuansheng/ip_derper https://www.bilibili.com/video/BV1WiWPeMErP ",
+  "articleBody": "在上一篇文章中，我介绍了 Tailscale 的搭建方法，同时说明了选择 Tailscale 的原因。在这篇文章中，如标题所示，我将介绍两个 Tailscale 的进阶玩法。\nSubnet routes（子网路由） 假设你有好几台设备，上边都部署了一些服务。这些设备在同一个局域网内，你希望你在外网时可以访问在这些设备上的服务。正常情况下，我们需要在每一台设备上都安装 Tailscale 客户端，才能实现这样的需求。我们注意到，这些设备都在同一局域网（网段）下，因此我们可以使用 Tailscale 自带的 subnet routes 来优化我们的组网。\nSubnet routes 的官方文章 太长不看版：Subnet routes（子网路由）是通过 Tailscale 连接远程网络（子网）的方法。配置 subnet routes 后，设备可以通过 Tailscale VPN 访问其他设备所在的本地网络，无需直接连接。\n假设我们的局域网配置如下图，局域网 IP 段为 192.168.1.0/24，自己配置时请替换为实际 IP 段\n我们可以将 Tailscale 安装在任意一个设备上，在成功加入 Tailscale 网络后，可以通过以下命令来添加子网\n如果你用的路由器运行着 openwrt，那么可以参考 openwrt 的官方文章 来安装 Tailscale\nsudo tailscale set --advertise-routes=\"192.168.1.0/24\" 然后去 Tailscale 控制台，找到对应的设备，找到编辑路由设置 最后将刚刚添加的子网勾选并保存 现在 Tailscale 网络里的所有设备（配置为子网路由网关的设备除外）访问 192.168.1.0/24 这个网段的流量都会被路由到这个设备，这样便实现了子网路由\n自建中转 前文说到，Tailscale 需要良好的 NAT 环境才能打洞成功并直连。但在部分情况下，Tailscale 无法成功打洞。在这种情况下，Tailscale 会选择使用 derp 来中转流量，也就是类似传统 VPN 的形式\n你可以使用这个 python 工具来测试你所在的网络是什么 NAT 环境 基本上，我们需要在 P2P 连接中需要至少有一个客户端拥有 Full Cone NAT 或者更好的公网 IP 才能打洞成功\n这并不是回退到 derp，Tailscale 会在一开始就使用 derp 来建立连接中转流量，并在打洞成功后使用 P2P 连接，这保证了 Tailscale 在各种网络环境下的可用性，同时加快了创建连接的速度\n但是，Tailscale 在国内并没有并没有 derp 节点。而由于种种原因 我大清自有国情，这些在海外的节点的连接质量并不好。因此我们需要自建 derp 节点，来改善我们在两个客户端都没有良好 NAT 类型时的连接质量。\n自建 derp 服务器有一个前提是拥有公网 IP 的服务器。准确的说，是拥有公网 IPv4 的服务器。并且需要暴露两个端口，分别用于提供 HTTPS 和 STUN 服务。\n实际上，使用 NATv4 服务器来搭建 derp 服务器也是可行的，只不过需要修改所用的端口\n按照官方的说明，derp 协议（全称 Detoured Encrypted Routing Protoco）是运行在 http 之上的，因此自建 derp 需要一个域名用于提供 https 服务。但不巧的是，在国内域名需要备案才能提供网站。所以我们可以采取 IP 直连的方式来建立和配置 derp 服务器，从而绕过域名备案。这个方法参考了这篇文章，并使用了文章作者构建的 docker 镜像。但请注意，IP 直连的部署方法并不不是官方推荐的方法\n使用域名 由于我是懒人，不想申请并维护 SSL 证书，因此我使用 derp + caddy 反代来搭建 derp 服务器，这样的好处是可以在已经部署了 caddy 的服务器上快速搭建起 derp 服务，且可以使用标准 443 端口而无需修改端口\n直接使用 docker compose 来部署：\nservices: derper: restart: always ports: - '3478:3478/udp' # STUN 端口 - '[derp-https-port]:[derp-https-port]/tcp' # https 端口 environment: - DERP_DOMAIN=[your-domain] - 'DERP_ADDR=:[derp-https-port]' image: fredliang/derper DERP_ADDR 环境变量中的 : 不能去除\n然后修改 Caddyfile，加入以下内容：\n[your-domain] { tls { get_certificate Tailscale } reverse_proxy http://localhost:[derp-https-port] } 请将 [derp-https-port] 和 [your-domain] 替换为实际使用的端口和域名\n访问你的域名，如果能访问以下页面则说明已经搭建成功了\n访问 Tailscale 的 ACL 控制界面，这个控制文件实际上是个 json5 格式的文件。在 \"derpMap\" 块内添加以下内容：\n// 前略 \"derpMap\": { \"OmitDefaultRegions\": true, // 如果只想使用自建的 derp 结点的话，就启用这条配置 \"Regions\": { \"970\": { // 区域 ID，在 900~999 之间选一个 \"RegionID\": 970, // 区域 ID，在 900~999 之间选一个 \"RegionCode\": \"YourRegionCode\", // 区域代码 \"RegionName\": \"YourRegionName\", // 区域名 \"Nodes\": [ { \"Name\": \"YourNodeName\", // derp 节点名 \"RegionID\": 970, // 区域 ID，在 900~999 之间选一个 \"HostName\": \"your-derp-domain\", // 节点所用域名 \"IPv4\": \"your-derp-ip\" // 加快解析速度 } ] } // 如果有更多自建 derp 节点，在此添加，格式同上 } } 在保存前建议将 ACL 控制文件用格式检查工具确认是否存在语法错误：在线 JSON5 验证\n在任意安装了 Tailscale 的终端上执行以下命令：\nTailscale netcheck 如果配置正确，应该能看到类似以下的输出：\nReport: * Time: 2025-01-17T09:26:14.5408586Z * UDP: true * IPv4: yes, 114.xx.xx.xx:49768 * IPv6: no, but OS has support * MappingVariesByDestIP: true * PortMapping: * CaptivePortal: false * Nearest DERP: YourRegionName * DERP latency: - YourRegionCode: 38.7ms (YourRegionName) IP 直连 由于官方的 derper 实现默认禁用了 IP 直连的方式，我们需要克隆官方仓库到本地，修改源代码并编译才能启用 IP 直连。具体方法可以参考这篇文章和 B 站上的这个视频。\n同时，这篇文章的作者已经编译好了修改后的 derper 并打包成了 docker 镜像，因此我们可以直接使用 docker compose 来部署：\nservices: ip_derper: restart: unless-stopped ports: - '[https-port]:443/tcp' - '[STUN-port]:3478/udp' container_name: derper image: ghcr.io/yangchuansheng/ip_derper 请将 [https-port] 和 [STUN-port] 替换为实际使用的端口\n经测试，可以使用 NATv4 的服务器，只需要将 [https-port] 和 [STUN-port] 这两个端口暴露到公网即可\n同理，通过访问 https://[your-server's-ip]:[https-port] ，你也可以打开这个界面： 只不过由于 IP 直连的方式的证书是自签名的，打开时浏览器会提示不安全，无视即可 同样访问 Tailscale 的 ACL 控制界面并修改：\n// 前略 \"derpMap\": { \"OmitDefaultRegions\": true, // 如果只想使用自建的 derp 结点的话，就启用这条配置 \"Regions\": { \"970\": { // 区域 ID，在 900~999 之间选一个 \"RegionID\": 970, // 区域 ID，在 900~999 之间选一个 \"RegionCode\": \"YourRegionCode\", // 区域代码 \"RegionName\": \"YourRegionName\", // 区域名 \"Nodes\": [ { \"Name\": \"YourNodeName\", // derp 节点名 \"RegionID\": 970, // 区域 ID，在 900~999 之间选一个 \"HostName\": \"your-derp-ip\", // 节点所用 IP \"IPv4\": \"your-derp-ip\", // 节点所用 IP \"DERPPort\": [https-port], // 节点 Https 端口 \"STUNPort\": [STUN-port], // 节点 STUN 端口 \"InsecureForTests\": true // 必须启用这一条才能使用 IP 直连 } ] } // 如果有更多自建 derp 节点，在此添加，格式同上 } } 在任意安装了 Tailscale 的终端上执行以下命令：\nTailscale netcheck 如果配置正确，应该能看到类似以下的输出：\nReport: * Time: 2025-01-17T09:26:14.5408586Z * UDP: true * IPv4: yes, 114.xx.xx.xx:49768 * IPv6: no, but OS has support * MappingVariesByDestIP: true * PortMapping: * CaptivePortal: false * Nearest DERP: YourRegionName * DERP latency: - YourRegionCode: 38.7ms (YourRegionName) 参考 https://tailscale.com/kb/1019/subnets https://tailscale.com/kb/1118/custom-derp-servers https://openwrt.org/docs/guide-user/services/vpn/Tailscale/start https://pypi.org/project/yapystun/ https://icloudnative.io/posts/custom-derp-servers/ https://github.com/yangchuansheng/ip_derper https://www.bilibili.com/video/BV1WiWPeMErP ",
   "wordCount" : "517",
   "inLanguage": "en",
   "datePublished": "2025-01-17T15:42:00Z",
@@ -149,14 +125,14 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34;
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://100.119.72.3:1313/posts/7.tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/"
+    "@id": "http://localhost:1313/posts/7.tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "WallBreakerNO4的博客",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://100.119.72.3:1313/assets/favicon.ico"
+      "url": "http://localhost:1313/assets/favicon.ico"
     }
   }
 }
@@ -174,9 +150,9 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34;
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://100.119.72.3:1313/" accesskey="h" title="WallBreakerNO4的博客 (Alt + H)">WallBreakerNO4的博客</a>
+            <a href="http://localhost:1313/" accesskey="h" title="WallBreakerNO4的博客 (Alt + H)">WallBreakerNO4的博客</a>
             <div class="logo-switches">
-                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -200,17 +176,17 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34;
         </div>
         <ul id="menu">
             <li>
-                <a href="http://100.119.72.3:1313/friends/" title="朋友">
+                <a href="http://localhost:1313/friends/" title="朋友">
                     <span>朋友</span>
                 </a>
             </li>
             <li>
-                <a href="http://100.119.72.3:1313/about/" title="关于">
+                <a href="http://localhost:1313/about/" title="关于">
                     <span>关于</span>
                 </a>
             </li>
             <li>
-                <a href="http://100.119.72.3:1313/archives" title="存档">
+                <a href="http://localhost:1313/archives" title="存档">
                     <span>存档</span>
                 </a>
             </li>
@@ -221,7 +197,7 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34;
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="http://100.119.72.3:1313/">Home</a>&nbsp;»&nbsp;<a href="http://100.119.72.3:1313/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       Tailscale 进阶使用教程 - 子网路由和自建中转
     </h1>
@@ -234,40 +210,31 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34;
 <p>假设你有好几台设备，上边都部署了一些服务。这些设备在同一个局域网内，你希望你在外网时可以访问在这些设备上的服务。正常情况下，我们需要在每一台设备上都安装 Tailscale 客户端，才能实现这样的需求。我们注意到，这些设备都在同一局域网（网段）下，因此我们可以使用 Tailscale 自带的 subnet routes 来优化我们的组网。</p>
 <blockquote>
 <p>Subnet routes 的<a href="https://Tailscale.com/kb/1019/subnets">官方文章</a>
-太长不看版：Subnet routes（子网路由）是通过 Tailscale 连接远程网络（子网）的方法。配置 subnet routes 后，设备可以通过 Tailscale VPN 访问其他设备所在的本地网络，无需直接连接。</p>
-</blockquote>
+太长不看版：Subnet routes（子网路由）是通过 Tailscale 连接远程网络（子网）的方法。配置 subnet routes 后，设备可以通过 Tailscale VPN 访问其他设备所在的本地网络，无需直接连接。</p></blockquote>
 <p>假设我们的局域网配置如下图，局域网 IP 段为 <code>192.168.1.0/24</code>，<strong>自己配置时请替换为实际 IP 段</strong></p>
-<p><img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202410111635185.png" alt="Tailscale subnet.drawio.png"  />
-</p>
+<p><img alt="Tailscale subnet.drawio.png" loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202410111635185.png"></p>
 <p>我们可以将 Tailscale 安装在任意一个设备上，在成功加入 Tailscale 网络后，可以通过以下命令来添加子网</p>
 <blockquote>
-<p>如果你用的路由器运行着 openwrt，那么可以参考 openwrt 的<a href="https://openwrt.org/docs/guide-user/services/vpn/Tailscale/start">官方文章</a> 来安装 Tailscale</p>
-</blockquote>
+<p>如果你用的路由器运行着 openwrt，那么可以参考 openwrt 的<a href="https://openwrt.org/docs/guide-user/services/vpn/Tailscale/start">官方文章</a> 来安装 Tailscale</p></blockquote>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>sudo tailscale set --advertise-routes<span style="color:#f92672">=</span><span style="color:#e6db74">&#34;192.168.1.0/24&#34;</span>
 </span></span></code></pre></div><p>然后去 <a href="https://login.Tailscale.com/admin/machines">Tailscale 控制台</a>，找到对应的设备，找到编辑路由设置
-<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202410111644921.png#center" alt="image.png"  />
-
+<img alt="image.png" loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202410111644921.png#center">
 最后将刚刚添加的子网勾选并保存
-<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202410111648375.png#center" alt="image.png"  />
-
+<img alt="image.png" loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202410111648375.png#center">
 现在 Tailscale 网络里的所有设备（配置为子网路由网关的设备除外）访问 <code>192.168.1.0/24</code> 这个网段的流量都会被路由到这个设备，这样便实现了子网路由</p>
 <h2 id="自建中转">自建中转<a hidden class="anchor" aria-hidden="true" href="#自建中转">#</a></h2>
 <p>前文说到，Tailscale 需要良好的 NAT 环境才能打洞成功并直连。但在部分情况下，Tailscale 无法成功打洞。在这种情况下，Tailscale 会选择使用 derp 来中转流量，也就是类似传统 VPN 的形式</p>
 <blockquote>
 <p>你可以使用这个 <a href="https://pypi.org/project/yapystun/">python 工具</a>来测试你所在的网络是什么 NAT 环境
-基本上，我们需要在 P2P 连接中需要至少有一个客户端拥有 Full Cone NAT 或者更好的公网 IP 才能打洞成功</p>
-</blockquote>
-<p><img loading="lazy" src="https://tailscale.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Ftraditional-vpn.0e10936c.png&amp;w=3840&amp;q=75#center" alt="image.png"  />
-</p>
+基本上，我们需要在 P2P 连接中需要至少有一个客户端拥有 Full Cone NAT 或者更好的公网 IP 才能打洞成功</p></blockquote>
+<p><img alt="image.png" loading="lazy" src="https://tailscale.com/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Ftraditional-vpn.0e10936c.png&w=3840&q=75#center"></p>
 <blockquote>
-<p>这并不是回退到 derp，Tailscale 会在一开始就使用 derp 来建立连接中转流量，并在打洞成功后使用 P2P 连接，这保证了 Tailscale 在各种网络环境下的可用性，同时加快了创建连接的速度</p>
-</blockquote>
+<p>这并不是回退到 derp，Tailscale 会在一开始就使用 derp 来建立连接中转流量，并在打洞成功后使用 P2P 连接，这保证了 Tailscale 在各种网络环境下的可用性，同时加快了创建连接的速度</p></blockquote>
 <p><strong>但是</strong>，Tailscale 在国内并没有并没有 derp 节点。而由于种种原因 <del>我大清自有国情</del>，这些在海外的节点的连接质量并不好。因此我们需要自建 derp 节点，来改善我们在两个客户端都没有良好 NAT 类型时的连接质量。</p>
 <hr>
 <p>自建 derp 服务器有一个前提是拥有公网 IP 的服务器。准确的说，是拥有公网 IPv4 的服务器。并且需要暴露两个端口，分别用于提供 HTTPS 和 STUN 服务。</p>
 <blockquote>
-<p>实际上，使用 NATv4 服务器来搭建 derp 服务器也是可行的，只不过需要修改所用的端口</p>
-</blockquote>
+<p>实际上，使用 NATv4 服务器来搭建 derp 服务器也是可行的，只不过需要修改所用的端口</p></blockquote>
 <p>按照官方的<a href="https://Tailscale.com/kb/1118/custom-derp-servers">说明</a>，derp 协议（全称 Detoured Encrypted Routing Protoco）是运行在 http 之上的，因此自建 derp 需要一个域名用于提供 https 服务。但不巧的是，在国内域名需要备案才能提供网站。所以我们可以采取 IP 直连的方式来建立和配置 derp 服务器，从而绕过域名备案。这个方法参考了这篇<a href="https://icloudnative.io/posts/custom-derp-servers/">文章</a>，并使用了文章作者构建的 docker 镜像。但请注意，IP 直连的部署方法并不不是官方推荐的方法</p>
 <h3 id="使用域名">使用域名<a hidden class="anchor" aria-hidden="true" href="#使用域名">#</a></h3>
 <p>由于我是懒人，不想申请并维护 SSL 证书，因此我使用 derp + caddy 反代来搭建 derp 服务器，这样的好处是可以在已经部署了 caddy 的服务器上快速搭建起 derp 服务，且可以使用标准 443 端口而无需修改端口</p>
@@ -279,12 +246,11 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34;
 </span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#39;3478:3478/udp&#39;</span> <span style="color:#75715e"># STUN 端口</span>
 </span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#39;[derp-https-port]:[derp-https-port]/tcp&#39;</span> <span style="color:#75715e"># https 端口</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">environment</span>:
-</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">DERP_DOMAIN=derp-us.wall-breaker-no4.xyz</span>
+</span></span><span style="display:flex;"><span>      - <span style="color:#ae81ff">DERP_DOMAIN=[your-domain]</span>
 </span></span><span style="display:flex;"><span>      - <span style="color:#e6db74">&#39;DERP_ADDR=:[derp-https-port]&#39;</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">fredliang/derper</span>
 </span></span></code></pre></div><blockquote>
-<p><code>DERP_ADDR</code> 环境变量中的 <code>:</code> 不能去除</p>
-</blockquote>
+<p><code>DERP_ADDR</code> 环境变量中的 <code>:</code> 不能去除</p></blockquote>
 <p>然后修改 Caddyfile，加入以下内容：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-Caddyfile" data-lang="Caddyfile"><span style="display:flex;"><span>[your-domain] {
 </span></span><span style="display:flex;"><span>        <span style="color:#66d9ef">tls</span> {
@@ -293,11 +259,9 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34;
 </span></span><span style="display:flex;"><span>    <span style="color:#66d9ef">reverse_proxy</span> <span style="color:#e6db74">http://localhost:[derp-https-port]</span>
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><blockquote>
-<p>请将 <code>[derp-https-port]</code> 和 <code>[your-domain]</code> 替换为实际使用的端口和域名</p>
-</blockquote>
+<p>请将 <code>[derp-https-port]</code> 和 <code>[your-domain]</code> 替换为实际使用的端口和域名</p></blockquote>
 <p>访问你的域名，如果能访问以下页面则说明已经搭建成功了</p>
-<p><img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202501171708720.png#center" alt="image.png"  />
-</p>
+<p><img alt="image.png" loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202501171708720.png#center"></p>
 <p>访问 Tailscale 的 ACL 控制<a href="https://login.Tailscale.com/admin/acls/file">界面</a>，这个控制文件实际上是个 json5 格式的文件。在 <code>&quot;derpMap&quot;</code> 块内添加以下内容：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#75715e">// 前略
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#e6db74">&#34;derpMap&#34;</span><span style="color:#960050;background-color:#1e0010">:</span> {
@@ -320,8 +284,7 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34;
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span>  }
 </span></span><span style="display:flex;"><span>}
 </span></span></code></pre></div><blockquote>
-<p>在保存前建议将 ACL 控制文件用格式检查工具确认是否存在语法错误：<a href="https://codebeautify.org/json5-validator">在线 JSON5 验证</a></p>
-</blockquote>
+<p>在保存前建议将 ACL 控制文件用格式检查工具确认是否存在语法错误：<a href="https://codebeautify.org/json5-validator">在线 JSON5 验证</a></p></blockquote>
 <p>在任意安装了 Tailscale 的终端上执行以下命令：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>Tailscale netcheck
 </span></span></code></pre></div><p>如果配置正确，应该能看到类似以下的输出：</p>
@@ -348,17 +311,13 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34;
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">container_name</span>: <span style="color:#ae81ff">derper</span>
 </span></span><span style="display:flex;"><span>    <span style="color:#f92672">image</span>: <span style="color:#ae81ff">ghcr.io/yangchuansheng/ip_derper</span>
 </span></span></code></pre></div><blockquote>
-<p>请将 <code>[https-port]</code> 和 <code>[STUN-port]</code> 替换为实际使用的端口</p>
-</blockquote>
+<p>请将 <code>[https-port]</code> 和 <code>[STUN-port]</code> 替换为实际使用的端口</p></blockquote>
 <blockquote>
-<p>经测试，可以使用 NATv4 的服务器，只需要将 <code>[https-port]</code> 和 <code>[STUN-port]</code> 这两个端口暴露到公网即可</p>
-</blockquote>
+<p>经测试，可以使用 NATv4 的服务器，只需要将 <code>[https-port]</code> 和 <code>[STUN-port]</code> 这两个端口暴露到公网即可</p></blockquote>
 <p>同理，通过访问 <code>https://[your-server's-ip]:[https-port]</code> ，你也可以打开这个界面：
-<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202501171708720.png#center" alt="image.png"  />
-
+<img alt="image.png" loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202501171708720.png#center">
 只不过由于 IP 直连的方式的证书是自签名的，打开时浏览器会提示不安全，无视即可
-<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202501172049200.png#center" alt="image.png"  />
-</p>
+<img alt="image.png" loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202501172049200.png#center"></p>
 <p>同样访问 Tailscale 的 ACL 控制<a href="https://login.Tailscale.com/admin/acls/file">界面</a>并修改：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-json" data-lang="json"><span style="display:flex;"><span><span style="color:#75715e">// 前略
 </span></span></span><span style="display:flex;"><span><span style="color:#75715e"></span><span style="color:#e6db74">&#34;derpMap&#34;</span><span style="color:#960050;background-color:#1e0010">:</span> {
@@ -407,8 +366,7 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34;
 <li><a href="https://icloudnative.io/posts/custom-derp-servers/">https://icloudnative.io/posts/custom-derp-servers/</a></li>
 <li><a href="https://github.com/yangchuansheng/ip_derper">https://github.com/yangchuansheng/ip_derper</a></li>
 <li><a href="https://www.bilibili.com/video/BV1WiWPeMErP">https://www.bilibili.com/video/BV1WiWPeMErP</a></li>
-</ul>
-</blockquote>
+</ul></blockquote>
 
 
   </div>
@@ -417,12 +375,12 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34;
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="http://100.119.72.3:1313/posts/8.%E7%99%BD%E5%AB%96%E8%85%BE%E8%AE%AF%E4%BA%91gpu%E8%B7%91stable-diffusion-webui/">
+  <a class="prev" href="http://localhost:1313/posts/8.%E7%99%BD%E5%AB%96%E8%85%BE%E8%AE%AF%E4%BA%91gpu%E8%B7%91stable-diffusion-webui/">
     <span class="title">« Prev</span>
     <br>
     <span>白嫖腾讯云GPU跑Stable Diffusion</span>
   </a>
-  <a class="next" href="http://100.119.72.3:1313/posts/%E8%8D%89%E7%A8%BF/%E5%A6%82%E4%BD%95%E7%94%A8sd%E6%9D%A5%E6%B6%A9%E6%B6%A9/">
+  <a class="next" href="http://localhost:1313/posts/%E8%8D%89%E7%A8%BF/%E5%A6%82%E4%BD%95%E7%94%A8sd%E6%9D%A5%E6%B6%A9%E6%B6%A9/">
     <span class="title">Next »</span>
     <br>
     <span>如何用SD来涩涩</span>
@@ -450,7 +408,7 @@ sudo tailscale set --advertise-routes=&#34;192.168.1.0/24&#34;
     </main>
     
 <footer class="footer">
-        <span>&copy; 2025 <a href="http://100.119.72.3:1313/">WallBreakerNO4的博客</a></span> · 
+        <span>&copy; 2025 <a href="http://localhost:1313/">WallBreakerNO4的博客</a></span> · 
 
     <span>
         Powered by

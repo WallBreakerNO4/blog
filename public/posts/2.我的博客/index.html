@@ -12,7 +12,6 @@
 域名
 
 搭博客的第一步，自然是拥有一个属于自己的域名
-
 wall-breaker-no4.xyz 这个域名，是我在 18 岁生日时给自己购买的生日礼物。这个域名最初是在腾讯云上购买的，后面迁移到了 Cloudflare 上。主要目的是为了白嫖 CF 免费的 CDN，次要目的是规避国内建站所需要的实名和备案。
 框架
 市面上主要的博客框架分为以下两大类：
@@ -46,16 +45,16 @@ Hugo 对 Markdown 的支持很好，可以把 Hugo 和 Obsidian 联动起来，�
 图床
 图床可以选择图床提供商，或者自建图床。图床提供商有免费的也有付费的，如国外有 SM. MS，国内有七牛云 等。自建图床也可以使用各个厂商的对象存储来实现。但是最终我选择了 GitHub repository &#43; Cloudflare Workers 来自建图床，原因如下：">
 <meta name="author" content="WallBreakerNO4">
-<link rel="canonical" href="http://100.119.72.3:1313/posts/2.%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://100.119.72.3:1313/assets/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://100.119.72.3:1313/assets/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://100.119.72.3:1313/assets/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://100.119.72.3:1313/assets/apple-touch-icon.png">
-<link rel="mask-icon" href="http://100.119.72.3:1313/assets/mstile-150x150.png">
+<link rel="canonical" href="http://localhost:1313/posts/2.%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.8fe10233a706bc87f2e08b3cf97b8bd4c0a80f10675a143675d59212121037c0.css" integrity="sha256-j&#43;ECM6cGvIfy4Is8&#43;XuL1MCoDxBnWhQ2ddWSEhIQN8A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/assets/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/assets/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/assets/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/assets/mstile-150x150.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://100.119.72.3:1313/posts/2.%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/2.%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/">
 <noscript>
     <style>
         #theme-toggle,
@@ -64,58 +63,28 @@ Hugo 对 Markdown 的支持很好，可以把 Hugo 和 Obsidian 联动起来，�
         }
 
     </style>
-</noscript><meta property="og:title" content="博客搭建过程记录" />
-<meta property="og:description" content="前言
-本人是一位计算机专业的学生，而学习计算机往往需要在网上自学很多内容。在网上搜索资料的的时候，抛开臭名昭著的 CSDN 虽然里面还是有一些不错的内容，最常见到的就是各式各样的个人博客。这些个人博客往往质量都相当高，我从这些博客中学习到了相当多的知识，收获颇丰。秉着“前人栽树，后人乘凉”的思想，在享受了那么多人栽的树后，我也决定搭个自己的博客。不求能做到栽树的水平，能够记录自己的学习经历，也已经很满意了。
-域名
-
-搭博客的第一步，自然是拥有一个属于自己的域名
-
+</noscript><meta property="og:url" content="http://localhost:1313/posts/2.%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/">
+  <meta property="og:site_name" content="WallBreakerNO4的博客">
+  <meta property="og:title" content="博客搭建过程记录">
+  <meta property="og:description" content="前言 本人是一位计算机专业的学生，而学习计算机往往需要在网上自学很多内容。在网上搜索资料的的时候，抛开臭名昭著的 CSDN 虽然里面还是有一些不错的内容，最常见到的就是各式各样的个人博客。这些个人博客往往质量都相当高，我从这些博客中学习到了相当多的知识，收获颇丰。秉着“前人栽树，后人乘凉”的思想，在享受了那么多人栽的树后，我也决定搭个自己的博客。不求能做到栽树的水平，能够记录自己的学习经历，也已经很满意了。
+域名 搭博客的第一步，自然是拥有一个属于自己的域名
 wall-breaker-no4.xyz 这个域名，是我在 18 岁生日时给自己购买的生日礼物。这个域名最初是在腾讯云上购买的，后面迁移到了 Cloudflare 上。主要目的是为了白嫖 CF 免费的 CDN，次要目的是规避国内建站所需要的实名和备案。
-框架
-市面上主要的博客框架分为以下两大类：
-
-动态博客框架
-
-WordPress
-Typecho
-&hellip;&hellip;
-
-
-静态博客框架
-
-Hexo
-Hugo
-&hellip;&hellip;
-
-
-
-最开始，我计划参考经常访问的一个博客：P3TERX ZONE，使用动态框架 Typecho 来搭建我的博客。
-但我最后还是选用了静态框架 Hugo 来搭建我的博客，原因如下：
-
-在搭建难度上，静态博客相比动态博客更简单 我菜死了
-静态博客可以靠 GitHub pages 之类的服务提供网站，可靠程度&#43;&#43;
-Hugo 对 Markdown 的支持很好，可以把 Hugo 和 Obsidian 联动起来，方便写文章
-我的朋友 @ECWU 和 @Steven53 都使用 Hugo 来搭建博客，有问题可以请教 骚扰
-
-部署和托管
-由于我的域名在就在 Cloudflare 上，因此在网站托管提供商上，我选择了 Cloudflare Pages。
-至于如何在 Cloudflare Pages 上托管 Hugo 站点可以参考官方文档
-图床
-图床可以选择图床提供商，或者自建图床。图床提供商有免费的也有付费的，如国外有 SM. MS，国内有七牛云 等。自建图床也可以使用各个厂商的对象存储来实现。但是最终我选择了 GitHub repository &#43; Cloudflare Workers 来自建图床，原因如下：" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://100.119.72.3:1313/posts/2.%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2023-11-20T15:46:00+00:00" />
-<meta property="article:modified_time" content="2023-11-20T15:46:00+00:00" />
-
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="博客搭建过程记录"/>
+框架 市面上主要的博客框架分为以下两大类：
+动态博客框架 WordPress Typecho …… 静态博客框架 Hexo Hugo …… 最开始，我计划参考经常访问的一个博客：P3TERX ZONE，使用动态框架 Typecho 来搭建我的博客。 但我最后还是选用了静态框架 Hugo 来搭建我的博客，原因如下：
+在搭建难度上，静态博客相比动态博客更简单 我菜死了 静态博客可以靠 GitHub pages 之类的服务提供网站，可靠程度&#43;&#43; Hugo 对 Markdown 的支持很好，可以把 Hugo 和 Obsidian 联动起来，方便写文章 我的朋友 @ECWU 和 @Steven53 都使用 Hugo 来搭建博客，有问题可以请教 骚扰 部署和托管 由于我的域名在就在 Cloudflare 上，因此在网站托管提供商上，我选择了 Cloudflare Pages。 至于如何在 Cloudflare Pages 上托管 Hugo 站点可以参考官方文档
+图床 图床可以选择图床提供商，或者自建图床。图床提供商有免费的也有付费的，如国外有 SM. MS，国内有七牛云 等。自建图床也可以使用各个厂商的对象存储来实现。但是最终我选择了 GitHub repository &#43; Cloudflare Workers 来自建图床，原因如下：">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2023-11-20T15:46:00+00:00">
+    <meta property="article:modified_time" content="2023-11-20T15:46:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="博客搭建过程记录">
 <meta name="twitter:description" content="前言
 本人是一位计算机专业的学生，而学习计算机往往需要在网上自学很多内容。在网上搜索资料的的时候，抛开臭名昭著的 CSDN 虽然里面还是有一些不错的内容，最常见到的就是各式各样的个人博客。这些个人博客往往质量都相当高，我从这些博客中学习到了相当多的知识，收获颇丰。秉着“前人栽树，后人乘凉”的思想，在享受了那么多人栽的树后，我也决定搭个自己的博客。不求能做到栽树的水平，能够记录自己的学习经历，也已经很满意了。
 域名
 
 搭博客的第一步，自然是拥有一个属于自己的域名
-
 wall-breaker-no4.xyz 这个域名，是我在 18 岁生日时给自己购买的生日礼物。这个域名最初是在腾讯云上购买的，后面迁移到了 Cloudflare 上。主要目的是为了白嫖 CF 免费的 CDN，次要目的是规避国内建站所需要的实名和备案。
 框架
 市面上主要的博客框架分为以下两大类：
@@ -147,7 +116,7 @@ Hugo 对 Markdown 的支持很好，可以把 Hugo 和 Obsidian 联动起来，�
 由于我的域名在就在 Cloudflare 上，因此在网站托管提供商上，我选择了 Cloudflare Pages。
 至于如何在 Cloudflare Pages 上托管 Hugo 站点可以参考官方文档
 图床
-图床可以选择图床提供商，或者自建图床。图床提供商有免费的也有付费的，如国外有 SM. MS，国内有七牛云 等。自建图床也可以使用各个厂商的对象存储来实现。但是最终我选择了 GitHub repository &#43; Cloudflare Workers 来自建图床，原因如下："/>
+图床可以选择图床提供商，或者自建图床。图床提供商有免费的也有付费的，如国外有 SM. MS，国内有七牛云 等。自建图床也可以使用各个厂商的对象存储来实现。但是最终我选择了 GitHub repository &#43; Cloudflare Workers 来自建图床，原因如下：">
 
 
 <script type="application/ld+json">
@@ -159,13 +128,13 @@ Hugo 对 Markdown 的支持很好，可以把 Hugo 和 Obsidian 联动起来，�
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "http://100.119.72.3:1313/posts/"
+      "item": "http://localhost:1313/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "博客搭建过程记录",
-      "item": "http://100.119.72.3:1313/posts/2.%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/"
+      "item": "http://localhost:1313/posts/2.%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/"
     }
   ]
 }
@@ -191,14 +160,14 @@ Hugo 对 Markdown 的支持很好，可以把 Hugo 和 Obsidian 联动起来，�
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://100.119.72.3:1313/posts/2.%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/"
+    "@id": "http://localhost:1313/posts/2.%E6%88%91%E7%9A%84%E5%8D%9A%E5%AE%A2/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "WallBreakerNO4的博客",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://100.119.72.3:1313/assets/favicon.ico"
+      "url": "http://localhost:1313/assets/favicon.ico"
     }
   }
 }
@@ -216,9 +185,9 @@ Hugo 对 Markdown 的支持很好，可以把 Hugo 和 Obsidian 联动起来，�
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://100.119.72.3:1313/" accesskey="h" title="WallBreakerNO4的博客 (Alt + H)">WallBreakerNO4的博客</a>
+            <a href="http://localhost:1313/" accesskey="h" title="WallBreakerNO4的博客 (Alt + H)">WallBreakerNO4的博客</a>
             <div class="logo-switches">
-                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -242,17 +211,17 @@ Hugo 对 Markdown 的支持很好，可以把 Hugo 和 Obsidian 联动起来，�
         </div>
         <ul id="menu">
             <li>
-                <a href="http://100.119.72.3:1313/friends/" title="朋友">
+                <a href="http://localhost:1313/friends/" title="朋友">
                     <span>朋友</span>
                 </a>
             </li>
             <li>
-                <a href="http://100.119.72.3:1313/about/" title="关于">
+                <a href="http://localhost:1313/about/" title="关于">
                     <span>关于</span>
                 </a>
             </li>
             <li>
-                <a href="http://100.119.72.3:1313/archives" title="存档">
+                <a href="http://localhost:1313/archives" title="存档">
                     <span>存档</span>
                 </a>
             </li>
@@ -263,7 +232,7 @@ Hugo 对 Markdown 的支持很好，可以把 Hugo 和 Obsidian 联动起来，�
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="http://100.119.72.3:1313/">Home</a>&nbsp;»&nbsp;<a href="http://100.119.72.3:1313/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       博客搭建过程记录
     </h1>
@@ -275,8 +244,7 @@ Hugo 对 Markdown 的支持很好，可以把 Hugo 和 Obsidian 联动起来，�
 <p>本人是一位计算机专业的学生，而学习计算机往往需要在网上自学很多内容。在网上搜索资料的的时候，抛开臭名昭著的 CSDN <del>虽然里面还是有一些不错的内容</del>，最常见到的就是各式各样的个人博客。这些个人博客往往质量都相当高，我从这些博客中学习到了相当多的知识，收获颇丰。秉着“前人栽树，后人乘凉”的思想，在享受了那么多人栽的树后，我也决定搭个自己的博客。不求能做到栽树的水平，能够记录自己的学习经历，也已经很满意了。</p>
 <h2 id="域名">域名<a hidden class="anchor" aria-hidden="true" href="#域名">#</a></h2>
 <blockquote>
-<p>搭博客的第一步，自然是拥有一个属于自己的域名</p>
-</blockquote>
+<p>搭博客的第一步，自然是拥有一个属于自己的域名</p></blockquote>
 <p><code>wall-breaker-no4.xyz</code> 这个域名，是我在 18 岁生日时给自己购买的生日礼物。这个域名最初是在腾讯云上购买的，后面迁移到了 Cloudflare 上。主要目的是为了白嫖 CF 免费的 CDN，次要目的是规避国内建站所需要的实名和备案。</p>
 <h2 id="框架">框架<a hidden class="anchor" aria-hidden="true" href="#框架">#</a></h2>
 <p>市面上主要的博客框架分为以下两大类：</p>
@@ -317,8 +285,7 @@ Hugo 对 Markdown 的支持很好，可以把 Hugo 和 Obsidian 联动起来，�
 <h2 id="写作流程">写作流程<a hidden class="anchor" aria-hidden="true" href="#写作流程">#</a></h2>
 <h3 id="使用模板来创建标头">使用模板来创建标头<a hidden class="anchor" aria-hidden="true" href="#使用模板来创建标头">#</a></h3>
 <p>Hugo 本身只需要用 Markdown 格式写成的文件放在 content/posts 下即可，并不需要用 Hugo 来创建 .md 格式的文件。因此只需在 content/posts 下创建 Obsidian 仓库，便可以在写博客时使用 Obsidian 来直接创建文件。</p>
-<p>但目前还有一个问题：Hugo 在渲染博客时会读取文件标头内的内容，如时间、作者等 <img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202311201939219.png#center" alt=".md标头.png"  />
-
+<p>但目前还有一个问题：Hugo 在渲染博客时会读取文件标头内的内容，如时间、作者等 <img alt=".md标头.png" loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202311201939219.png#center">
 而如果每次都要手动创建标头就太麻烦了，因此我试用 Obsidian 自带的 <code>模板</code> 功能来实现每次新建文件时自动创建标头。具体方法网上一搜就是，这里就不赘述了。</p>
 <h3 id="发表文章">发表文章<a hidden class="anchor" aria-hidden="true" href="#发表文章">#</a></h3>
 <p>在前面<strong>托管和部署</strong>中，我已经配置好了 Cloudflare 和 GitHub 的联动，所以我只需要将标头内的 <code>draft</code> 改成 <code>false</code>，并 push 到 GitHub 上即可。之后包括渲染网站、部署等操作， Cloudflare 会自动帮我完成。</p>
@@ -339,12 +306,12 @@ Hugo 对 Markdown 的支持很好，可以把 Hugo 和 Obsidian 联动起来，�
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="prev" href="http://100.119.72.3:1313/posts/3.ubuntu-zsh/">
+  <a class="prev" href="http://localhost:1313/posts/3.ubuntu-zsh/">
     <span class="title">« Prev</span>
     <br>
     <span>在Ubuntu上安装zsh以及高亮、自动补全插件</span>
   </a>
-  <a class="next" href="http://100.119.72.3:1313/posts/1.ts3/">
+  <a class="next" href="http://localhost:1313/posts/1.ts3/">
     <span class="title">Next »</span>
     <br>
     <span>TeamSpeak 3 客户端使用教程</span>
@@ -372,7 +339,7 @@ Hugo 对 Markdown 的支持很好，可以把 Hugo 和 Obsidian 联动起来，�
     </main>
     
 <footer class="footer">
-        <span>&copy; 2025 <a href="http://100.119.72.3:1313/">WallBreakerNO4的博客</a></span> · 
+        <span>&copy; 2025 <a href="http://localhost:1313/">WallBreakerNO4的博客</a></span> · 
 
     <span>
         Powered by

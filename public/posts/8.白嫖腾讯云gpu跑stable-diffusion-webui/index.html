@@ -10,45 +10,40 @@
 <meta name="description" content="AI 绘画并不是一个离我们很远的话题，随着基于 diffusion 架构的 stable diffusion 的诞生，各式各样的绘图模型如井喷式诞生。如果想在本地跑 AIGC 的绘画软件，那么一块强大的 GPU 是必不可少的。但不是所有人都是臭打游戏的拥有一块 GPU，因此我在这里介绍如何白嫖腾讯云的免费 GPU 来运行 Stable Diffusion WebUI
 
 感谢 Linux Do 上的网友将这个白嫖的方法分享出来
-
 准备
 首先打开 https://ide.cloud.tencent.com/dashboard/gpu-workspace ，登录后便能进入到这一个界面（图中是我已经创建好的，请忽略）：
 
 
-
 腾讯云在 Cloud Studio 中提供了一个月 10000 分钟的 GPU 时长（2025 年 1 月 1 日后），免费的 GPU 配置为 Tesla T4，拥有 16G 的显存。这用于跑 Stable Diffusion WebUI 已经绰绰有余了。
 美中不足的是，这个在排除了系统自带占用后，只有 30G 的空间，稍微有点小
-
 新建一个工作空间：
-
 
 名称随便，能记住就行，模板选择 Pytorch：
 
-
 进入新建好的工作空间 VScode 换皮
 
-
 将左侧的示例删除：
-
 
 新建一个终端：
 
 
-
-
 安装 WebUI
-克隆项目（使用 Github Proxy 代理）到本地并进入 webui 文件夹：">
+克隆项目（使用 Github Proxy 代理）到本地并进入 webui 文件夹：
+git clone https://ghfast.top/https://github.com/lllyasviel/stable-diffusion-webui-forge.git
+cd stable-diffusion-webui-forge
+
+Github Proxy 项目的域名很容易被墙，请去项目最新发布地址查看可用域名，并将后续使用 Github Proxy 的域名替换">
 <meta name="author" content="WallBreakerNO4">
-<link rel="canonical" href="http://100.119.72.3:1313/posts/8.%E7%99%BD%E5%AB%96%E8%85%BE%E8%AE%AF%E4%BA%91gpu%E8%B7%91stable-diffusion-webui/">
-<link crossorigin="anonymous" href="/assets/css/stylesheet.fc220c15db4aef0318bbf30adc45d33d4d7c88deff3238b23eb255afdc472ca6.css" integrity="sha256-/CIMFdtK7wMYu/MK3EXTPU18iN7/MjiyPrJVr9xHLKY=" rel="preload stylesheet" as="style">
-<link rel="icon" href="http://100.119.72.3:1313/assets/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="http://100.119.72.3:1313/assets/favicon-16x16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="http://100.119.72.3:1313/assets/favicon-32x32.png">
-<link rel="apple-touch-icon" href="http://100.119.72.3:1313/assets/apple-touch-icon.png">
-<link rel="mask-icon" href="http://100.119.72.3:1313/assets/mstile-150x150.png">
+<link rel="canonical" href="http://localhost:1313/posts/8.%E7%99%BD%E5%AB%96%E8%85%BE%E8%AE%AF%E4%BA%91gpu%E8%B7%91stable-diffusion-webui/">
+<link crossorigin="anonymous" href="/assets/css/stylesheet.8fe10233a706bc87f2e08b3cf97b8bd4c0a80f10675a143675d59212121037c0.css" integrity="sha256-j&#43;ECM6cGvIfy4Is8&#43;XuL1MCoDxBnWhQ2ddWSEhIQN8A=" rel="preload stylesheet" as="style">
+<link rel="icon" href="http://localhost:1313/assets/favicon.ico">
+<link rel="icon" type="image/png" sizes="16x16" href="http://localhost:1313/assets/favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="http://localhost:1313/assets/favicon-32x32.png">
+<link rel="apple-touch-icon" href="http://localhost:1313/assets/apple-touch-icon.png">
+<link rel="mask-icon" href="http://localhost:1313/assets/mstile-150x150.png">
 <meta name="theme-color" content="#2e2e33">
 <meta name="msapplication-TileColor" content="#2e2e33">
-<link rel="alternate" hreflang="en" href="http://100.119.72.3:1313/posts/8.%E7%99%BD%E5%AB%96%E8%85%BE%E8%AE%AF%E4%BA%91gpu%E8%B7%91stable-diffusion-webui/">
+<link rel="alternate" hreflang="en" href="http://localhost:1313/posts/8.%E7%99%BD%E5%AB%96%E8%85%BE%E8%AE%AF%E4%BA%91gpu%E8%B7%91stable-diffusion-webui/">
 <noscript>
     <style>
         #theme-toggle,
@@ -57,76 +52,47 @@
         }
 
     </style>
-</noscript><meta property="og:title" content="白嫖腾讯云GPU跑Stable Diffusion" />
-<meta property="og:description" content="AI 绘画并不是一个离我们很远的话题，随着基于 diffusion 架构的 stable diffusion 的诞生，各式各样的绘图模型如井喷式诞生。如果想在本地跑 AIGC 的绘画软件，那么一块强大的 GPU 是必不可少的。但不是所有人都是臭打游戏的拥有一块 GPU，因此我在这里介绍如何白嫖腾讯云的免费 GPU 来运行 Stable Diffusion WebUI
-
+</noscript><meta property="og:url" content="http://localhost:1313/posts/8.%E7%99%BD%E5%AB%96%E8%85%BE%E8%AE%AF%E4%BA%91gpu%E8%B7%91stable-diffusion-webui/">
+  <meta property="og:site_name" content="WallBreakerNO4的博客">
+  <meta property="og:title" content="白嫖腾讯云GPU跑Stable Diffusion">
+  <meta property="og:description" content="AI 绘画并不是一个离我们很远的话题，随着基于 diffusion 架构的 stable diffusion 的诞生，各式各样的绘图模型如井喷式诞生。如果想在本地跑 AIGC 的绘画软件，那么一块强大的 GPU 是必不可少的。但不是所有人都是臭打游戏的拥有一块 GPU，因此我在这里介绍如何白嫖腾讯云的免费 GPU 来运行 Stable Diffusion WebUI
 感谢 Linux Do 上的网友将这个白嫖的方法分享出来
-
-准备
-首先打开 https://ide.cloud.tencent.com/dashboard/gpu-workspace ，登录后便能进入到这一个界面（图中是我已经创建好的，请忽略）：
-
-
-
-腾讯云在 Cloud Studio 中提供了一个月 10000 分钟的 GPU 时长（2025 年 1 月 1 日后），免费的 GPU 配置为 Tesla T4，拥有 16G 的显存。这用于跑 Stable Diffusion WebUI 已经绰绰有余了。
-美中不足的是，这个在排除了系统自带占用后，只有 30G 的空间，稍微有点小
-
-新建一个工作空间：
-
-
-名称随便，能记住就行，模板选择 Pytorch：
-
-
-进入新建好的工作空间 VScode 换皮
-
-
-将左侧的示例删除：
-
-
-新建一个终端：
-
-
-
-
-安装 WebUI
-克隆项目（使用 Github Proxy 代理）到本地并进入 webui 文件夹：" />
-<meta property="og:type" content="article" />
-<meta property="og:url" content="http://100.119.72.3:1313/posts/8.%E7%99%BD%E5%AB%96%E8%85%BE%E8%AE%AF%E4%BA%91gpu%E8%B7%91stable-diffusion-webui/" /><meta property="article:section" content="posts" />
-<meta property="article:published_time" content="2025-01-18T00:27:00+00:00" />
-<meta property="article:modified_time" content="2025-01-18T00:27:00+00:00" />
-
-<meta name="twitter:card" content="summary"/>
-<meta name="twitter:title" content="白嫖腾讯云GPU跑Stable Diffusion"/>
+准备 首先打开 https://ide.cloud.tencent.com/dashboard/gpu-workspace ，登录后便能进入到这一个界面（图中是我已经创建好的，请忽略）： 腾讯云在 Cloud Studio 中提供了一个月 10000 分钟的 GPU 时长（2025 年 1 月 1 日后），免费的 GPU 配置为 Tesla T4，拥有 16G 的显存。这用于跑 Stable Diffusion WebUI 已经绰绰有余了。 美中不足的是，这个在排除了系统自带占用后，只有 30G 的空间，稍微有点小
+新建一个工作空间： 名称随便，能记住就行，模板选择 Pytorch： 进入新建好的工作空间 VScode 换皮 将左侧的示例删除： 新建一个终端： 安装 WebUI 克隆项目（使用 Github Proxy 代理）到本地并进入 webui 文件夹：
+git clone https://ghfast.top/https://github.com/lllyasviel/stable-diffusion-webui-forge.git cd stable-diffusion-webui-forge Github Proxy 项目的域名很容易被墙，请去项目最新发布地址查看可用域名，并将后续使用 Github Proxy 的域名替换">
+  <meta property="og:locale" content="zh">
+  <meta property="og:type" content="article">
+    <meta property="article:section" content="posts">
+    <meta property="article:published_time" content="2025-01-18T00:27:00+00:00">
+    <meta property="article:modified_time" content="2025-01-18T00:27:00+00:00">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="白嫖腾讯云GPU跑Stable Diffusion">
 <meta name="twitter:description" content="AI 绘画并不是一个离我们很远的话题，随着基于 diffusion 架构的 stable diffusion 的诞生，各式各样的绘图模型如井喷式诞生。如果想在本地跑 AIGC 的绘画软件，那么一块强大的 GPU 是必不可少的。但不是所有人都是臭打游戏的拥有一块 GPU，因此我在这里介绍如何白嫖腾讯云的免费 GPU 来运行 Stable Diffusion WebUI
 
 感谢 Linux Do 上的网友将这个白嫖的方法分享出来
-
 准备
 首先打开 https://ide.cloud.tencent.com/dashboard/gpu-workspace ，登录后便能进入到这一个界面（图中是我已经创建好的，请忽略）：
 
 
-
 腾讯云在 Cloud Studio 中提供了一个月 10000 分钟的 GPU 时长（2025 年 1 月 1 日后），免费的 GPU 配置为 Tesla T4，拥有 16G 的显存。这用于跑 Stable Diffusion WebUI 已经绰绰有余了。
 美中不足的是，这个在排除了系统自带占用后，只有 30G 的空间，稍微有点小
-
 新建一个工作空间：
-
 
 名称随便，能记住就行，模板选择 Pytorch：
 
-
 进入新建好的工作空间 VScode 换皮
 
-
 将左侧的示例删除：
-
 
 新建一个终端：
 
 
-
-
 安装 WebUI
-克隆项目（使用 Github Proxy 代理）到本地并进入 webui 文件夹："/>
+克隆项目（使用 Github Proxy 代理）到本地并进入 webui 文件夹：
+git clone https://ghfast.top/https://github.com/lllyasviel/stable-diffusion-webui-forge.git
+cd stable-diffusion-webui-forge
+
+Github Proxy 项目的域名很容易被墙，请去项目最新发布地址查看可用域名，并将后续使用 Github Proxy 的域名替换">
 
 
 <script type="application/ld+json">
@@ -138,13 +104,13 @@
       "@type": "ListItem",
       "position":  1 ,
       "name": "Posts",
-      "item": "http://100.119.72.3:1313/posts/"
+      "item": "http://localhost:1313/posts/"
     }, 
     {
       "@type": "ListItem",
       "position":  2 ,
       "name": "白嫖腾讯云GPU跑Stable Diffusion",
-      "item": "http://100.119.72.3:1313/posts/8.%E7%99%BD%E5%AB%96%E8%85%BE%E8%AE%AF%E4%BA%91gpu%E8%B7%91stable-diffusion-webui/"
+      "item": "http://localhost:1313/posts/8.%E7%99%BD%E5%AB%96%E8%85%BE%E8%AE%AF%E4%BA%91gpu%E8%B7%91stable-diffusion-webui/"
     }
   ]
 }
@@ -155,7 +121,7 @@
   "@type": "BlogPosting",
   "headline": "白嫖腾讯云GPU跑Stable Diffusion",
   "name": "白嫖腾讯云GPU跑Stable Diffusion",
-  "description": "AI 绘画并不是一个离我们很远的话题，随着基于 diffusion 架构的 stable diffusion 的诞生，各式各样的绘图模型如井喷式诞生。如果想在本地跑 AIGC 的绘画软件，那么一块强大的 GPU 是必不可少的。但不是所有人都是臭打游戏的拥有一块 GPU，因此我在这里介绍如何白嫖腾讯云的免费 GPU 来运行 Stable Diffusion WebUI\n感谢 Linux Do 上的网友将这个白嫖的方法分享出来\n准备 首先打开 https://ide.cloud.tencent.com/dashboard/gpu-workspace ，登录后便能进入到这一个界面（图中是我已经创建好的，请忽略）： 腾讯云在 Cloud Studio 中提供了一个月 10000 分钟的 GPU 时长（2025 年 1 月 1 日后），免费的 GPU 配置为 Tesla T4，拥有 16G 的显存。这用于跑 Stable Diffusion WebUI 已经绰绰有余了。 美中不足的是，这个在排除了系统自带占用后，只有 30G 的空间，稍微有点小\n新建一个工作空间： 名称随便，能记住就行，模板选择 Pytorch： 进入新建好的工作空间 VScode 换皮 将左侧的示例删除： 新建一个终端： 安装 WebUI 克隆项目（使用 Github Proxy 代理）到本地并进入 webui 文件夹：\n",
+  "description": "AI 绘画并不是一个离我们很远的话题，随着基于 diffusion 架构的 stable diffusion 的诞生，各式各样的绘图模型如井喷式诞生。如果想在本地跑 AIGC 的绘画软件，那么一块强大的 GPU 是必不可少的。但不是所有人都是臭打游戏的拥有一块 GPU，因此我在这里介绍如何白嫖腾讯云的免费 GPU 来运行 Stable Diffusion WebUI\n感谢 Linux Do 上的网友将这个白嫖的方法分享出来\n准备 首先打开 https://ide.cloud.tencent.com/dashboard/gpu-workspace ，登录后便能进入到这一个界面（图中是我已经创建好的，请忽略）： 腾讯云在 Cloud Studio 中提供了一个月 10000 分钟的 GPU 时长（2025 年 1 月 1 日后），免费的 GPU 配置为 Tesla T4，拥有 16G 的显存。这用于跑 Stable Diffusion WebUI 已经绰绰有余了。 美中不足的是，这个在排除了系统自带占用后，只有 30G 的空间，稍微有点小\n新建一个工作空间： 名称随便，能记住就行，模板选择 Pytorch： 进入新建好的工作空间 VScode 换皮 将左侧的示例删除： 新建一个终端： 安装 WebUI 克隆项目（使用 Github Proxy 代理）到本地并进入 webui 文件夹：\ngit clone https://ghfast.top/https://github.com/lllyasviel/stable-diffusion-webui-forge.git cd stable-diffusion-webui-forge Github Proxy 项目的域名很容易被墙，请去项目最新发布地址查看可用域名，并将后续使用 Github Proxy 的域名替换\n",
   "keywords": [
     
   ],
@@ -170,14 +136,14 @@
   },
   "mainEntityOfPage": {
     "@type": "WebPage",
-    "@id": "http://100.119.72.3:1313/posts/8.%E7%99%BD%E5%AB%96%E8%85%BE%E8%AE%AF%E4%BA%91gpu%E8%B7%91stable-diffusion-webui/"
+    "@id": "http://localhost:1313/posts/8.%E7%99%BD%E5%AB%96%E8%85%BE%E8%AE%AF%E4%BA%91gpu%E8%B7%91stable-diffusion-webui/"
   },
   "publisher": {
     "@type": "Organization",
     "name": "WallBreakerNO4的博客",
     "logo": {
       "@type": "ImageObject",
-      "url": "http://100.119.72.3:1313/assets/favicon.ico"
+      "url": "http://localhost:1313/assets/favicon.ico"
     }
   }
 }
@@ -195,9 +161,9 @@
 <header class="header">
     <nav class="nav">
         <div class="logo">
-            <a href="http://100.119.72.3:1313/" accesskey="h" title="WallBreakerNO4的博客 (Alt + H)">WallBreakerNO4的博客</a>
+            <a href="http://localhost:1313/" accesskey="h" title="WallBreakerNO4的博客 (Alt + H)">WallBreakerNO4的博客</a>
             <div class="logo-switches">
-                <button id="theme-toggle" accesskey="t" title="(Alt + T)">
+                <button id="theme-toggle" accesskey="t" title="(Alt + T)" aria-label="Toggle theme">
                     <svg id="moon" xmlns="http://www.w3.org/2000/svg" width="24" height="18" viewBox="0 0 24 24"
                         fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                         stroke-linejoin="round">
@@ -221,17 +187,17 @@
         </div>
         <ul id="menu">
             <li>
-                <a href="http://100.119.72.3:1313/friends/" title="朋友">
+                <a href="http://localhost:1313/friends/" title="朋友">
                     <span>朋友</span>
                 </a>
             </li>
             <li>
-                <a href="http://100.119.72.3:1313/about/" title="关于">
+                <a href="http://localhost:1313/about/" title="关于">
                     <span>关于</span>
                 </a>
             </li>
             <li>
-                <a href="http://100.119.72.3:1313/archives" title="存档">
+                <a href="http://localhost:1313/archives" title="存档">
                     <span>存档</span>
                 </a>
             </li>
@@ -242,7 +208,7 @@
 
 <article class="post-single">
   <header class="post-header">
-    <div class="breadcrumbs"><a href="http://100.119.72.3:1313/">Home</a>&nbsp;»&nbsp;<a href="http://100.119.72.3:1313/posts/">Posts</a></div>
+    <div class="breadcrumbs"><a href="http://localhost:1313/">Home</a>&nbsp;»&nbsp;<a href="http://localhost:1313/posts/">Posts</a></div>
     <h1 class="post-title entry-hint-parent">
       白嫖腾讯云GPU跑Stable Diffusion
     </h1>
@@ -252,64 +218,49 @@
   </header> 
   <div class="post-content"><p>AI 绘画并不是一个离我们很远的话题，随着基于 diffusion 架构的 stable diffusion 的诞生，各式各样的绘图模型如井喷式诞生。如果想在本地跑 AIGC 的绘画软件，那么一块强大的 GPU 是必不可少的。但不是所有人都<del>是臭打游戏的</del>拥有一块 GPU，因此我在这里介绍如何白嫖腾讯云的免费 GPU 来运行 Stable Diffusion WebUI</p>
 <blockquote>
-<p>感谢 <a href="https://linux.do/t/topic/262176">Linux Do</a> 上的网友将这个白嫖的方法分享出来</p>
-</blockquote>
+<p>感谢 <a href="https://linux.do/t/topic/262176">Linux Do</a> 上的网友将这个白嫖的方法分享出来</p></blockquote>
 <h2 id="准备">准备<a hidden class="anchor" aria-hidden="true" href="#准备">#</a></h2>
 <p>首先打开 <a href="https://ide.cloud.tencent.com/dashboard/gpu-workspace">https://ide.cloud.tencent.com/dashboard/gpu-workspace</a> ，登录后便能进入到这一个界面（图中是我已经创建好的，请忽略）：
-<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210041980.png" alt="image.png"  />
-</p>
+<img alt="image.png" loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210041980.png"></p>
 <blockquote>
 <p>腾讯云在 Cloud Studio 中提供了一个月 10000 分钟的 GPU 时长（2025 年 1 月 1 日后），免费的 GPU 配置为 Tesla T4，拥有 16G 的显存。这用于跑 Stable Diffusion WebUI 已经绰绰有余了。
-美中不足的是，这个在排除了系统自带占用后，只有 30G 的空间，稍微有点小</p>
-</blockquote>
+美中不足的是，这个在排除了系统自带占用后，只有 30G 的空间，稍微有点小</p></blockquote>
 <p>新建一个工作空间：
-<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210046512.png" alt="image.png"  />
-</p>
+<img alt="image.png" loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210046512.png"></p>
 <p>名称随便，能记住就行，模板选择 Pytorch：
-<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210047611.png" alt="image.png"  />
-</p>
+<img alt="image.png" loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210047611.png"></p>
 <p>进入新建好的工作空间 <del>VScode 换皮</del>
-<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210122200.png" alt="image.png"  />
-</p>
+<img alt="image.png" loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210122200.png"></p>
 <p>将左侧的示例删除：
-<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210124619.png" alt="image.png"  />
-</p>
+<img alt="image.png" loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210124619.png"></p>
 <p>新建一个终端：
-<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210126986.png" alt="image.png"  />
-
-<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210127485.png" alt="image.png"  />
-</p>
+<img alt="image.png" loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210126986.png">
+<img alt="image.png" loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210127485.png"></p>
 <h2 id="安装-webui">安装 WebUI<a hidden class="anchor" aria-hidden="true" href="#安装-webui">#</a></h2>
 <p>克隆项目（使用 Github Proxy 代理）到本地并进入 webui 文件夹：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>git clone https://ghfast.top/https://github.com/lllyasviel/stable-diffusion-webui-forge.git
 </span></span><span style="display:flex;"><span>cd stable-diffusion-webui-forge
 </span></span></code></pre></div><blockquote>
-<p>Github Proxy 项目的域名很容易被墙，请去项目最新发布<a href="https://ghproxy.link/">地址</a>查看可用域名，并将后续使用 Github Proxy 的域名替换</p>
-</blockquote>
+<p>Github Proxy 项目的域名很容易被墙，请去项目最新发布<a href="https://ghproxy.link/">地址</a>查看可用域名，并将后续使用 Github Proxy 的域名替换</p></blockquote>
 <p>将自带的 pytorch 删除（版本太老了），创建 venv 并安装最新版的 pytorch：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>pip uninstall torch torchvision torchaudio
 </span></span><span style="display:flex;"><span>python -m venv venv
 </span></span><span style="display:flex;"><span>source venv/bin/activate
 </span></span><span style="display:flex;"><span>pip install torch torchvision torchaudio --index-url https://download.pytorch.org/whl/cu124
 </span></span></code></pre></div><blockquote>
-<p>可能会比较慢，但国内没有 pytorch 的镜像源了，只能这样嗯下</p>
-</blockquote>
+<p>可能会比较慢，但国内没有 pytorch 的镜像源了，只能这样嗯下</p></blockquote>
 <p>打开 <code>stable-diffusion-webui-forge/modules/launch_utils.py</code> 文件，将里面所有的 <code>https://github.com</code> 替换为 <code>https://ghfast.top/https://github.com</code>，在第一次启动 webui 安装插件时走镜像加速安装
-<img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210146890.png" alt="image.png"  />
-</p>
+<img alt="image.png" loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210146890.png"></p>
 <blockquote>
-<p>使用 <code>ctrl + H</code> 进行替换</p>
-</blockquote>
+<p>使用 <code>ctrl + H</code> 进行替换</p></blockquote>
 <p>安装工作空间缺失的组件（<code>aria2</code> 是用于下载模型的，如果你喜欢使用 <code>wget</code> 的话就不用安装）：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>apt update <span style="color:#f92672">&amp;&amp;</span> apt install aria2 google-perftools bc libgl1 -y
 </span></span></code></pre></div><p>修改 <code>stable-diffusion-webui-forge/webui-user.sh</code>，取消 <code>export COMMANDLINE_ARGS=&quot;&quot;</code> 这一行的注释，并修改为：</p>
 <pre tabindex="0"><code>export COMMANDLINE_ARGS=&#34;--listen --enable-insecure-extension-access --api --theme dark --cuda-malloc&#34;
-</code></pre><p><img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210151109.png" alt="image.png"  />
-</p>
+</code></pre><p><img alt="image.png" loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210151109.png"></p>
 <p>进入 <code>stable-diffusion-webui-forge/models/Stable-diffusion</code> 下载模型：</p>
 <blockquote>
-<p>对于画二次元图片，我推荐 Laxhar Dream Lab 训练的 NoobAI-XL 系列模型：<a href="https://huggingface.co/Laxhar">Huggingface 地址</a>，<a href="https://civitai.com/models/833294/noobai-xl-nai-xl">Civitai 地址</a>。我为这个模型做了一个画风查看网站，在此打个广告：<a href="https://noobai.wall-breaker-no4.xyz/batch/noobai-xl-vpred-1">NoobAI-XL V-Pred 1.0 Version 画风对比</a></p>
-</blockquote>
+<p>对于画二次元图片，我推荐 Laxhar Dream Lab 训练的 NoobAI-XL 系列模型：<a href="https://huggingface.co/Laxhar">Huggingface 地址</a>，<a href="https://civitai.com/models/833294/noobai-xl-nai-xl">Civitai 地址</a>。我为这个模型做了一个画风查看网站，在此打个广告：<a href="https://noobai.wall-breaker-no4.xyz/batch/noobai-xl-vpred-1">NoobAI-XL V-Pred 1.0 Version 画风对比</a></p></blockquote>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd stable-diffusion-webui-forge/models/Stable-diffusion
 </span></span><span style="display:flex;"><span><span style="color:#75715e"># 由于 HuggingFace 被墙，使用 HF-mirror 下载</span>
 </span></span><span style="display:flex;"><span>aria2c -x <span style="color:#ae81ff">16</span> -o NoobAI-XL-Vpred-v1.0.safetensors <span style="color:#e6db74">&#34;https://hf-mirror.com/Laxhar/noobai-XL-Vpred-1.0/resolve/main/NoobAI-XL-Vpred-v1.0.safetensors?download=true&#34;</span>
@@ -319,15 +270,13 @@
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd /workspace/stable-diffusion-webui-forge/
 </span></span><span style="display:flex;"><span>./webui.sh -f
 </span></span></code></pre></div><blockquote>
-<p>由于是 root 身份，需要添加 <code>-f</code> 参数才能启动 webui</p>
-</blockquote>
+<p>由于是 root 身份，需要添加 <code>-f</code> 参数才能启动 webui</p></blockquote>
 <p>终端出现类似以下输出时，webui 便启动成功了</p>
 <pre tabindex="0"><code>Running on local URL:  http://0.0.0.0:7860
 
 To create a public link, set `share=True` in `launch()`.
 Startup time: 47.7s (prepare environment: 12.1s, launcher: 0.6s, import torch: 12.2s, initialize shared: 0.1s, other imports: 0.5s, load scripts: 2.2s, initialize google blockly: 14.1s, create ui: 2.6s, gradio launch: 1.4s, add APIs: 1.7s).
-</code></pre><p><img loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210226475.png" alt="image.png"  />
-</p>
+</code></pre><p><img alt="image.png" loading="lazy" src="https://image.wall-breaker-no4.xyz/imgs/202412210226475.png"></p>
 <h2 id="访问-webui">访问 WebUI<a hidden class="anchor" aria-hidden="true" href="#访问-webui">#</a></h2>
 <p>由于腾讯云的这个工作空间并不提供外部访问端口的功能，我们需要使用内网穿透工具来访问 webui。市面上有很多内网穿透服务，因此本章仅为抛砖引玉，不一定是最好的解决方案。</p>
 <h3 id="webui-自带的穿透">WebUI 自带的穿透<a hidden class="anchor" aria-hidden="true" href="#webui-自带的穿透">#</a></h3>
@@ -361,13 +310,11 @@ Startup time: 47.7s (prepare environment: 12.1s, launcher: 0.6s, import torch: 1
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-frps.toml" data-lang="frps.toml"><span style="display:flex;"><span><span style="color:#a6e22e">bindPort</span> = [<span style="color:#a6e22e">FRP-port</span>]
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">auth</span>.<span style="color:#a6e22e">token</span> = <span style="color:#e6db74">&#34;[FRP-token]&#34;</span>
 </span></span></code></pre></div><blockquote>
-<p>请将 <code>[FRP-port]</code> 和 <code>[FRP-token]</code> 替换为实际使用的端口和 token</p>
-</blockquote>
+<p>请将 <code>[FRP-port]</code> 和 <code>[FRP-token]</code> 替换为实际使用的端口和 token</p></blockquote>
 <p>最后启动 docker 容器：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>docker compose up -d
 </span></span></code></pre></div><blockquote>
-<p>请注意开放服务器的防火墙端口，需要开放两个：<code>[FRP-port]/tcp</code> 和 <code>7860/tcp</code></p>
-</blockquote>
+<p>请注意开放服务器的防火墙端口，需要开放两个：<code>[FRP-port]/tcp</code> 和 <code>7860/tcp</code></p></blockquote>
 <hr>
 <p>回到腾讯云 IDE，让我们新建一个终端并创建一个文件夹来放 frpc 相关的文件：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>cd /workspace/
@@ -389,8 +336,7 @@ Startup time: 47.7s (prepare environment: 12.1s, launcher: 0.6s, import torch: 1
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">localPort</span> = <span style="color:#ae81ff">7860</span>
 </span></span><span style="display:flex;"><span><span style="color:#a6e22e">remotePort</span> = <span style="color:#ae81ff">7860</span>
 </span></span></code></pre></div><blockquote>
-<p>请将 <code>[IP-or-domain]</code>、<code>[FRP-port]</code> 和 <code>[FRP-token]</code> 替换为实际使用的服务器地址端口和 token</p>
-</blockquote>
+<p>请将 <code>[IP-or-domain]</code>、<code>[FRP-port]</code> 和 <code>[FRP-token]</code> 替换为实际使用的服务器地址端口和 token</p></blockquote>
 <p>启动 frpc：</p>
 <div class="highlight"><pre tabindex="0" style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4;"><code class="language-shell" data-lang="shell"><span style="display:flex;"><span>./frpc -c ./frpc.toml
 </span></span></code></pre></div><p>正常启动后便可以访问 <code>http://[IP-or-domain]:7860</code> 来访问 WebUI 并正常的生成图片，所生成的图片会保存到 <code>/workspace/stable-diffusion-webui-forge/outputs</code> 文件夹下</p>
@@ -431,7 +377,12 @@ Startup time: 47.7s (prepare environment: 12.1s, launcher: 0.6s, import torch: 1
     <ul class="post-tags">
     </ul>
 <nav class="paginav">
-  <a class="next" href="http://100.119.72.3:1313/posts/7.tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/">
+  <a class="prev" href="http://localhost:1313/posts/%E8%8D%89%E7%A8%BF/%E6%88%91%E7%9A%84%E4%B8%96%E7%95%8C%E4%BC%98%E5%8C%96mod%E8%AE%B0%E5%BD%95/">
+    <span class="title">« Prev</span>
+    <br>
+    <span>我的世界优化Mod</span>
+  </a>
+  <a class="next" href="http://localhost:1313/posts/7.tailscale-%E8%BF%9B%E9%98%B6%E4%BD%BF%E7%94%A8%E6%95%99%E7%A8%8B---%E5%AD%90%E7%BD%91%E8%B7%AF%E7%94%B1%E5%92%8C%E8%87%AA%E5%BB%BA%E4%B8%AD%E8%BD%AC/">
     <span class="title">Next »</span>
     <br>
     <span>Tailscale 进阶使用教程 - 子网路由和自建中转</span>
@@ -459,7 +410,7 @@ Startup time: 47.7s (prepare environment: 12.1s, launcher: 0.6s, import torch: 1
     </main>
     
 <footer class="footer">
-        <span>&copy; 2025 <a href="http://100.119.72.3:1313/">WallBreakerNO4的博客</a></span> · 
+        <span>&copy; 2025 <a href="http://localhost:1313/">WallBreakerNO4的博客</a></span> · 
 
     <span>
         Powered by
