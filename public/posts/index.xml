@@ -6,8 +6,50 @@
     <description>Recent content in Posts on WallBreakerNO4的博客</description>
     <generator>Hugo -- 0.148.2</generator>
     <language>zh</language>
-    <lastBuildDate>Tue, 11 Mar 2025 20:15:00 +0000</lastBuildDate>
+    <lastBuildDate>Mon, 28 Jul 2025 10:00:00 +0000</lastBuildDate>
     <atom:link href="http://localhost:1313/posts/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>CST 新生电脑使用指南</title>
+      <link>http://localhost:1313/posts/%E8%8D%89%E7%A8%BF/cst-%E6%96%B0%E7%94%9F%E7%94%B5%E8%84%91%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</link>
+      <pubDate>Mon, 28 Jul 2025 10:00:00 +0000</pubDate>
+      <guid>http://localhost:1313/posts/%E8%8D%89%E7%A8%BF/cst-%E6%96%B0%E7%94%9F%E7%94%B5%E8%84%91%E4%BD%BF%E7%94%A8%E6%8C%87%E5%8D%97/</guid>
+      <description>&lt;p&gt;欢迎各位新同学加入 CST 的大家庭！从今天起，你手中的电脑将不再仅仅是娱乐的工具，而是你未来四年，乃至更长职业生涯中最重要的伙伴和武器。如何驾驭这匹“宝马”，让它稳定、高效地服务于你的学习和探索，是许多新生面临的第一个挑战。&lt;/p&gt;
+&lt;p&gt;本指南正是为此而生。笔者将结合自己的经验，从培养良好的使用习惯、掌握高效的学习方法，到发掘实用的开发工具和教育资源，为你提供一份全面的入门攻略。需要特别说明的是，本文内容主要针对 Windows 操作系统，Mac 用户也可以参考其中的通用原则，但部分具体操作可能有所不同。&lt;/p&gt;
+&lt;p&gt;希望这篇指南能帮助你少走弯路，为你的大学生活和技术之旅，开一个好头。&lt;/p&gt;
+&lt;h2 id=&#34;使用习惯&#34;&gt;使用习惯&lt;/h2&gt;
+&lt;p&gt;进入了 CST 专业，也就意味着接下来的四年（大概率更长的时间），你都要经常使用你的电脑。一个良好的使用习惯，尤其是对安全的重视，才能保证你电脑长期稳定、数据安全无虞。&lt;/p&gt;
+&lt;h3 id=&#34;数据安全重中之重&#34;&gt;数据安全：重中之重&lt;/h3&gt;
+&lt;h4 id=&#34;关闭-bitlocker&#34;&gt;关闭 Bitlocker&lt;/h4&gt;
+&lt;p&gt;如果你是新买的电脑，那很有可能你的电脑是自带 Bitlocker 并将电脑硬盘加密了的。Bitlocker 的初衷是讲电脑硬盘加密，了防止当电脑被他人物理接触（如被偷走）的情况下，机密数据产生泄露。这个功能对企业很重要，但对我们日常使用却可能产生负面影响。一旦系统崩溃且你忘记或丢失了恢复密钥，你的所有数据将永久无法访问。对于新手来说，这是十分灾难性的情况，笔者也不希望新生丢失，因此强烈推荐关闭 Bitlocker。&lt;/p&gt;
+&lt;p&gt;TODO：具体关闭步骤，以及顺便提一嘴备份&lt;/p&gt;
+&lt;h4 id=&#34;从软件官网下载软件&#34;&gt;从软件官网下载软件&lt;/h4&gt;
+&lt;p&gt;电脑不像手机，能从官方的应用商城下载绝大多数的软件。无论是在 Windows 上还是在 Mac 上，官方的软件中心（Microsoft Store 和 Mac App Store）都没有覆盖全部的常用软件，部分软件还是需要从浏览器手动下载并安装。
+在这时候，有些同学可能因为搜索引擎的误导（说你呢，傻逼百度）就会去 xx 软件园之类的网站去下载软件。这实际上是非常不好的使用习惯，原因如下：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;无法保证软件安全性：你无法确定从这些第三方网站下载的软件是否未经修改（如被植入病毒）&lt;/li&gt;
+&lt;li&gt;垃圾软件捆绑：有些网站会在软件中捆绑垃圾软件，你一旦安装，你的电脑就会被各种垃圾软件霸占（如各种一刀 999 的弹窗广告）&lt;/li&gt;
+&lt;li&gt;版本过旧：这些网站提供的软件往往不是最新版本，可能会缺少重要的安全更新或功能改进&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;笔者推荐的最佳实践是，在安装软件时，通过搜索引擎确认软件官网，然后再下载软件并安装。&lt;/p&gt;
+&lt;p&gt;以安装微信为例：
+&lt;img alt=&#34;image.png&#34; loading=&#34;lazy&#34; src=&#34;https://image.wall-breaker-no4.xyz/2025/07/7948aed6209e20ddd980d1bf5ec28fc5.png&#34;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;在搜索引擎中搜索想要下载的软件，并检查域名是否为官方域名（一个小技巧，如果你无法确认域名是否为官方网站，你可以去 Wikipedia 上找官网网址）&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;&lt;img alt=&#34;image.png&#34; loading=&#34;lazy&#34; src=&#34;https://image.wall-breaker-no4.xyz/2025/07/785d79d4be0796d88dfcc541acf5c06f.png&#34;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;找到对应的操作系统进行下载&lt;/p&gt;&lt;/blockquote&gt;
+&lt;p&gt;养成下载软件从官网下载的习惯，能很大程度上规避电脑中病毒的风险&lt;/p&gt;
+&lt;h4 id=&#34;重要不要关闭杀毒软件&#34;&gt;&lt;strong&gt;重要：不要关闭杀毒软件&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;现在 Windows 电脑安装后，自带一个杀毒软件：Windows Defender。在大多数情况下，这已经够用了。你也可以选择安装第三方杀毒软件，如火绒，但千万不要关闭所有的杀毒软件。
+此外，当你从网上下载了文件，但是被杀软报毒的时候。请相信杀软的判断，而不要相信所谓“杀毒软件误报”。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;你相信是杀毒软件误报，还是相信我是秦始皇？&lt;/p&gt;&lt;/blockquote&gt;
+&lt;h4 id=&#34;重要不要关闭-uac&#34;&gt;&lt;strong&gt;重要：不要关闭 UAC&lt;/strong&gt;&lt;/h4&gt;
+&lt;p&gt;UAC (User Account Control)，是 Windows 中的一项安全控制机制。当一个软件需要修改系统时，必须通过 UAC 向用户申请权限，并在用户/管理员批准后这个软件才能运行。这是系统交到用户上的一道保险，由于告知用户软件可能会有高危操作，让用户自行判断。
+&lt;img alt=&#34;image.png&#34; loading=&#34;lazy&#34; src=&#34;https://image.wall-breaker-no4.xyz/2025/07/f2642dc2f8728e286707608ed6c069d1.png&#34;&gt;&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;安装软件时的 UAC 提示&lt;/p&gt;</description>
+    </item>
     <item>
       <title>我的世界优化Mod</title>
       <link>http://localhost:1313/posts/%E8%8D%89%E7%A8%BF/%E6%88%91%E7%9A%84%E4%B8%96%E7%95%8C%E4%BC%98%E5%8C%96mod%E8%AE%B0%E5%BD%95/</link>
