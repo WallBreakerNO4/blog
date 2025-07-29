@@ -20,8 +20,11 @@
 &lt;p&gt;进入了 CST 专业，也就意味着接下来的四年（大概率更长的时间），你都要经常使用你的电脑。一个良好的使用习惯，尤其是对安全的重视，才能保证你电脑长期稳定、数据安全无虞。&lt;/p&gt;
 &lt;h3 id=&#34;数据安全重中之重&#34;&gt;数据安全：重中之重&lt;/h3&gt;
 &lt;h4 id=&#34;关闭-bitlocker&#34;&gt;关闭 Bitlocker&lt;/h4&gt;
-&lt;p&gt;如果你是新买的电脑，那很有可能你的电脑是自带 Bitlocker 并将电脑硬盘加密了的。Bitlocker 的初衷是讲电脑硬盘加密，了防止当电脑被他人物理接触（如被偷走）的情况下，机密数据产生泄露。这个功能对企业很重要，但对我们日常使用却可能产生负面影响。一旦系统崩溃且你忘记或丢失了恢复密钥，你的所有数据将永久无法访问。对于新手来说，这是十分灾难性的情况，笔者也不希望新生丢失，因此强烈推荐关闭 Bitlocker。&lt;/p&gt;
-&lt;p&gt;TODO：具体关闭步骤，以及顺便提一嘴备份&lt;/p&gt;
+&lt;p&gt;如果你是新买的电脑，那很有可能你的电脑是自带 Bitlocker 并将电脑硬盘加密了的。Bitlocker 的初衷是将电脑硬盘加密，以防止当电脑被他人物理接触（如被偷走）的情况下，机密数据产生泄露。这个功能对企业很重要，但对我们日常使用却可能产生负面影响。一旦系统崩溃且你忘记或丢失了恢复密钥，你的所有数据将永久无法访问。对于新手来说，这是十分灾难性的情况，笔者也不希望新生丢失，因此强烈推荐关闭 Bitlocker。请跟随以下步骤检查并关闭 Bitlocker：&lt;/p&gt;
+&lt;ol&gt;
+&lt;li&gt;在 Windows 搜索栏中输入“Bitlocker”，点击“管理 BitLocker”。
+&lt;img loading=&#34;lazy&#34; src=&#34;https://image.wall-breaker-no4.xyz/2025/07/eb2e35dfe93707b90da21dbadd75bec2.png&#34;&gt;&lt;/li&gt;
+&lt;/ol&gt;
 &lt;h4 id=&#34;从软件官网下载软件&#34;&gt;从软件官网下载软件&lt;/h4&gt;
 &lt;p&gt;电脑不像手机，能从官方的应用商城下载绝大多数的软件。无论是在 Windows 上还是在 Mac 上，官方的软件中心（Microsoft Store 和 Mac App Store）都没有覆盖全部的常用软件，部分软件还是需要从浏览器手动下载并安装。
 在这时候，有些同学可能因为搜索引擎的误导（说你呢，傻逼百度）就会去 xx 软件园之类的网站去下载软件。这实际上是非常不好的使用习惯，原因如下：&lt;/p&gt;
@@ -46,9 +49,7 @@
 &lt;p&gt;你相信是杀毒软件误报，还是相信我是秦始皇？&lt;/p&gt;&lt;/blockquote&gt;
 &lt;h4 id=&#34;重要不要关闭-uac&#34;&gt;&lt;strong&gt;重要：不要关闭 UAC&lt;/strong&gt;&lt;/h4&gt;
 &lt;p&gt;UAC (User Account Control)，是 Windows 中的一项安全控制机制。当一个软件需要修改系统时，必须通过 UAC 向用户申请权限，并在用户/管理员批准后这个软件才能运行。这是系统交到用户上的一道保险，由于告知用户软件可能会有高危操作，让用户自行判断。
-&lt;img alt=&#34;image.png&#34; loading=&#34;lazy&#34; src=&#34;https://image.wall-breaker-no4.xyz/2025/07/f2642dc2f8728e286707608ed6c069d1.png&#34;&gt;&lt;/p&gt;
-&lt;blockquote&gt;
-&lt;p&gt;安装软件时的 UAC 提示&lt;/p&gt;</description>
+&lt;img alt=&#34;image.png&#34; loading=&#34;lazy&#34; src=&#34;https://image.wall-breaker-no4.xyz/2025/07/f2642dc2f8728e286707608ed6c069d1.png&#34;&gt;&lt;/p&gt;</description>
     </item>
     <item>
       <title>我的世界优化Mod</title>
