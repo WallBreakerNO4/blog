@@ -11,8 +11,8 @@ ShowBreadCrumbs: false
 | {{<figure src="https://avatars.githubusercontent.com/u/22657774?v=4" width="50px">}}                                                  | [黑墨水鱼](https://aquarium39.moe/)                      | 有个可爱的妹妹（确信）       |
 | {{<figure src="https://blog.rinchord.top/img/icon150_hu_3709d6f853545f54.png" width="50px">}}                                         | [RinChord](https://blog.rinchord.top/)                   | 渺之舟，宇之奏               |
 | {{<figure src="https://avatars.githubusercontent.com/u/16585846?v=4" width="50px">}}                                                  | [Junjie Liu](https://blog.cklau.cc/)                     | 大湾区人                     |
-| {{<figure src="https://blog.zlicdt.top/img/avatar.webp" width="50px">}}                                                               | [Rin](https://blog.rin.moe/)                             | Nin                          |
-| {{<figure src="https://blog.zlicdt.top/img/avatar.png" width="50px">}}                                                                | [zlicdt](https://blog.zlicdt.top/)                       | 回收废旧猫娘                 |
+| {{<figure src="https://blog.rin.moe/img/avatar.png" width="50px">}}                                                                   | [Rin](https://blog.rin.moe/)                             | Nin                          |
+| {{<figure src="https://blog.zlicdt.top/img/avatar.webp" width="50px">}}                                                               | [zlicdt](https://blog.zlicdt.top/)                       | 回收废旧猫娘                 |
 | {{<figure src="https://www.haotian22.top/img/head.jpg" width="50px">}}                                                                | [Hao_Tian](https://www.haotian22.top/)                   | 一个兼具日常向和技术向的小站 |
 | {{<figure src="https://cascade.moe/images/avatar.webp" width="50px">}}                                                                | [Cascade](https://cascade.moe/)                          | 工程师猫娘                   |
 
